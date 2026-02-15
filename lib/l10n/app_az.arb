@@ -1,0 +1,23 @@
+{
+  "@@locale": "az",
+  "appTitle": "Vogue Motion",
+  "create": "YARAT",
+  "selectImage": "ŞƏKİL SEÇ",
+  "changeImage": "ŞƏKİLİ DƏYİŞ",
+  "generateVideo": "VİDEO\nYARAT",
+  "videoReady": "VİDEO HAZIRDIR",
+  "previewVideo": "VİDEOYA BAX",
+  "recentVideos": "SON VİDEOLAR",
+  "viewAll": "HAMISI",
+  "reset": "Sıfırla",
+  "resetConfirmTitle": "Sıfırla",
+  "resetConfirmMessage": "Bütün dəyişiklikləri sıfırlamaq istəyirsiniz?",
+  "no": "Xeyr",
+  "yes": "Bəli",
+  "imageProcessing": "Şəkil emal olunur...",
+  "videoGenerating": "Video yaradılır...",
+  "videoGenerated": "Video hazırlandı ✓",
+  "videoGenerationError": "Video yaradılarkən xəta baş verdi",
+  "selectImageFirst": "Əvvəlcə şəkil seçin",
+  "error": "Xəta: {error}"
+}

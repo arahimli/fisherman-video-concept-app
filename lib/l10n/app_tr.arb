@@ -1,0 +1,23 @@
+{
+  "@@locale": "tr",
+  "appTitle": "Vogue Motion",
+  "create": "OLUŞTUR",
+  "selectImage": "RESİM SEÇ",
+  "changeImage": "RESMİ DEĞİŞTİR",
+  "generateVideo": "VİDEO\nOLUŞTUR",
+  "videoReady": "VİDEO HAZIR",
+  "previewVideo": "VİDEOYU İZLE",
+  "recentVideos": "SON VİDEOLAR",
+  "viewAll": "TÜMÜ",
+  "reset": "Sıfırla",
+  "resetConfirmTitle": "Sıfırla",
+  "resetConfirmMessage": "Tüm değişiklikleri sıfırlamak istiyor musunuz?",
+  "no": "Hayır",
+  "yes": "Evet",
+  "imageProcessing": "Resim işleniyor...",
+  "videoGenerating": "Video oluşturuluyor...",
+  "videoGenerated": "Video hazırlandı ✓",
+  "videoGenerationError": "Video oluşturulurken hata oluştu",
+  "selectImageFirst": "Önce bir resim seçin",
+  "error": "Hata: {error}"
+}

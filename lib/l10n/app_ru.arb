@@ -1,0 +1,23 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Vogue Motion",
+  "create": "СОЗДАТЬ",
+  "selectImage": "ВЫБРАТЬ ФОТО",
+  "changeImage": "ИЗМЕНИТЬ ФОТО",
+  "generateVideo": "СОЗДАТЬ\nВИДЕО",
+  "videoReady": "ВИДЕО ГОТОВО",
+  "previewVideo": "ПРОСМОТР ВИДЕО",
+  "recentVideos": "ПОСЛЕДНИЕ ВИДЕО",
+  "viewAll": "ВСЕ",
+  "reset": "Сбросить",
+  "resetConfirmTitle": "Сбросить",
+  "resetConfirmMessage": "Вы хотите сбросить все изменения?",
+  "no": "Нет",
+  "yes": "Да",
+  "imageProcessing": "Обработка изображения...",
+  "videoGenerating": "Создание видео...",
+  "videoGenerated": "Видео готово ✓",
+  "videoGenerationError": "Произошла ошибка при создании видео",
+  "selectImageFirst": "Сначала выберите изображение",
+  "error": "Ошибка: {error}"
+}

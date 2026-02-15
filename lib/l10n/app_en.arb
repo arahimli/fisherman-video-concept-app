@@ -1,0 +1,30 @@
+{
+  "@@locale": "en",
+  "appTitle": "Vogue Motion",
+  "create": "CREATE",
+  "selectImage": "SELECT IMAGE",
+  "changeImage": "CHANGE IMAGE",
+  "generateVideo": "GENERATE\nVIDEO",
+  "videoReady": "VIDEO READY",
+  "previewVideo": "PREVIEW VIDEO",
+  "recentVideos": "RECENT VIDEOS",
+  "viewAll": "VIEW ALL",
+  "reset": "Reset",
+  "resetConfirmTitle": "Reset",
+  "resetConfirmMessage": "Do you want to reset all changes?",
+  "no": "No",
+  "yes": "Yes",
+  "imageProcessing": "Processing image...",
+  "videoGenerating": "Generating video...",
+  "videoGenerated": "Video generated ✓",
+  "videoGenerationError": "Error occurred while generating video",
+  "selectImageFirst": "Please select an image first",
+  "error": "Error: {error}",
+  "@error": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  }
+}
