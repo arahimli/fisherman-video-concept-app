@@ -8,7 +8,7 @@ import 'package:saver_gallery/saver_gallery.dart';
 class VideoPreviewScreen extends StatefulWidget {
   final String videoPath;
 
-  const VideoPreviewScreen({Key? key, required this.videoPath}) : super(key: key);
+  const VideoPreviewScreen({super.key, required this.videoPath});
 
   @override
   State<VideoPreviewScreen> createState() => _VideoPreviewScreenState();

@@ -1,7 +1,7 @@
 // lib/new_home_page.dart
 import 'dart:io';
 import 'dart:ui';
-import 'package:fisherman_video/video_page.dart';
+import 'package:fisherman_video/presentation/pages/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -317,8 +317,8 @@ class _NewHomePageState extends State<NewHomePage>
                     return Transform.scale(
                       scale: _pulseAnimation.value,
                       child: Container(
-                        width: screenWidth * 0.55,
-                        height: screenWidth * 0.55,
+                        width: screenWidth * 0.65,
+                        height: screenWidth * 0.65,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
@@ -331,8 +331,8 @@ class _NewHomePageState extends State<NewHomePage>
                   },
                 ),
                 Container(
-                  width: screenWidth * 0.43,
-                  height: screenWidth * 0.43,
+                  width: screenWidth * 0.53,
+                  height: screenWidth * 0.53,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(
@@ -344,8 +344,8 @@ class _NewHomePageState extends State<NewHomePage>
                 GestureDetector(
                   onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
                   child: Container(
-                    width: screenWidth * 0.32,
-                    height: screenWidth * 0.32,
+                    width: screenWidth * 0.42,
+                    height: screenWidth * 0.42,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
