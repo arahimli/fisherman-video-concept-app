@@ -280,6 +280,9 @@ class _NewHomePageState extends State<NewHomePage>
         imageFile = state.imageFile;
       }
 
+      if(imageFile == null) {
+        return _buildCreateMode(context, screenWidth, screenHeight, l10n);
+      }
       return _buildImagePreviewMode(
         context,
         screenWidth,
