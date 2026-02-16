@@ -156,6 +156,84 @@ abstract class AppLocalizations {
   /// **'VIEW ALL'**
   String get viewAll;
 
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @allVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'All Videos'**
+  String get allVideos;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @older.
+  ///
+  /// In en, this message translates to:
+  /// **'Older'**
+  String get older;
+
+  /// No description provided for @noVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'No videos yet'**
+  String get noVideos;
+
+  /// No description provided for @noVideosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first video to see it here'**
+  String get noVideosDesc;
+
+  /// No description provided for @deleteVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Video'**
+  String get deleteVideo;
+
+  /// No description provided for @deleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this video?'**
+  String get deleteConfirm;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @reset.
   ///
   /// In en, this message translates to:
@@ -220,7 +298,31 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Error: {error}'**
-  String error(String error);
+  String error(Object error);
+
+  /// No description provided for @filterByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Date'**
+  String get filterByDate;
+
+  /// No description provided for @allDates.
+  ///
+  /// In en, this message translates to:
+  /// **'All Dates'**
+  String get allDates;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load More'**
+  String get loadMore;
+
+  /// No description provided for @videosCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} videos'**
+  String videosCount(int count);
 }
 
 class _AppLocalizationsDelegate

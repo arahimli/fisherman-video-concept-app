@@ -5,8 +5,11 @@ import 'package:fisherman_video/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
+import '../managers/history_bloc/bloc.dart';
 import '../managers/video_bloc/bloc.dart';
+import 'history_page.dart';
 
 class NewHomePage extends StatefulWidget {
   const NewHomePage({super.key});
@@ -44,7 +47,11 @@ class _NewHomePageState extends State<NewHomePage>
     super.dispose();
   }
 
-  void _showResetDialog(BuildContext context) {
+  void _showResetDialog(
+    BuildContext context,
+    double screenWidth,
+    List<Widget> actions,
+  ) {
     final l10n = AppLocalizations.of(context);
 
     showDialog(
@@ -59,25 +66,7 @@ class _NewHomePageState extends State<NewHomePage>
           l10n.resetConfirmMessage,
           style: const TextStyle(color: Colors.white70),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(
-              l10n.no,
-              style: const TextStyle(color: Colors.white70),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              context.read<VideoBloc>().add(ResetEvent());
-            },
-            child: Text(
-              l10n.yes,
-              style: const TextStyle(color: Color(0xFFB8956A)),
-            ),
-          ),
-        ],
+        actions: actions,
       ),
     );
   }
@@ -97,24 +86,31 @@ class _NewHomePageState extends State<NewHomePage>
     final screenHeight = MediaQuery.of(context).size.height;
     final l10n = AppLocalizations.of(context);
 
-    return BlocListener<VideoBloc, VideoState>(
-      listener: (context, state) {
-        if (state is VideoGeneratedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(l10n.videoGenerated),
-              backgroundColor: const Color(0xFFB8956A),
-            ),
-          );
-        } else if (state is VideoErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.errorMessage),
-              backgroundColor: Colors.red,
-            ),
-          );
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<VideoBloc, VideoState>(
+          listener: (context, state) {
+            if (state is VideoGeneratedState) {
+              // Reload recent videos when new video is generated
+              context.read<HistoryBloc>().add(LoadRecentVideosEvent());
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(l10n.videoGenerated ?? 'Video generated ✓'),
+                  backgroundColor: const Color(0xFFB8956A),
+                ),
+              );
+            } else if (state is VideoErrorState) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         appBar: _buildAppBar(context, screenWidth, l10n),
         body: BlocBuilder<VideoBloc, VideoState>(
@@ -127,7 +123,12 @@ class _NewHomePageState extends State<NewHomePage>
               );
             }
             return _buildMainContent(
-                context, screenWidth, screenHeight, state, l10n);
+              context,
+              screenWidth,
+              screenHeight,
+              state,
+              l10n,
+            );
           },
         ),
       ),
@@ -135,10 +136,10 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   PreferredSizeWidget _buildAppBar(
-      BuildContext context,
-      double screenWidth,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    double screenWidth,
+    AppLocalizations l10n,
+  ) {
     return AppBar(
       backgroundColor: const Color(0xFF0A0A0A),
       elevation: 0,
@@ -166,7 +167,50 @@ class _NewHomePageState extends State<NewHomePage>
                   color: const Color(0xFFB8956A),
                   size: screenWidth * 0.065,
                 ),
-                onPressed: () => _showResetDialog(context),
+                onPressed: () => _showResetDialog(context, screenWidth,
+                  [
+                    IconButton(
+                      icon: Icon(
+                        Icons.history,
+                        color: const Color(0xFFB8956A),
+                        size: screenWidth * 0.065,
+                      ),
+                      onPressed: () {
+                        context.read<HistoryBloc>().add(LoadHistoryEvent());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HistoryPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    BlocBuilder<VideoBloc, VideoState>(
+                      builder: (context, state) {
+                        if (state is ImagePickedState ||
+                            state is VideoGeneratedState ||
+                            state is VideoErrorState) {
+                          return IconButton(
+                            icon: Icon(
+                              Icons.refresh,
+                              color: const Color(0xFFB8956A),
+                              size: screenWidth * 0.065,
+                            ),
+                            onPressed: (){},
+                            // onPressed: () => _showResetDialog(context, screenWidth),
+                          );
+                        }
+                        return IconButton(
+                          icon: Icon(
+                            Icons.account_circle_outlined,
+                            color: Colors.white,
+                            size: screenWidth * 0.065,
+                          ),
+                          onPressed: () {},
+                        );
+                      },
+                    ),
+                  ],),
               );
             }
             return IconButton(
@@ -184,10 +228,10 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildLoadingState(
-      double screenWidth,
-      double screenHeight,
-      String loadingMessage,
-      ) {
+    double screenWidth,
+    double screenHeight,
+    String loadingMessage,
+  ) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -259,12 +303,12 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildMainContent(
-      BuildContext context,
-      double screenWidth,
-      double screenHeight,
-      VideoState state,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    double screenWidth,
+    double screenHeight,
+    VideoState state,
+    AppLocalizations l10n,
+  ) {
     if (state is ImagePickedState ||
         state is VideoGeneratedState ||
         state is VideoErrorState) {
@@ -294,11 +338,11 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildCreateMode(
-      BuildContext context,
-      double screenWidth,
-      double screenHeight,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    double screenWidth,
+    double screenHeight,
+    AppLocalizations l10n,
+  ) {
     return Column(
       children: [
         // Create Circle Button
@@ -456,13 +500,13 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildImagePreviewMode(
-      BuildContext context,
-      double screenWidth,
-      double screenHeight,
-      File imageFile,
-      String? videoPath,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    double screenWidth,
+    double screenHeight,
+    File imageFile,
+    String? videoPath,
+    AppLocalizations l10n,
+  ) {
     return Column(
       children: [
         // Image Preview
@@ -538,12 +582,12 @@ class _NewHomePageState extends State<NewHomePage>
           flex: videoPath != null ? 3 : 3,
           child: videoPath != null
               ? _buildVideoReadySection(
-            context,
-            screenWidth,
-            screenHeight,
-            videoPath,
-            l10n,
-          )
+                  context,
+                  screenWidth,
+                  screenHeight,
+                  videoPath,
+                  l10n,
+                )
               : _buildRecentVideos(screenWidth, screenHeight, l10n),
         ),
 
@@ -553,12 +597,12 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildVideoReadySection(
-      BuildContext context,
-      double screenWidth,
-      double screenHeight,
-      String videoPath,
-      AppLocalizations l10n,
-      ) {
+    BuildContext context,
+    double screenWidth,
+    double screenHeight,
+    String videoPath,
+    AppLocalizations l10n,
+  ) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
       child: Container(
@@ -616,9 +660,7 @@ class _NewHomePageState extends State<NewHomePage>
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFB8956A),
                   foregroundColor: const Color(0xFF0A0A0A),
-                  padding: EdgeInsets.symmetric(
-                    vertical: screenHeight * 0.016,
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.016),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(screenWidth * 0.03),
                   ),
@@ -632,21 +674,133 @@ class _NewHomePageState extends State<NewHomePage>
     );
   }
 
+  // new_home_page.dart - _buildRecentVideos method
   Widget _buildRecentVideos(
-      double screenWidth,
-      double screenHeight,
-      AppLocalizations l10n,
-      ) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    double screenWidth,
+    double screenHeight,
+    AppLocalizations? l10n,
+  ) {
+    return BlocBuilder<HistoryBloc, HistoryState>(
+      builder: (context, state) {
+        if (state is RecentVideosLoaded) {
+          if (state.videos.isEmpty) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                  child: Text(
+                    l10n?.recentVideos ?? 'RECENT VIDEOS',
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.5),
+                      fontSize: screenWidth * 0.03,
+                      letterSpacing: 2,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                Center(
+                  child: Text(
+                    l10n?.noVideos ?? 'No videos yet',
+                    style: TextStyle(
+                      color: Colors.white38,
+                      fontSize: screenWidth * 0.032,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          }
+
+          final videos = state.videos;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                l10n.recentVideos,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      l10n?.recentVideos ?? 'RECENT VIDEOS',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.5),
+                        fontSize: screenWidth * 0.03,
+                        letterSpacing: 2,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        context.read<HistoryBloc>().add(LoadHistoryEvent());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HistoryPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        l10n?.viewAll ?? 'VIEW ALL',
+                        style: TextStyle(
+                          color: const Color(0xFFB8956A),
+                          fontSize: screenWidth * 0.03,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.01),
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                  itemCount: videos.length,
+                  itemBuilder: (context, index) {
+                    final video = videos[index];
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        right: index < videos.length - 1
+                            ? screenWidth * 0.04
+                            : 0,
+                      ),
+                      child: _RecentVideoItem(
+                        video: video,
+                        screenWidth: screenWidth,
+                        screenHeight: screenHeight,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VideoPreviewScreen(
+                                videoPath: video.videoPath,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        }
+
+        // Loading or initial state
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              child: Text(
+                l10n?.recentVideos ?? 'RECENT VIDEOS',
                 style: TextStyle(
                   color: Colors.white.withOpacity(0.5),
                   fontSize: screenWidth * 0.03,
@@ -654,61 +808,14 @@ class _NewHomePageState extends State<NewHomePage>
                   fontWeight: FontWeight.w300,
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  l10n.viewAll,
-                  style: TextStyle(
-                    color: const Color(0xFFB8956A),
-                    fontSize: screenWidth * 0.03,
-                    letterSpacing: 1.5,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.01),
-        Expanded(
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-            children: [
-              _RecentVideoItem(
-                title: 'EDITORIAL_01.MP4',
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF8B6F47), Color(0xFF2A1810)],
-                ),
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-              ),
-              SizedBox(width: screenWidth * 0.04),
-              _RecentVideoItem(
-                title: 'MOTION_SILK_V2',
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0xFFB8956A), Color(0xFF6B5539)],
-                ),
-                showPlayIcon: true,
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-              ),
-              SizedBox(width: screenWidth * 0.04),
-              _RecentVideoItem(
-                title: 'DRAFT_PRO',
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF4A4A4A), Color(0xFF1A1A1A)],
-                ),
-                screenWidth: screenWidth,
-                screenHeight: screenHeight,
-              ),
-            ],
-          ),
-        ),
-      ],
+            ),
+            SizedBox(height: screenHeight * 0.02),
+            const Center(
+              child: CircularProgressIndicator(color: Color(0xFFB8956A)),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -770,36 +877,50 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
+// new_home_page.dart - _RecentVideoItem
 class _RecentVideoItem extends StatelessWidget {
-  final String title;
-  final Gradient gradient;
-  final bool showPlayIcon;
+  final VideoHistoryData video;
   final double screenWidth;
   final double screenHeight;
+  final VoidCallback onTap;
 
   const _RecentVideoItem({
-    required this.title,
-    required this.gradient,
-    this.showPlayIcon = false,
+    required this.video,
     required this.screenWidth,
     required this.screenHeight,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: screenWidth * 0.35,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(screenWidth * 0.04),
-        gradient: gradient,
-        border: Border.all(
-          color: const Color(0xFFB8956A).withOpacity(0.2),
-          width: 1,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth * 0.35,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(screenWidth * 0.04),
+          border: Border.all(
+            color: const Color(0xFFB8956A).withOpacity(0.2),
+            width: 1,
+          ),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF2A2A2A), Color(0xFF1A1A1A)],
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          if (showPlayIcon)
+        child: Stack(
+          children: [
+            if (video.imagePath != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(screenWidth * 0.04),
+                child: Image.file(
+                  File(video.imagePath!),
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
             Center(
               child: Container(
                 padding: EdgeInsets.all(screenWidth * 0.025),
@@ -814,39 +935,40 @@ class _RecentVideoItem extends StatelessWidget {
                 ),
               ),
             ),
-          Positioned(
-            bottom: screenHeight * 0.01,
-            left: screenWidth * 0.025,
-            right: screenWidth * 0.025,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(screenWidth * 0.02),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.02,
-                    vertical: screenHeight * 0.006,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(screenWidth * 0.02),
-                  ),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: screenWidth * 0.024,
-                      letterSpacing: 0.8,
-                      fontWeight: FontWeight.w500,
+            Positioned(
+              bottom: screenHeight * 0.01,
+              left: screenWidth * 0.025,
+              right: screenWidth * 0.025,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(screenWidth * 0.02),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.02,
+                      vertical: screenHeight * 0.006,
                     ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(screenWidth * 0.02),
+                    ),
+                    child: Text(
+                      video.title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.024,
+                        letterSpacing: 0.8,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

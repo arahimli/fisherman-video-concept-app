@@ -36,6 +36,45 @@ class AppLocalizationsAz extends AppLocalizations {
   String get viewAll => 'HAMISI';
 
   @override
+  String get history => 'Tarixçə';
+
+  @override
+  String get allVideos => 'Bütün Videolar';
+
+  @override
+  String get today => 'Bu gün';
+
+  @override
+  String get yesterday => 'Dünən';
+
+  @override
+  String get thisWeek => 'Bu həftə';
+
+  @override
+  String get thisMonth => 'Bu ay';
+
+  @override
+  String get older => 'Köhnə';
+
+  @override
+  String get noVideos => 'Hələ video yoxdur';
+
+  @override
+  String get noVideosDesc => 'İlk videonu yarat ki, burada görünsün';
+
+  @override
+  String get deleteVideo => 'Videonu Sil';
+
+  @override
+  String get deleteConfirm => 'Bu videonu silmək istədiyinizə əminsiniz?';
+
+  @override
+  String get delete => 'Sil';
+
+  @override
+  String get cancel => 'İmtina';
+
+  @override
   String get reset => 'Sıfırla';
 
   @override
@@ -67,7 +106,21 @@ class AppLocalizationsAz extends AppLocalizations {
   String get selectImageFirst => 'Əvvəlcə şəkil seçin';
 
   @override
-  String error(String error) {
+  String error(Object error) {
     return 'Xəta: $error';
+  }
+
+  @override
+  String get filterByDate => 'Tarixə görə süz';
+
+  @override
+  String get allDates => 'Bütün Tarixlər';
+
+  @override
+  String get loadMore => 'Daha çox yüklə';
+
+  @override
+  String videosCount(int count) {
+    return '$count video';
   }
 }

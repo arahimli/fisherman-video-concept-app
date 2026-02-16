@@ -3,10 +3,12 @@
 part of 'bloc.dart';
 
 
+
 class VideoBloc extends Bloc<VideoEvent, VideoState> {
   final ImagePicker _picker = ImagePicker();
+  final AppDatabase database;
 
-  VideoBloc() : super(VideoInitial()) {
+  VideoBloc({required this.database}) : super(VideoInitial()) {
     on<PickImageEvent>(_onPickImage);
     on<GenerateVideoEvent>(_onGenerateVideo);
     on<ResetEvent>(_onReset);
@@ -49,15 +51,26 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     }
 
     try {
-      // Processing image - message will be localized in UI
-      emit(VideoLoadingState(imageFile, event.processingMessage ?? 'Processing image...'));
+      emit(VideoLoadingState(
+          imageFile, event.processingMessage ?? 'Processing image...'));
       final images = await ImageService.processImage(imageFile);
 
-      // Generating video - message will be localized in UI
-      emit(VideoLoadingState(imageFile, event.generatingMessage ?? 'Generating video...'));
+      emit(VideoLoadingState(
+          imageFile, event.generatingMessage ?? 'Generating video...'));
       final videoFile = await VideoService.generateVideo(images);
 
       if (videoFile != null) {
+        // Save to database using Drift
+        final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+        final videoHistory = VideoHistoryCompanion(
+          videoPath: drift.Value(videoFile),
+          imagePath: drift.Value(imageFile.path),
+          createdAt: drift.Value(DateTime.now()),
+          title: drift.Value('MOTION_$timestamp'),
+        );
+
+        await database.createVideo(videoHistory);
+
         emit(VideoGeneratedState(imageFile, videoFile));
       } else {
         emit(VideoErrorState(

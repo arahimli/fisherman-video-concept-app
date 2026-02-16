@@ -1,16 +1,21 @@
+import 'package:fisherman_video/presentation/managers/history_bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'data/database/app_database.dart';
 import 'l10n/app_localizations.dart';
 import 'presentation/managers/video_bloc/bloc.dart';
 import 'presentation/pages/home_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() {  // Initialize database globally
+  final database = AppDatabase();
+  runApp(MyApp(database: database));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AppDatabase database;
+
+  const MyApp({super.key, required this.database});
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +39,16 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Georgia',
       ),
       debugShowCheckedModeBanner: false,
-      home: BlocProvider(
-        create: (context) => VideoBloc(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<VideoBloc>(
+            create: (context) => VideoBloc(database: database),
+          ),
+          BlocProvider<HistoryBloc>(
+            create: (context) => HistoryBloc(database: database)
+              ..add(LoadRecentVideosEvent()),
+          ),
+        ],
         child: const NewHomePage(),
       ),
     );
