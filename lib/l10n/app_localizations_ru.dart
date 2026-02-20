@@ -154,5 +154,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareVideoText => 'Посмотри моё видео!';
 
   @override
-  String shareError(Object error) => 'Ошибка при отправке: $error';
+  String shareError(Object error) {
+    return 'Ошибка при отправке: $error';
+  }
 }

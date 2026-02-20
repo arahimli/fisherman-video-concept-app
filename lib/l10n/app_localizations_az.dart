@@ -125,37 +125,37 @@ class AppLocalizationsAz extends AppLocalizations {
   }
 
   @override
-  String get videoPreviewTitle => 'PREVIEW';
+  String get videoPreviewTitle => 'ÖNİZLƏMƏ';
 
   @override
-  String get shareSheet => 'SHARE';
+  String get shareSheet => 'PAYLAŞ';
 
   @override
-  String get save => 'Save';
+  String get save => 'Saxla';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Saxlanılır...';
 
   @override
-  String get saveToGallery => 'Save to gallery';
+  String get saveToGallery => 'Qalereya saxla';
 
   @override
-  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
+  String get saveToGalleryDesc => 'Telefonun qaleresinda saxlanacaq';
 
   @override
-  String get videoSavedSuccess => '✓ Video saved to gallery';
+  String get videoSavedSuccess => '✓ Video qalereya saxlanıldı';
 
   @override
-  String get share => 'Share';
+  String get share => 'Paylaş';
 
   @override
-  String get shareSubtitle => 'WhatsApp, Telegram and other apps';
+  String get shareSubtitle => 'WhatsApp, Telegram və digər tətbiqlər';
 
   @override
-  String get shareVideoText => 'Look at my video!';
+  String get shareVideoText => 'Bu videomu bax!';
 
   @override
-  String shareError(String error) {
-    return 'Share error: $error';
+  String shareError(Object error) {
+    return 'Paylaşma xətası: $error';
   }
 }

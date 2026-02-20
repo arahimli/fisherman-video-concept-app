@@ -154,7 +154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareVideoText => 'Look at my video!';
 
   @override
-  String shareError(String error) {
+  String shareError(Object error) {
     return 'Share error: $error';
   }
 }
