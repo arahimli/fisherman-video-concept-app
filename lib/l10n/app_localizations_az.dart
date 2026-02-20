@@ -18,7 +18,7 @@ class AppLocalizationsAz extends AppLocalizations {
   String get selectImage => 'ŞƏKİL\nSEÇ';
 
   @override
-  String get changeImage => 'ŞƏKİLİ DƏYİŞ';
+  String get changeImage => 'ŞƏKİLİ\nDƏYİŞ';
 
   @override
   String get generateVideo => 'VİDEO\nYARAT';

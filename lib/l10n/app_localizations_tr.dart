@@ -18,7 +18,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get selectImage => 'RESİM\nSEÇ';
 
   @override
-  String get changeImage => 'RESMİ DEĞİŞTİR';
+  String get changeImage => 'RESMİ\nDEĞİŞTİR';
 
   @override
   String get generateVideo => 'VİDEO\nOLUŞTUR';

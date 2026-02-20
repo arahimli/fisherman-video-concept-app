@@ -18,7 +18,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectImage => 'ВЫБРАТЬ\nФОТО';
 
   @override
-  String get changeImage => 'ИЗМЕНИТЬ ФОТО';
+  String get changeImage => 'ИЗМЕНИТЬ\nФОТО';
 
   @override
   String get generateVideo => 'СОЗДАТЬ\nВИДЕО';

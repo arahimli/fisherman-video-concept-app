@@ -117,13 +117,13 @@ abstract class AppLocalizations {
   /// No description provided for @selectImage.
   ///
   /// In en, this message translates to:
-  /// **'SELECT IMAGE'**
+  /// **'SELECT\nIMAGE'**
   String get selectImage;
 
   /// No description provided for @changeImage.
   ///
   /// In en, this message translates to:
-  /// **'CHANGE IMAGE'**
+  /// **'CHANGE\nIMAGE'**
   String get changeImage;
 
   /// No description provided for @generateVideo.

@@ -3,7 +3,7 @@
   "appTitle": "Vogue Motion",
   "create": "CREATE",
   "selectImage": "SELECT\nIMAGE",
-  "changeImage": "CHANGE IMAGE",
+  "changeImage": "CHANGE\nIMAGE",
   "generateVideo": "GENERATE\nVIDEO",
   "videoReady": "VIDEO READY",
   "previewVideo": "PREVIEW VIDEO",

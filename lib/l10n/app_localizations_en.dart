@@ -18,7 +18,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectImage => 'SELECT\nIMAGE';
 
   @override
-  String get changeImage => 'CHANGE IMAGE';
+  String get changeImage => 'CHANGE\nIMAGE';
 
   @override
   String get generateVideo => 'GENERATE\nVIDEO';
