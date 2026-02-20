@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:saver_gallery/saver_gallery.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
@@ -74,6 +76,118 @@ class _HistoryPageState extends State<HistoryPage> {
 
     context.read<HistoryBloc>().add(
       FilterByDateEvent(startDate: startDate, endDate: endDate),
+    );
+  }
+
+  void _showVideoOptions(BuildContext context, VideoHistoryData video) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+
+              // Share
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.send_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
+                onTap: () async {
+                  Navigator.pop(sheetContext);
+                  try {
+                    await Share.shareXFiles(
+                      [XFile(video.videoPath)],
+                      text: l10n.shareVideoText,
+                    );
+                  } catch (_) {}
+                },
+              ),
+
+              Divider(color: AppColors.surfaceElevated, height: AppSpacing.xl),
+
+              // Save
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.save_alt_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.saveToGallery, style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.saveToGalleryDesc, style: AppTextStyles.historyCardDate),
+                onTap: () async {
+                  Navigator.pop(sheetContext);
+                  final result = await SaverGallery.saveFile(
+                    filePath: video.videoPath,
+                    fileName: 'fisherman_video_${DateTime.now().millisecondsSinceEpoch}',
+                    skipIfExists: true,
+                  );
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          result.isSuccess
+                              ? l10n.videoSavedSuccess
+                              : l10n.error(result.errorMessage ?? ''),
+                        ),
+                        backgroundColor: result.isSuccess ? AppColors.accent : AppColors.error,
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              Divider(color: AppColors.surfaceElevated, height: AppSpacing.xl),
+
+              // Delete
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.12),
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.delete_outline, color: AppColors.error, size: 22),
+                ),
+                title: Text(l10n.deleteVideo, style: AppTextStyles.historyCardTitle.copyWith(color: AppColors.error)),
+                subtitle: Text(l10n.deleteConfirm, style: AppTextStyles.historyCardDate),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _deleteVideo(context, video.id);
+                },
+              ),
+
+              const SizedBox(height: AppSpacing.sm),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -271,10 +385,12 @@ class _HistoryPageState extends State<HistoryPage> {
             child: CircularProgressIndicator(color: AppColors.accent),
           );
         }
+        final video = state.videos[index];
         return _VideoCard(
-          video: state.videos[index],
-          onTap: () => context.push(AppRoutes.videoPreview, extra: state.videos[index].videoPath),
-          onLongPress: () => _deleteVideo(context, state.videos[index].id),
+          video: video,
+          onTap: () => context.push(AppRoutes.videoPreview, extra: video.videoPath),
+          onDelete: () => _deleteVideo(context, video.id),
+          onLongPress: () => _showVideoOptions(context, video),
         );
       },
     );
@@ -287,11 +403,13 @@ class _HistoryPageState extends State<HistoryPage> {
 class _VideoCard extends StatelessWidget {
   final VideoHistoryData video;
   final VoidCallback onTap;
+  final VoidCallback onDelete;
   final VoidCallback onLongPress;
 
   const _VideoCard({
     required this.video,
     required this.onTap,
+    required this.onDelete,
     required this.onLongPress,
   });
 
@@ -315,7 +433,32 @@ class _VideoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildThumbnail()),
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildThumbnail(),
+                  Positioned(
+                    top: AppSpacing.xs,
+                    right: AppSpacing.xs,
+                    child: GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        padding: const EdgeInsets.all(AppSpacing.xs),
+                        decoration: const BoxDecoration(
+                          color: AppColors.overlayDark,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.delete_outline,
+                          color: AppColors.textPrimary,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
