@@ -15,7 +15,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get create => 'OLUŞTUR';
 
   @override
-  String get selectImage => 'RESİM SEÇ';
+  String get selectImage => 'RESİM\nSEÇ';
 
   @override
   String get changeImage => 'RESMİ DEĞİŞTİR';

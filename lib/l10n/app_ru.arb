@@ -2,7 +2,7 @@
   "@@locale": "ru",
   "appTitle": "Vogue Motion",
   "create": "СОЗДАТЬ",
-  "selectImage": "ВЫБРАТЬ ФОТО",
+  "selectImage": "ВЫБРАТЬ\nФОТО",
   "changeImage": "ИЗМЕНИТЬ ФОТО",
   "generateVideo": "СОЗДАТЬ\nВИДЕО",
   "videoReady": "ВИДЕО ГОТОВО",

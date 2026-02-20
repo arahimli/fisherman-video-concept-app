@@ -2,7 +2,7 @@
   "@@locale": "en",
   "appTitle": "Vogue Motion",
   "create": "CREATE",
-  "selectImage": "SELECT IMAGE",
+  "selectImage": "SELECT\nIMAGE",
   "changeImage": "CHANGE IMAGE",
   "generateVideo": "GENERATE\nVIDEO",
   "videoReady": "VIDEO READY",

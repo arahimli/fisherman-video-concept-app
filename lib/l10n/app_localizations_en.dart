@@ -15,7 +15,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get create => 'CREATE';
 
   @override
-  String get selectImage => 'SELECT IMAGE';
+  String get selectImage => 'SELECT\nIMAGE';
 
   @override
   String get changeImage => 'CHANGE IMAGE';
