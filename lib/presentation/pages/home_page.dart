@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -20,10 +21,11 @@ class NewHomePage extends StatefulWidget {
 }
 
 class _NewHomePageState extends State<NewHomePage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _pulseAnimation;
   late Animation<double> _rotateAnimation;
+  late AnimationController _orbitController;
 
   @override
   void initState() {
@@ -40,23 +42,85 @@ class _NewHomePageState extends State<NewHomePage>
     _rotateAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
+
+    _orbitController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 36),
+    )..repeat();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _orbitController.dispose();
     super.dispose();
   }
 
-  void _showResetDialog(BuildContext context, List<Widget> actions) {
+  void _showResetSheet(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: Text(l10n.resetConfirmTitle, style: AppTextStyles.dialogTitle),
-        content: Text(l10n.resetConfirmMessage, style: AppTextStyles.dialogContent),
-        actions: actions,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Text(l10n.resetConfirmTitle, style: AppTextStyles.appBarTitle),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n.resetConfirmMessage,
+                style: AppTextStyles.dialogContent,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(sheetContext),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        side: const BorderSide(color: AppColors.accentBorder),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.no),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(sheetContext);
+                        context.read<VideoBloc>().add(ResetEvent());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.background,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.yes),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -92,13 +156,16 @@ class _NewHomePageState extends State<NewHomePage>
       ],
       child: Scaffold(
         appBar: _buildAppBar(context, screenWidth, l10n),
-        body: BlocBuilder<VideoBloc, VideoState>(
-          builder: (context, state) {
-            if (state is VideoLoadingState) {
-              return _buildLoadingState(screenWidth, state.loadingMessage);
-            }
-            return _buildMainContent(context, screenWidth, screenHeight, state, l10n);
-          },
+        body: SafeArea(
+          top: false,
+          child: BlocBuilder<VideoBloc, VideoState>(
+            builder: (context, state) {
+              if (state is VideoLoadingState) {
+                return _buildLoadingState(screenWidth, state.loadingMessage);
+              }
+              return _buildMainContent(context, screenWidth, screenHeight, state, l10n);
+            },
+          ),
         ),
       ),
     );
@@ -122,25 +189,7 @@ class _NewHomePageState extends State<NewHomePage>
                 state is VideoErrorState) {
               return IconButton(
                 icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
-                onPressed: () => _showResetDialog(context, [
-                  IconButton(
-                    icon: const Icon(Icons.history, color: AppColors.accent, size: 26),
-                    onPressed: () => context.push(AppRoutes.history),
-                  ),
-                  BlocBuilder<VideoBloc, VideoState>(
-                    builder: (context, state) {
-                      if (state is ImagePickedState ||
-                          state is VideoGeneratedState ||
-                          state is VideoErrorState) {
-                        return IconButton(
-                          icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
-                          onPressed: () {},
-                        );
-                      }
-                      return SizedBox();
-                    },
-                  ),
-                ]),
+                onPressed: () => _showResetSheet(context),
               );
             }
             return SizedBox();
@@ -245,88 +294,54 @@ class _NewHomePageState extends State<NewHomePage>
         Expanded(
           flex: 5,
           child: Center(
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                AnimatedBuilder(
+            child: AnimatedBuilder(
+              animation: _orbitController,
+              builder: (context, child) {
+                return SizedBox(
+                  width: screenWidth * 0.88,
+                  height: screenWidth * 0.88,
+                  child: CustomPaint(
+                    painter: _SolarSystemPainter(_orbitController.value),
+                    child: child,
+                  ),
+                );
+              },
+              child: Center(
+                child: AnimatedBuilder(
                   animation: _pulseAnimation,
-                  builder: (context, child) {
+                  builder: (context, _) {
                     return Transform.scale(
                       scale: _pulseAnimation.value,
-                      child: Container(
-                        width: screenWidth * 0.55,
-                        height: screenWidth * 0.55,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.fromBorderSide(
-                            BorderSide(color: AppColors.accentBorderFaint, width: 1),
+                      child: GestureDetector(
+                        onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
+                        child: Container(
+                          width: screenWidth * 0.32,
+                          height: screenWidth * 0.32,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.fromBorderSide(
+                              BorderSide(color: AppColors.accent, width: 2),
+                            ),
+                            boxShadow: AppShadows.accentGlow,
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                color: AppColors.accent,
+                                size: screenWidth * 0.1,
+                              ),
+                              const SizedBox(height: AppSpacing.sm),
+                              Text(l10n.create, style: AppTextStyles.createLabel),
+                            ],
                           ),
                         ),
                       ),
                     );
                   },
                 ),
-                Container(
-                  width: screenWidth * 0.43,
-                  height: screenWidth * 0.43,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.fromBorderSide(
-                      BorderSide(color: AppColors.accentBorderLight, width: 1),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
-                  child: Container(
-                    width: screenWidth * 0.32,
-                    height: screenWidth * 0.32,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.fromBorderSide(
-                        BorderSide(color: AppColors.accent, width: 2),
-                      ),
-                      boxShadow: AppShadows.accentGlow,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          color: AppColors.accent,
-                          size: screenWidth * 0.1,
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text(l10n.create, style: AppTextStyles.createLabel),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 0,
-                  right: screenWidth * 0.22,
-                  child: Container(
-                    width: screenWidth * 0.015,
-                    height: screenWidth * 0.015,
-                    decoration: const BoxDecoration(
-                      color: AppColors.accent,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: screenHeight * 0.03,
-                  left: screenWidth * 0.2,
-                  child: Container(
-                    width: screenWidth * 0.012,
-                    height: screenWidth * 0.012,
-                    decoration: const BoxDecoration(
-                      color: AppColors.textSubtle,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -347,12 +362,7 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.videocam_outlined,
                   label: l10n.generateVideo,
                   isAccent: true,
-                  onTap: () => context.read<VideoBloc>().add(
-                    GenerateVideoEvent(
-                      processingMessage: l10n.imageProcessing,
-                      generatingMessage: l10n.videoGenerating,
-                    ),
-                  ),
+                  onTap: null,
                 ),
               ),
             ],
@@ -409,12 +419,14 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.videocam_outlined,
                   label: l10n.generateVideo,
                   isAccent: true,
-                  onTap: () => context.read<VideoBloc>().add(
-                    GenerateVideoEvent(
-                      processingMessage: l10n.imageProcessing,
-                      generatingMessage: l10n.videoGenerating,
-                    ),
-                  ),
+                  onTap: videoPath != null
+                      ? null
+                      : () => context.read<VideoBloc>().add(
+                            GenerateVideoEvent(
+                              processingMessage: l10n.imageProcessing,
+                              generatingMessage: l10n.videoGenerating,
+                            ),
+                          ),
                 ),
               ),
             ],
@@ -591,7 +603,7 @@ class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool isAccent;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const _ActionButton({
     required this.icon,
@@ -600,33 +612,38 @@ class _ActionButton extends StatelessWidget {
     required this.onTap,
   });
 
+  bool get _isDisabled => onTap == null;
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: isAccent ? AppColors.accentStrong : AppColors.surface,
-      borderRadius: AppRadius.mdAll,
-      child: InkWell(
-        onTap: onTap,
+    return Opacity(
+      opacity: _isDisabled ? 0.38 : 1.0,
+      child: Material(
+        color: isAccent ? AppColors.accentStrong : AppColors.surface,
         borderRadius: AppRadius.mdAll,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: isAccent ? AppColors.surface : AppColors.accent,
-                size: 26,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                label,
-                textAlign: TextAlign.center,
-                style: AppTextStyles.actionButton.copyWith(
-                  color: isAccent ? AppColors.surface : AppColors.textPrimary,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadius.mdAll,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  color: isAccent ? AppColors.surface : AppColors.accent,
+                  size: 26,
                 ),
-              ),
-            ],
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: AppTextStyles.actionButton.copyWith(
+                    color: isAccent ? AppColors.surface : AppColors.textPrimary,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -720,4 +737,124 @@ class _RecentVideoItem extends StatelessWidget {
       ),
     );
   }
+}
+
+// ── Solar System ──────────────────────────────────────────────────────────────
+
+class _Planet {
+  final double angleOffset;
+  final double radius;
+  final Color color;
+  final bool glowing;
+
+  const _Planet({
+    required this.angleOffset,
+    required this.radius,
+    required this.color,
+    this.glowing = false,
+  });
+}
+
+class _SolarSystemPainter extends CustomPainter {
+  final double progress;
+
+  _SolarSystemPainter(this.progress);
+
+  static const _tau = 2 * pi;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height / 2);
+    final w = size.width;
+
+    // ── Ring 1 — inner, 3 full rotations/cycle, clockwise ───────────────────
+    _drawRing(
+      canvas, center,
+      radius: w * 0.20,
+      baseAngle: progress * _tau * 3,
+      strokeWidth: 0.8,
+      ringColor: const Color(0x4DB8956A),
+      planets: const [
+        _Planet(angleOffset: 0,          radius: 3.5, color: Color(0xFFB8956A), glowing: true),
+      ],
+    );
+
+    // ── Ring 2 — middle, 2 full rotations/cycle, counter-clockwise ──────────
+    _drawRing(
+      canvas, center,
+      radius: w * 0.31,
+      baseAngle: -progress * _tau * 2,
+      strokeWidth: 0.6,
+      ringColor: const Color(0x33B8956A),
+      planets: const [
+        _Planet(angleOffset: 0,             radius: 2.8, color: Color(0x99FFFFFF)),
+        _Planet(angleOffset: pi * 0.75,     radius: 3.2, color: Color(0x99B8956A)),
+      ],
+    );
+
+    // ── Ring 3 — outer, 1 full rotation/cycle, clockwise ────────────────────
+    _drawRing(
+      canvas, center,
+      radius: w * 0.43,
+      baseAngle: progress * _tau * 1,
+      strokeWidth: 0.5,
+      ringColor: const Color(0x26B8956A),
+      planets: const [
+        _Planet(angleOffset: 0,             radius: 2.2, color: Color(0x66FFFFFF)),
+        _Planet(angleOffset: pi * 1.3,      radius: 2.6, color: Color(0x55B8956A)),
+        _Planet(angleOffset: pi * 0.45,     radius: 1.8, color: Color(0x44FFFFFF)),
+      ],
+    );
+  }
+
+  void _drawRing(
+    Canvas canvas,
+    Offset center, {
+    required double radius,
+    required double baseAngle,
+    required double strokeWidth,
+    required Color ringColor,
+    required List<_Planet> planets,
+  }) {
+    // Ring circle
+    canvas.drawCircle(
+      center,
+      radius,
+      Paint()
+        ..color = ringColor
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = strokeWidth,
+    );
+
+    // Planets
+    for (final planet in planets) {
+      final angle = baseAngle + planet.angleOffset;
+      final pos = Offset(
+        center.dx + radius * cos(angle),
+        center.dy + radius * sin(angle),
+      );
+
+      if (planet.glowing) {
+        canvas.drawCircle(
+          pos,
+          planet.radius + 3.5,
+          Paint()
+            ..color = planet.color.withAlpha(50)
+            ..style = PaintingStyle.fill
+            ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 5),
+        );
+      }
+
+      canvas.drawCircle(
+        pos,
+        planet.radius,
+        Paint()
+          ..color = planet.color
+          ..style = PaintingStyle.fill,
+      );
+    }
+  }
+
+  @override
+  bool shouldRepaint(_SolarSystemPainter old) => old.progress != progress;
 }

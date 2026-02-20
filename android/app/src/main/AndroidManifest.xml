@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="fisherman_video"
+        android:label="Old Fisherman"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

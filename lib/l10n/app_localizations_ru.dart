@@ -9,16 +9,16 @@ class AppLocalizationsRu extends AppLocalizations {
   AppLocalizationsRu([String locale = 'ru']) : super(locale);
 
   @override
-  String get appTitle => 'Vogue Motion';
+  String get appTitle => 'Old Fisherman';
 
   @override
   String get create => 'СОЗДАТЬ';
 
   @override
-  String get selectImage => 'ВЫБРАТЬ ФОТО';
+  String get selectImage => 'ВЫБРАТЬ\nФОТО';
 
   @override
-  String get changeImage => 'ИЗМЕНИТЬ ФОТО';
+  String get changeImage => 'ИЗМЕНИТЬ\nФОТО';
 
   @override
   String get generateVideo => 'СОЗДАТЬ\nВИДЕО';

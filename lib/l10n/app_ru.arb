@@ -1,9 +1,9 @@
 {
   "@@locale": "ru",
-  "appTitle": "Vogue Motion",
+  "appTitle": "Old Fisherman",
   "create": "СОЗДАТЬ",
-  "selectImage": "ВЫБРАТЬ ФОТО",
-  "changeImage": "ИЗМЕНИТЬ ФОТО",
+  "selectImage": "ВЫБРАТЬ\nФОТО",
+  "changeImage": "ИЗМЕНИТЬ\nФОТО",
   "generateVideo": "СОЗДАТЬ\nВИДЕО",
   "videoReady": "ВИДЕО ГОТОВО",
   "previewVideo": "ПРОСМОТР ВИДЕО",

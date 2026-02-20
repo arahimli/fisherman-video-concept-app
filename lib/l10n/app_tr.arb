@@ -1,9 +1,9 @@
 {
   "@@locale": "tr",
-  "appTitle": "Vogue Motion",
+  "appTitle": "Old Fisherman",
   "create": "OLUŞTUR",
-  "selectImage": "RESİM SEÇ",
-  "changeImage": "RESMİ DEĞİŞTİR",
+  "selectImage": "RESİM\nSEÇ",
+  "changeImage": "RESMİ\nDEĞİŞTİR",
   "generateVideo": "VİDEO\nOLUŞTUR",
   "videoReady": "VİDEO HAZIR",
   "previewVideo": "VİDEOYU İZLE",

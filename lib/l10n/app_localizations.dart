@@ -105,7 +105,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Vogue Motion'**
+  /// **'Old Fisherman'**
   String get appTitle;
 
   /// No description provided for @create.
@@ -117,13 +117,13 @@ abstract class AppLocalizations {
   /// No description provided for @selectImage.
   ///
   /// In en, this message translates to:
-  /// **'SELECT IMAGE'**
+  /// **'SELECT\nIMAGE'**
   String get selectImage;
 
   /// No description provided for @changeImage.
   ///
   /// In en, this message translates to:
-  /// **'CHANGE IMAGE'**
+  /// **'CHANGE\nIMAGE'**
   String get changeImage;
 
   /// No description provided for @generateVideo.

@@ -9,16 +9,16 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Vogue Motion';
+  String get appTitle => 'Old Fisherman';
 
   @override
   String get create => 'CREATE';
 
   @override
-  String get selectImage => 'SELECT IMAGE';
+  String get selectImage => 'SELECT\nIMAGE';
 
   @override
-  String get changeImage => 'CHANGE IMAGE';
+  String get changeImage => 'CHANGE\nIMAGE';
 
   @override
   String get generateVideo => 'GENERATE\nVIDEO';

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:saver_gallery/saver_gallery.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
@@ -77,30 +79,183 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
+  void _showVideoOptions(BuildContext context, VideoHistoryData video) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+
+              // Share
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.send_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
+                onTap: () async {
+                  Navigator.pop(sheetContext);
+                  try {
+                    await Share.shareXFiles(
+                      [XFile(video.videoPath)],
+                      text: l10n.shareVideoText,
+                    );
+                  } catch (_) {}
+                },
+              ),
+
+              Divider(color: AppColors.surfaceElevated, height: AppSpacing.xl),
+
+              // Save
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.save_alt_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.saveToGallery, style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.saveToGalleryDesc, style: AppTextStyles.historyCardDate),
+                onTap: () async {
+                  Navigator.pop(sheetContext);
+                  final result = await SaverGallery.saveFile(
+                    filePath: video.videoPath,
+                    fileName: 'fisherman_video_${DateTime.now().millisecondsSinceEpoch}',
+                    skipIfExists: true,
+                  );
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          result.isSuccess
+                              ? l10n.videoSavedSuccess
+                              : l10n.error(result.errorMessage ?? ''),
+                        ),
+                        backgroundColor: result.isSuccess ? AppColors.accent : AppColors.error,
+                      ),
+                    );
+                  }
+                },
+              ),
+
+              Divider(color: AppColors.surfaceElevated, height: AppSpacing.xl),
+
+              // Delete
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.12),
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.delete_outline, color: AppColors.error, size: 22),
+                ),
+                title: Text(l10n.deleteVideo, style: AppTextStyles.historyCardTitle.copyWith(color: AppColors.error)),
+                subtitle: Text(l10n.deleteConfirm, style: AppTextStyles.historyCardDate),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  _deleteVideo(context, video.id);
+                },
+              ),
+
+              const SizedBox(height: AppSpacing.sm),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   void _deleteVideo(BuildContext context, int videoId) {
     final l10n = AppLocalizations.of(context);
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: Text(l10n.deleteVideo, style: AppTextStyles.dialogTitle),
-        content: Text(l10n.deleteConfirm, style: AppTextStyles.dialogContent),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(l10n.cancel, style: AppTextStyles.dialogContent),
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Text(l10n.deleteVideo, style: AppTextStyles.appBarTitle),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n.deleteConfirm,
+                style: AppTextStyles.dialogContent,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(sheetContext),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        side: const BorderSide(color: AppColors.accentBorder),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.cancel),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(sheetContext);
+                        context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.error,
+                        foregroundColor: AppColors.textPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.delete),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
-            },
-            child: Text(
-              l10n.delete,
-              style: AppTextStyles.dialogContent.copyWith(color: AppColors.error),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -121,31 +276,34 @@ class _HistoryPageState extends State<HistoryPage> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: Column(
-        children: [
-          _buildFilterChips(l10n),
-          Expanded(
-            child: BlocBuilder<HistoryBloc, HistoryState>(
-              builder: (context, state) {
-                if (state is HistoryLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: AppColors.accent),
-                  );
-                }
-                if (state is HistoryLoaded) {
-                  if (state.videos.isEmpty) return _buildEmptyState(l10n);
-                  return _buildVideoGrid(context, state);
-                }
-                if (state is HistoryError) {
-                  return Center(
-                    child: Text(state.message, style: const TextStyle(color: AppColors.error)),
-                  );
-                }
-                return const SizedBox();
-              },
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            _buildFilterChips(l10n),
+            Expanded(
+              child: BlocBuilder<HistoryBloc, HistoryState>(
+                builder: (context, state) {
+                  if (state is HistoryLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: AppColors.accent),
+                    );
+                  }
+                  if (state is HistoryLoaded) {
+                    if (state.videos.isEmpty) return _buildEmptyState(l10n);
+                    return _buildVideoGrid(context, state);
+                  }
+                  if (state is HistoryError) {
+                    return Center(
+                      child: Text(state.message, style: const TextStyle(color: AppColors.error)),
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -153,25 +311,40 @@ class _HistoryPageState extends State<HistoryPage> {
   // ── Filter chips ────────────────────────────────────────────────────────────
 
   Widget _buildFilterChips(AppLocalizations l10n) {
+    final filters = [
+      (label: l10n.allDates,  value: 'all'),
+      (label: l10n.today,     value: 'today'),
+      (label: l10n.yesterday, value: 'yesterday'),
+      (label: l10n.thisWeek,  value: 'week'),
+      (label: l10n.thisMonth, value: 'month'),
+    ];
     return SizedBox(
-      height: 60,
-      child: ListView(
+      height: 52,
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.xl,
-          vertical: AppSpacing.sm,
-        ),
-        children: [
-          _FilterChip(label: l10n.allDates,  value: 'all',       selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.today,     value: 'today',     selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.yesterday, value: 'yesterday', selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.thisWeek,  value: 'week',      selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.thisMonth, value: 'month',     selected: _selectedFilter, onTap: _applyFilter),
-        ],
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+        itemCount: filters.length,
+        separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.sm),
+        itemBuilder: (context, i) {
+          final isSelected = _selectedFilter == filters[i].value;
+          return ChoiceChip(
+            label: Text(filters[i].label),
+            selected: isSelected,
+            onSelected: (_) => _applyFilter(filters[i].value),
+            labelStyle: AppTextStyles.filterChip.copyWith(
+              color: isSelected ? AppColors.background : AppColors.textPrimary,
+            ),
+            selectedColor: AppColors.accent,
+            backgroundColor: AppColors.surface,
+            side: BorderSide(
+              color: isSelected ? AppColors.accent : AppColors.accentBorder,
+              width: 1,
+            ),
+            shape: const StadiumBorder(),
+            showCheckmark: false,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 2),
+          );
+        },
       ),
     );
   }
@@ -212,70 +385,31 @@ class _HistoryPageState extends State<HistoryPage> {
             child: CircularProgressIndicator(color: AppColors.accent),
           );
         }
+        final video = state.videos[index];
         return _VideoCard(
-          video: state.videos[index],
-          onTap: () => context.push(AppRoutes.videoPreview, extra: state.videos[index].videoPath),
-          onLongPress: () => _deleteVideo(context, state.videos[index].id),
+          video: video,
+          onTap: () => context.push(AppRoutes.videoPreview, extra: video.videoPath),
+          onDelete: () => _deleteVideo(context, video.id),
+          onLongPress: () => _showVideoOptions(context, video),
         );
       },
     );
   }
 }
 
-// ── Filter Chip ───────────────────────────────────────────────────────────────
-
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final String value;
-  final String selected;
-  final void Function(String) onTap;
-
-  const _FilterChip({
-    required this.label,
-    required this.value,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isSelected = selected == value;
-    return GestureDetector(
-      onTap: () => onTap(value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.sm,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.accent : AppColors.surface,
-          borderRadius: AppRadius.pillAll,
-          border: Border.all(
-            color: isSelected ? AppColors.accent : AppColors.accentBorder,
-            width: 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.filterChip.copyWith(
-            color: isSelected ? AppColors.background : AppColors.textPrimary,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 // ── Video Card ────────────────────────────────────────────────────────────────
 
 class _VideoCard extends StatelessWidget {
   final VideoHistoryData video;
   final VoidCallback onTap;
+  final VoidCallback onDelete;
   final VoidCallback onLongPress;
 
   const _VideoCard({
     required this.video,
     required this.onTap,
+    required this.onDelete,
     required this.onLongPress,
   });
 
@@ -299,7 +433,32 @@ class _VideoCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(child: _buildThumbnail()),
+            Expanded(
+              child: Stack(
+                children: [
+                  _buildThumbnail(),
+                  Positioned(
+                    top: AppSpacing.xs,
+                    right: AppSpacing.xs,
+                    child: GestureDetector(
+                      onTap: onDelete,
+                      child: Container(
+                        padding: const EdgeInsets.all(AppSpacing.xs),
+                        decoration: const BoxDecoration(
+                          color: AppColors.overlayDark,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.delete_outline,
+                          color: AppColors.textPrimary,
+                          size: 18,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(

@@ -52,10 +52,11 @@ abstract class AppTextStyles {
   );
 
   static const TextStyle actionButton = TextStyle(
-    fontSize: 10,
-    letterSpacing: 1.3,
-    fontWeight: FontWeight.w600,
-    height: 1.2,
+    fontSize: 11,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 1.5,
+    fontWeight: FontWeight.w300,
+    height: 1.6,
   );
 
   // ── Section labels ────────────────────────────────────────────────────────

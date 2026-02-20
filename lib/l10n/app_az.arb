@@ -1,9 +1,9 @@
 {
   "@@locale": "az",
-  "appTitle": "Vogue Motion",
+  "appTitle": "Old Fisherman",
   "create": "YARAT",
-  "selectImage": "ŞƏKİL SEÇ",
-  "changeImage": "ŞƏKİLİ DƏYİŞ",
+  "selectImage": "ŞƏKİL\nSEÇ",
+  "changeImage": "ŞƏKİLİ\nDƏYİŞ",
   "generateVideo": "VİDEO\nYARAT",
   "videoReady": "VİDEO HAZIRDIR",
   "previewVideo": "VİDEOYA BAX",

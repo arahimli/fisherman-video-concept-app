@@ -1,9 +1,9 @@
 {
   "@@locale": "en",
-  "appTitle": "Vogue Motion",
+  "appTitle": "Old Fisherman",
   "create": "CREATE",
-  "selectImage": "SELECT IMAGE",
-  "changeImage": "CHANGE IMAGE",
+  "selectImage": "SELECT\nIMAGE",
+  "changeImage": "CHANGE\nIMAGE",
   "generateVideo": "GENERATE\nVIDEO",
   "videoReady": "VIDEO READY",
   "previewVideo": "PREVIEW VIDEO",

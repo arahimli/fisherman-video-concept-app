@@ -9,16 +9,16 @@ class AppLocalizationsAz extends AppLocalizations {
   AppLocalizationsAz([String locale = 'az']) : super(locale);
 
   @override
-  String get appTitle => 'Vogue Motion';
+  String get appTitle => 'Old Fisherman';
 
   @override
   String get create => 'YARAT';
 
   @override
-  String get selectImage => 'ŞƏKİL SEÇ';
+  String get selectImage => 'ŞƏKİL\nSEÇ';
 
   @override
-  String get changeImage => 'ŞƏKİLİ DƏYİŞ';
+  String get changeImage => 'ŞƏKİLİ\nDƏYİŞ';
 
   @override
   String get generateVideo => 'VİDEO\nYARAT';
