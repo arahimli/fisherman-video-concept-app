@@ -45,7 +45,7 @@ class _NewHomePageState extends State<NewHomePage>
 
     _orbitController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 20),
+      duration: const Duration(seconds: 36),
     )..repeat();
   }
 
