@@ -39,12 +39,6 @@ class HistoryLoaded extends HistoryState {
   }
 }
 
-class RecentVideosLoaded extends HistoryState {
-  final List<VideoHistoryData> videos;
-
-  RecentVideosLoaded(this.videos);
-}
-
 class HistoryError extends HistoryState {
   final String message;
 

@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/service_locator.dart';
 import 'core/router/app_router.dart';
 import 'l10n/app_localizations.dart';
-import 'presentation/managers/history_bloc/bloc.dart';
+import 'presentation/managers/recent_videos_bloc/bloc.dart';
 import 'presentation/managers/video_bloc/bloc.dart';
 
 void main() {
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<HistoryBloc>(
-          create: (context) => sl<HistoryBloc>()..add(LoadRecentVideosEvent()),
+        BlocProvider<RecentVideosBloc>(
+          create: (context) => sl<RecentVideosBloc>()..add(LoadRecentVideosEvent()),
         ),
         BlocProvider<VideoBloc>(
           create: (context) => sl<VideoBloc>(),
