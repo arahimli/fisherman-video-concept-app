@@ -121,39 +121,41 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String videosCount(int count) {
-    return '$count video';
+    return '$count videos';
   }
 
   @override
-  String get videoPreviewTitle => 'ÖNİZLEME';
+  String get videoPreviewTitle => 'PREVIEW';
 
   @override
-  String get shareSheet => 'PAYLAŞ';
+  String get shareSheet => 'SHARE';
 
   @override
-  String get save => 'Kaydet';
+  String get save => 'Save';
 
   @override
-  String get saving => 'Kaydediliyor...';
+  String get saving => 'Saving...';
 
   @override
-  String get saveToGallery => 'Galeriye kaydet';
+  String get saveToGallery => 'Save to gallery';
 
   @override
-  String get saveToGalleryDesc => 'Telefonunuzun galerisine kaydedilecek';
+  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
 
   @override
-  String get videoSavedSuccess => '✓ Video galeriye kaydedildi';
+  String get videoSavedSuccess => '✓ Video saved to gallery';
 
   @override
-  String get share => 'Paylaş';
+  String get share => 'Share';
 
   @override
-  String get shareSubtitle => 'WhatsApp, Telegram ve diğer uygulamalar';
+  String get shareSubtitle => 'WhatsApp, Telegram and other apps';
 
   @override
-  String get shareVideoText => 'Videoma bak!';
+  String get shareVideoText => 'Look at my video!';
 
   @override
-  String shareError(Object error) => 'Paylaşım hatası: $error';
+  String shareError(String error) {
+    return 'Share error: $error';
+  }
 }

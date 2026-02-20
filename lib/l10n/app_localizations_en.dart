@@ -119,6 +119,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get loadMore => 'Load More';
 
   @override
+  String videosCount(int count) {
+    return '$count videos';
+  }
+
+  @override
   String get videoPreviewTitle => 'PREVIEW';
 
   @override
@@ -134,7 +139,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveToGallery => 'Save to gallery';
 
   @override
-  String get saveToGalleryDesc => "Will be saved to your phone's gallery";
+  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
 
   @override
   String get videoSavedSuccess => '✓ Video saved to gallery';
@@ -149,10 +154,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareVideoText => 'Look at my video!';
 
   @override
-  String shareError(Object error) => 'Share error: $error';
-
-  @override
-  String videosCount(int count) {
-    return '$count videos';
+  String shareError(String error) {
+    return 'Share error: $error';
   }
 }

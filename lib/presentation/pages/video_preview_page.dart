@@ -117,7 +117,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(l10n.shareError(e)),
+            content: Text(l10n.shareError(e.toString())),
             backgroundColor: AppColors.error,
           ),
         );

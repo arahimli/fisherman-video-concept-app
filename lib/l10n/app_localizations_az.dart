@@ -120,40 +120,42 @@ class AppLocalizationsAz extends AppLocalizations {
   String get loadMore => 'Daha çox yüklə';
 
   @override
-  String get videoPreviewTitle => 'ÖNİZLƏMƏ';
-
-  @override
-  String get shareSheet => 'PAYLAŞ';
-
-  @override
-  String get save => 'Saxla';
-
-  @override
-  String get saving => 'Saxlanılır...';
-
-  @override
-  String get saveToGallery => 'Qalereya saxla';
-
-  @override
-  String get saveToGalleryDesc => 'Telefonun qaleresinda saxlanacaq';
-
-  @override
-  String get videoSavedSuccess => '✓ Video qalereya saxlanıldı';
-
-  @override
-  String get share => 'Paylaş';
-
-  @override
-  String get shareSubtitle => 'WhatsApp, Telegram və digər tətbiqlər';
-
-  @override
-  String get shareVideoText => 'Bu videomu bax!';
-
-  @override
-  String shareError(Object error) => 'Paylaşma xətası: $error';
-
-  @override
   String videosCount(int count) {
     return '$count video';
+  }
+
+  @override
+  String get videoPreviewTitle => 'PREVIEW';
+
+  @override
+  String get shareSheet => 'SHARE';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get saveToGallery => 'Save to gallery';
+
+  @override
+  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
+
+  @override
+  String get videoSavedSuccess => '✓ Video saved to gallery';
+
+  @override
+  String get share => 'Share';
+
+  @override
+  String get shareSubtitle => 'WhatsApp, Telegram and other apps';
+
+  @override
+  String get shareVideoText => 'Look at my video!';
+
+  @override
+  String shareError(String error) {
+    return 'Share error: $error';
   }
 }

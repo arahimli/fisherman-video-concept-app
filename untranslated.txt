@@ -1,4 +1,18 @@
 {
+  "az": [
+    "videoPreviewTitle",
+    "shareSheet",
+    "save",
+    "saving",
+    "saveToGallery",
+    "saveToGalleryDesc",
+    "videoSavedSuccess",
+    "share",
+    "shareSubtitle",
+    "shareVideoText",
+    "shareError"
+  ],
+
   "ru": [
     "history",
     "allVideos",
@@ -16,7 +30,18 @@
     "filterByDate",
     "allDates",
     "loadMore",
-    "videosCount"
+    "videosCount",
+    "videoPreviewTitle",
+    "shareSheet",
+    "save",
+    "saving",
+    "saveToGallery",
+    "saveToGalleryDesc",
+    "videoSavedSuccess",
+    "share",
+    "shareSubtitle",
+    "shareVideoText",
+    "shareError"
   ],
 
   "tr": [
@@ -36,6 +61,17 @@
     "filterByDate",
     "allDates",
     "loadMore",
-    "videosCount"
+    "videosCount",
+    "videoPreviewTitle",
+    "shareSheet",
+    "save",
+    "saving",
+    "saveToGallery",
+    "saveToGalleryDesc",
+    "videoSavedSuccess",
+    "share",
+    "shareSubtitle",
+    "shareVideoText",
+    "shareError"
   ]
 }

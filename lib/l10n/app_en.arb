@@ -52,7 +52,7 @@
     "placeholders": {
       "error": { "type": "String" }
     }
-  }
+  },
   "@videosCount": {
     "placeholders": {
       "count": {

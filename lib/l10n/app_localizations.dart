@@ -324,38 +324,71 @@ abstract class AppLocalizations {
   /// **'{count} videos'**
   String videosCount(int count);
 
-  /// Video preview page title.
+  /// No description provided for @videoPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PREVIEW'**
   String get videoPreviewTitle;
 
-  /// Bottom sheet title for share options.
+  /// No description provided for @shareSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'SHARE'**
   String get shareSheet;
 
-  /// Save button label.
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
   String get save;
 
-  /// Saving in-progress label.
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
   String get saving;
 
-  /// Save to gallery tile title.
+  /// No description provided for @saveToGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to gallery'**
   String get saveToGallery;
 
-  /// Save to gallery tile subtitle.
+  /// No description provided for @saveToGalleryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Will be saved to your phone\'s gallery'**
   String get saveToGalleryDesc;
 
-  /// Success message after saving to gallery.
+  /// No description provided for @videoSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Video saved to gallery'**
   String get videoSavedSuccess;
 
-  /// Share button / tile label.
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
   String get share;
 
-  /// Share tile subtitle listing apps.
+  /// No description provided for @shareSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp, Telegram and other apps'**
   String get shareSubtitle;
 
-  /// Text sent alongside the shared video.
+  /// No description provided for @shareVideoText.
+  ///
+  /// In en, this message translates to:
+  /// **'Look at my video!'**
   String get shareVideoText;
 
-  /// Share error message with error detail.
-  String shareError(Object error);
+  /// No description provided for @shareError.
+  ///
+  /// In en, this message translates to:
+  /// **'Share error: {error}'**
+  String shareError(String error);
 }
 
 class _AppLocalizationsDelegate
