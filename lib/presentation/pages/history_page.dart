@@ -2,11 +2,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
-import '../../video_page.dart';
 import '../managers/history_bloc/bloc.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -140,7 +140,7 @@ class _HistoryPageState extends State<HistoryPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
       ),
       body: Column(
@@ -300,12 +300,7 @@ class _HistoryPageState extends State<HistoryPage> {
       ) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => VideoPreviewScreen(videoPath: video.videoPath),
-          ),
-        );
+        context.push('/video-preview', extra: video.videoPath);
       },
       onLongPress: () => _deleteVideo(context, video.id),
       child: Container(

@@ -1,15 +1,14 @@
 // lib/new_home_page.dart
 import 'dart:io';
 import 'dart:ui';
-import 'package:fisherman_video/video_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
 import '../managers/video_bloc/bloc.dart';
-import 'history_page.dart';
 
 class NewHomePage extends StatefulWidget {
   const NewHomePage({super.key});
@@ -72,12 +71,7 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   void _showVideoPreview(BuildContext context, String videoPath) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => VideoPreviewScreen(videoPath: videoPath),
-      ),
-    );
+    context.push('/video-preview', extra: videoPath);
   }
 
   @override
@@ -177,12 +171,7 @@ class _NewHomePageState extends State<NewHomePage>
                       ),
                       onPressed: () {
                         context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HistoryPage(),
-                          ),
-                        );
+                        context.push('/history');
                       },
                     ),
                     BlocBuilder<VideoBloc, VideoState>(
@@ -750,15 +739,10 @@ class RecentVideosWidget extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const HistoryPage(),
-                          ),
-                        );
+                        context.push('/history');
                       },
                       child: Text(
-                        l10n?.viewAll ?? 'VIEW ALL',
+                        l10n.viewAll ?? 'VIEW ALL',
                         style: TextStyle(
                           color: const Color(0xFFB8956A),
                           fontSize: screenWidth * 0.03,
@@ -788,14 +772,7 @@ class RecentVideosWidget extends StatelessWidget {
                         screenWidth: screenWidth,
                         screenHeight: screenHeight,
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VideoPreviewScreen(
-                                videoPath: video.videoPath,
-                              ),
-                            ),
-                          );
+                          context.push('/video-preview', extra: video.videoPath);
                         },
                       ),
                     );
