@@ -53,7 +53,8 @@ abstract class AppTextStyles {
 
   static const TextStyle actionButton = TextStyle(
     fontSize: 11,
-    letterSpacing: 1.0,
+    fontStyle: FontStyle.italic,
+    letterSpacing: 1.5,
     fontWeight: FontWeight.w300,
     height: 1.6,
   );
