@@ -5,12 +5,17 @@ import '../../core/di/service_locator.dart';
 import '../../presentation/managers/history_bloc/bloc.dart';
 import '../../presentation/pages/history_page.dart';
 import '../../presentation/pages/home_page.dart';
+import '../../presentation/pages/splash_page.dart';
 import '../../presentation/pages/video_preview_page.dart';
 import 'app_routes.dart';
 
 final GoRouter appRouter = GoRouter(
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.splash,
   routes: [
+    GoRoute(
+      path: AppRoutes.splash,
+      builder: (context, state) => const SplashPage(),
+    ),
     GoRoute(
       path: AppRoutes.home,
       builder: (context, state) => const NewHomePage(),
