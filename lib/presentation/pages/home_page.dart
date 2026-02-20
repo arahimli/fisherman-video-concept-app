@@ -764,11 +764,11 @@ class _SolarSystemPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
     final w = size.width;
 
-    // ── Ring 1 — inner, fastest, clockwise ──────────────────────────────────
+    // ── Ring 1 — inner, 3 full rotations/cycle, clockwise ───────────────────
     _drawRing(
       canvas, center,
       radius: w * 0.20,
-      baseAngle: progress * _tau * 1.5,
+      baseAngle: progress * _tau * 3,
       strokeWidth: 0.8,
       ringColor: const Color(0x4DB8956A),
       planets: const [
@@ -776,11 +776,11 @@ class _SolarSystemPainter extends CustomPainter {
       ],
     );
 
-    // ── Ring 2 — middle, counter-clockwise ──────────────────────────────────
+    // ── Ring 2 — middle, 2 full rotations/cycle, counter-clockwise ──────────
     _drawRing(
       canvas, center,
       radius: w * 0.31,
-      baseAngle: -progress * _tau * 0.9,
+      baseAngle: -progress * _tau * 2,
       strokeWidth: 0.6,
       ringColor: const Color(0x33B8956A),
       planets: const [
@@ -789,11 +789,11 @@ class _SolarSystemPainter extends CustomPainter {
       ],
     );
 
-    // ── Ring 3 — outer, slow, clockwise ─────────────────────────────────────
+    // ── Ring 3 — outer, 1 full rotation/cycle, clockwise ────────────────────
     _drawRing(
       canvas, center,
       radius: w * 0.43,
-      baseAngle: progress * _tau * 0.55,
+      baseAngle: progress * _tau * 1,
       strokeWidth: 0.5,
       ringColor: const Color(0x26B8956A),
       planets: const [
