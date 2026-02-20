@@ -9,7 +9,7 @@ class AppLocalizationsTr extends AppLocalizations {
   AppLocalizationsTr([String locale = 'tr']) : super(locale);
 
   @override
-  String get appTitle => 'Vogue Motion';
+  String get appTitle => 'Old Fisherman';
 
   @override
   String get create => 'OLUŞTUR';

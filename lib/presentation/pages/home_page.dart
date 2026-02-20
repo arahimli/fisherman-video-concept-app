@@ -156,13 +156,16 @@ class _NewHomePageState extends State<NewHomePage>
       ],
       child: Scaffold(
         appBar: _buildAppBar(context, screenWidth, l10n),
-        body: BlocBuilder<VideoBloc, VideoState>(
-          builder: (context, state) {
-            if (state is VideoLoadingState) {
-              return _buildLoadingState(screenWidth, state.loadingMessage);
-            }
-            return _buildMainContent(context, screenWidth, screenHeight, state, l10n);
-          },
+        body: SafeArea(
+          top: false,
+          child: BlocBuilder<VideoBloc, VideoState>(
+            builder: (context, state) {
+              if (state is VideoLoadingState) {
+                return _buildLoadingState(screenWidth, state.loadingMessage);
+              }
+              return _buildMainContent(context, screenWidth, screenHeight, state, l10n);
+            },
+          ),
         ),
       ),
     );

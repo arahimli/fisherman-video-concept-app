@@ -162,31 +162,34 @@ class _HistoryPageState extends State<HistoryPage> {
           onPressed: () => context.pop(),
         ),
       ),
-      body: Column(
-        children: [
-          _buildFilterChips(l10n),
-          Expanded(
-            child: BlocBuilder<HistoryBloc, HistoryState>(
-              builder: (context, state) {
-                if (state is HistoryLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: AppColors.accent),
-                  );
-                }
-                if (state is HistoryLoaded) {
-                  if (state.videos.isEmpty) return _buildEmptyState(l10n);
-                  return _buildVideoGrid(context, state);
-                }
-                if (state is HistoryError) {
-                  return Center(
-                    child: Text(state.message, style: const TextStyle(color: AppColors.error)),
-                  );
-                }
-                return const SizedBox();
-              },
+      body: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            _buildFilterChips(l10n),
+            Expanded(
+              child: BlocBuilder<HistoryBloc, HistoryState>(
+                builder: (context, state) {
+                  if (state is HistoryLoading) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: AppColors.accent),
+                    );
+                  }
+                  if (state is HistoryLoaded) {
+                    if (state.videos.isEmpty) return _buildEmptyState(l10n);
+                    return _buildVideoGrid(context, state);
+                  }
+                  if (state is HistoryError) {
+                    return Center(
+                      child: Text(state.message, style: const TextStyle(color: AppColors.error)),
+                    );
+                  }
+                  return const SizedBox();
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -194,25 +197,40 @@ class _HistoryPageState extends State<HistoryPage> {
   // ── Filter chips ────────────────────────────────────────────────────────────
 
   Widget _buildFilterChips(AppLocalizations l10n) {
+    final filters = [
+      (label: l10n.allDates,  value: 'all'),
+      (label: l10n.today,     value: 'today'),
+      (label: l10n.yesterday, value: 'yesterday'),
+      (label: l10n.thisWeek,  value: 'week'),
+      (label: l10n.thisMonth, value: 'month'),
+    ];
     return SizedBox(
-      height: 60,
-      child: ListView(
+      height: 52,
+      child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.xl,
-          vertical: AppSpacing.sm,
-        ),
-        children: [
-          _FilterChip(label: l10n.allDates,  value: 'all',       selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.today,     value: 'today',     selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.yesterday, value: 'yesterday', selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.thisWeek,  value: 'week',      selected: _selectedFilter, onTap: _applyFilter),
-          const SizedBox(width: AppSpacing.sm),
-          _FilterChip(label: l10n.thisMonth, value: 'month',     selected: _selectedFilter, onTap: _applyFilter),
-        ],
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+        itemCount: filters.length,
+        separatorBuilder: (_, __) => const SizedBox(width: AppSpacing.sm),
+        itemBuilder: (context, i) {
+          final isSelected = _selectedFilter == filters[i].value;
+          return ChoiceChip(
+            label: Text(filters[i].label),
+            selected: isSelected,
+            onSelected: (_) => _applyFilter(filters[i].value),
+            labelStyle: AppTextStyles.filterChip.copyWith(
+              color: isSelected ? AppColors.background : AppColors.textPrimary,
+            ),
+            selectedColor: AppColors.accent,
+            backgroundColor: AppColors.surface,
+            side: BorderSide(
+              color: isSelected ? AppColors.accent : AppColors.accentBorder,
+              width: 1,
+            ),
+            shape: const StadiumBorder(),
+            showCheckmark: false,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: 2),
+          );
+        },
       ),
     );
   }
@@ -263,49 +281,6 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 }
 
-// ── Filter Chip ───────────────────────────────────────────────────────────────
-
-class _FilterChip extends StatelessWidget {
-  final String label;
-  final String value;
-  final String selected;
-  final void Function(String) onTap;
-
-  const _FilterChip({
-    required this.label,
-    required this.value,
-    required this.selected,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isSelected = selected == value;
-    return GestureDetector(
-      onTap: () => onTap(value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.sm,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.accent : AppColors.surface,
-          borderRadius: AppRadius.pillAll,
-          border: Border.all(
-            color: isSelected ? AppColors.accent : AppColors.accentBorder,
-            width: 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: AppTextStyles.filterChip.copyWith(
-            color: isSelected ? AppColors.background : AppColors.textPrimary,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 // ── Video Card ────────────────────────────────────────────────────────────────
 

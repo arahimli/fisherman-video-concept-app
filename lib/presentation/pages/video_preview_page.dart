@@ -210,7 +210,9 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
           ),
         ],
       ),
-      body: Column(
+      body: SafeArea(
+        top: false,
+        child: Column(
         children: [
           // ── Video player ────────────────────────────────────────────────
           Expanded(
@@ -286,6 +288,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
             ),
           ),
         ],
+        ),
       ),
     );
   }

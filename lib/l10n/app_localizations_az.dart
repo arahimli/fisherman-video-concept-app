@@ -9,7 +9,7 @@ class AppLocalizationsAz extends AppLocalizations {
   AppLocalizationsAz([String locale = 'az']) : super(locale);
 
   @override
-  String get appTitle => 'Vogue Motion';
+  String get appTitle => 'Old Fisherman';
 
   @override
   String get create => 'YARAT';
