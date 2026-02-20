@@ -388,7 +388,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Share error: {error}'**
-  String shareError(String error);
+  String shareError(Object error);
 }
 
 class _AppLocalizationsDelegate
