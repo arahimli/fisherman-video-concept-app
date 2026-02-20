@@ -96,7 +96,7 @@ class _NewHomePageState extends State<NewHomePage>
 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(l10n.videoGenerated ?? 'Video generated ✓'),
+                  content: Text(l10n.videoGenerated),
                   backgroundColor: const Color(0xFFB8956A),
                 ),
               );
@@ -491,7 +491,7 @@ class _NewHomePageState extends State<NewHomePage>
         // Recent Videos Section
         Expanded(
           flex: 4,
-          child: _buildRecentVideos(screenWidth, screenHeight, l10n),
+          child: RecentVideosWidget(),
         ),
 
         SizedBox(height: screenHeight * 0.02),
@@ -680,6 +680,20 @@ class _NewHomePageState extends State<NewHomePage>
     double screenHeight,
     AppLocalizations? l10n,
   ) {
+    return RecentVideosWidget();
+  }
+}
+
+class RecentVideosWidget extends StatelessWidget {
+  const RecentVideosWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final l10n = AppLocalizations.of(context);
     return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (context, state) {
         if (state is RecentVideosLoaded) {
