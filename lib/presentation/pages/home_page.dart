@@ -48,15 +48,71 @@ class _NewHomePageState extends State<NewHomePage>
     super.dispose();
   }
 
-  void _showResetDialog(BuildContext context, List<Widget> actions) {
+  void _showResetSheet(BuildContext context) {
     final l10n = AppLocalizations.of(context);
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: Text(l10n.resetConfirmTitle, style: AppTextStyles.dialogTitle),
-        content: Text(l10n.resetConfirmMessage, style: AppTextStyles.dialogContent),
-        actions: actions,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Text(l10n.resetConfirmTitle, style: AppTextStyles.appBarTitle),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n.resetConfirmMessage,
+                style: AppTextStyles.dialogContent,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(sheetContext),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        side: const BorderSide(color: AppColors.accentBorder),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.no),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(sheetContext);
+                        context.read<VideoBloc>().add(ResetEvent());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.background,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.yes),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -122,25 +178,7 @@ class _NewHomePageState extends State<NewHomePage>
                 state is VideoErrorState) {
               return IconButton(
                 icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
-                onPressed: () => _showResetDialog(context, [
-                  IconButton(
-                    icon: const Icon(Icons.history, color: AppColors.accent, size: 26),
-                    onPressed: () => context.push(AppRoutes.history),
-                  ),
-                  BlocBuilder<VideoBloc, VideoState>(
-                    builder: (context, state) {
-                      if (state is ImagePickedState ||
-                          state is VideoGeneratedState ||
-                          state is VideoErrorState) {
-                        return IconButton(
-                          icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
-                          onPressed: () {},
-                        );
-                      }
-                      return SizedBox();
-                    },
-                  ),
-                ]),
+                onPressed: () => _showResetSheet(context),
               );
             }
             return SizedBox();

@@ -79,28 +79,69 @@ class _HistoryPageState extends State<HistoryPage> {
 
   void _deleteVideo(BuildContext context, int videoId) {
     final l10n = AppLocalizations.of(context);
-    showDialog(
+    showModalBottomSheet(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        backgroundColor: AppColors.surface,
-        title: Text(l10n.deleteVideo, style: AppTextStyles.dialogTitle),
-        content: Text(l10n.deleteConfirm, style: AppTextStyles.dialogContent),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
-            child: Text(l10n.cancel, style: AppTextStyles.dialogContent),
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Text(l10n.deleteVideo, style: AppTextStyles.appBarTitle),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                l10n.deleteConfirm,
+                style: AppTextStyles.dialogContent,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.pop(sheetContext),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.textPrimary,
+                        side: const BorderSide(color: AppColors.accentBorder),
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.cancel),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.md),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(sheetContext);
+                        context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.error,
+                        foregroundColor: AppColors.textPrimary,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                      ),
+                      child: Text(l10n.delete),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(dialogContext);
-              context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
-            },
-            child: Text(
-              l10n.delete,
-              style: AppTextStyles.dialogContent.copyWith(color: AppColors.error),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
