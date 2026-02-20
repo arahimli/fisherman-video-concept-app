@@ -1,12 +1,12 @@
-// lib/new_home_page.dart
 import 'dart:io';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
-
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
@@ -48,32 +48,17 @@ class _NewHomePageState extends State<NewHomePage>
     super.dispose();
   }
 
-  void _showResetDialog(
-    BuildContext context,
-    double screenWidth,
-    List<Widget> actions,
-  ) {
+  void _showResetDialog(BuildContext context, List<Widget> actions) {
     final l10n = AppLocalizations.of(context);
-
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: Text(
-          l10n.resetConfirmTitle,
-          style: const TextStyle(color: Colors.white),
-        ),
-        content: Text(
-          l10n.resetConfirmMessage,
-          style: const TextStyle(color: Colors.white70),
-        ),
+        backgroundColor: AppColors.surface,
+        title: Text(l10n.resetConfirmTitle, style: AppTextStyles.dialogTitle),
+        content: Text(l10n.resetConfirmMessage, style: AppTextStyles.dialogContent),
         actions: actions,
       ),
     );
-  }
-
-  void _showVideoPreview(BuildContext context, String videoPath) {
-    context.push(AppRoutes.videoPreview, extra: videoPath);
   }
 
   @override
@@ -87,20 +72,18 @@ class _NewHomePageState extends State<NewHomePage>
         BlocListener<VideoBloc, VideoState>(
           listener: (context, state) {
             if (state is VideoGeneratedState) {
-              // Reload recent videos when new video is generated
               context.read<HistoryBloc>().add(LoadRecentVideosEvent());
-
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(l10n.videoGenerated),
-                  backgroundColor: const Color(0xFFB8956A),
+                  backgroundColor: AppColors.accent,
                 ),
               );
             } else if (state is VideoErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.errorMessage),
-                  backgroundColor: Colors.red,
+                  backgroundColor: AppColors.error,
                 ),
               );
             }
@@ -112,19 +95,9 @@ class _NewHomePageState extends State<NewHomePage>
         body: BlocBuilder<VideoBloc, VideoState>(
           builder: (context, state) {
             if (state is VideoLoadingState) {
-              return _buildLoadingState(
-                screenWidth,
-                screenHeight,
-                state.loadingMessage,
-              );
+              return _buildLoadingState(screenWidth, state.loadingMessage);
             }
-            return _buildMainContent(
-              context,
-              screenWidth,
-              screenHeight,
-              state,
-              l10n,
-            );
+            return _buildMainContent(context, screenWidth, screenHeight, state, l10n);
           },
         ),
       ),
@@ -137,19 +110,9 @@ class _NewHomePageState extends State<NewHomePage>
     AppLocalizations l10n,
   ) {
     return AppBar(
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: AppColors.background,
       elevation: 0,
-
-      title: Text(
-        l10n.appTitle,
-        style: TextStyle(
-          fontSize: screenWidth * 0.045,
-          fontStyle: FontStyle.italic,
-          letterSpacing: 2,
-          color: Colors.white,
-          fontWeight: FontWeight.w300,
-        ),
-      ),
+      title: Text(l10n.appTitle, style: AppTextStyles.appBarTitle),
       centerTitle: true,
       actions: [
         BlocBuilder<VideoBloc, VideoState>(
@@ -158,57 +121,43 @@ class _NewHomePageState extends State<NewHomePage>
                 state is VideoGeneratedState ||
                 state is VideoErrorState) {
               return IconButton(
-                icon: Icon(
-                  Icons.refresh,
-                  color: const Color(0xFFB8956A),
-                  size: screenWidth * 0.065,
-                ),
-                onPressed: () => _showResetDialog(context, screenWidth,
-                  [
-                    IconButton(
-                      icon: Icon(
-                        Icons.history,
-                        color: const Color(0xFFB8956A),
-                        size: screenWidth * 0.065,
-                      ),
-                      onPressed: () {
-                        context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        context.push(AppRoutes.history);
-                      },
-                    ),
-                    BlocBuilder<VideoBloc, VideoState>(
-                      builder: (context, state) {
-                        if (state is ImagePickedState ||
-                            state is VideoGeneratedState ||
-                            state is VideoErrorState) {
-                          return IconButton(
-                            icon: Icon(
-                              Icons.refresh,
-                              color: const Color(0xFFB8956A),
-                              size: screenWidth * 0.065,
-                            ),
-                            onPressed: (){},
-                            // onPressed: () => _showResetDialog(context, screenWidth),
-                          );
-                        }
+                icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
+                onPressed: () => _showResetDialog(context, [
+                  IconButton(
+                    icon: const Icon(Icons.history, color: AppColors.accent, size: 26),
+                    onPressed: () {
+                      context.read<HistoryBloc>().add(LoadHistoryEvent());
+                      context.push(AppRoutes.history);
+                    },
+                  ),
+                  BlocBuilder<VideoBloc, VideoState>(
+                    builder: (context, state) {
+                      if (state is ImagePickedState ||
+                          state is VideoGeneratedState ||
+                          state is VideoErrorState) {
                         return IconButton(
-                          icon: Icon(
-                            Icons.account_circle_outlined,
-                            color: Colors.white,
-                            size: screenWidth * 0.065,
-                          ),
+                          icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
                           onPressed: () {},
                         );
-                      },
-                    ),
-                  ],),
+                      }
+                      return IconButton(
+                        icon: const Icon(
+                          Icons.account_circle_outlined,
+                          color: AppColors.textPrimary,
+                          size: 26,
+                        ),
+                        onPressed: () {},
+                      );
+                    },
+                  ),
+                ]),
               );
             }
             return IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.account_circle_outlined,
-                color: Colors.white,
-                size: screenWidth * 0.065,
+                color: AppColors.textPrimary,
+                size: 26,
               ),
               onPressed: () {},
             );
@@ -218,11 +167,7 @@ class _NewHomePageState extends State<NewHomePage>
     );
   }
 
-  Widget _buildLoadingState(
-    double screenWidth,
-    double screenHeight,
-    String loadingMessage,
-  ) {
+  Widget _buildLoadingState(double screenWidth, String loadingMessage) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -240,15 +185,9 @@ class _NewHomePageState extends State<NewHomePage>
                       height: screenWidth * 0.3,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(
-                          color: const Color(0xFFB8956A),
-                          width: 3,
-                        ),
-                        gradient: LinearGradient(
-                          colors: [
-                            const Color(0xFFB8956A),
-                            const Color(0xFFB8956A).withOpacity(0.1),
-                          ],
+                        border: Border.all(color: AppColors.accent, width: 3),
+                        gradient: const LinearGradient(
+                          colors: [AppColors.accent, AppColors.accentOverlay],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                         ),
@@ -262,30 +201,20 @@ class _NewHomePageState extends State<NewHomePage>
                 height: screenWidth * 0.2,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF0A0A0A),
-                  border: Border.all(
-                    color: const Color(0xFFB8956A).withOpacity(0.3),
-                    width: 2,
-                  ),
+                  color: AppColors.background,
+                  border: Border.all(color: AppColors.accentBorder, width: 2),
                 ),
               ),
             ],
           ),
-          SizedBox(height: screenHeight * 0.04),
-          Text(
-            loadingMessage,
-            style: TextStyle(
-              fontSize: screenWidth * 0.04,
-              color: Colors.white70,
-              letterSpacing: 1.5,
-            ),
-          ),
-          SizedBox(height: screenHeight * 0.015),
+          const SizedBox(height: AppSpacing.xxxl),
+          Text(loadingMessage, style: AppTextStyles.loadingMessage),
+          const SizedBox(height: AppSpacing.md),
           SizedBox(
             width: screenWidth * 0.5,
             child: const LinearProgressIndicator(
               backgroundColor: Colors.white10,
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFB8956A)),
+              valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
             ),
           ),
         ],
@@ -316,16 +245,10 @@ class _NewHomePageState extends State<NewHomePage>
       }
 
       return _buildImagePreviewMode(
-        context,
-        screenWidth,
-        screenHeight,
-        imageFile!,
-        videoPath,
-        l10n,
+        context, screenWidth, screenHeight, imageFile!, videoPath, l10n,
       );
-    } else {
-      return _buildCreateMode(context, screenWidth, screenHeight, l10n);
     }
+    return _buildCreateMode(context, screenWidth, screenHeight, l10n);
   }
 
   Widget _buildCreateMode(
@@ -336,7 +259,6 @@ class _NewHomePageState extends State<NewHomePage>
   ) {
     return Column(
       children: [
-        // Create Circle Button
         Expanded(
           flex: 5,
           child: Center(
@@ -351,11 +273,10 @@ class _NewHomePageState extends State<NewHomePage>
                       child: Container(
                         width: screenWidth * 0.55,
                         height: screenWidth * 0.55,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            color: const Color(0xFFB8956A).withOpacity(0.15),
-                            width: 1,
+                          border: Border.fromBorderSide(
+                            BorderSide(color: AppColors.accentBorderFaint, width: 1),
                           ),
                         ),
                       ),
@@ -365,11 +286,10 @@ class _NewHomePageState extends State<NewHomePage>
                 Container(
                   width: screenWidth * 0.43,
                   height: screenWidth * 0.43,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: const Color(0xFFB8956A).withOpacity(0.25),
-                      width: 1,
+                    border: Border.fromBorderSide(
+                      BorderSide(color: AppColors.accentBorderLight, width: 1),
                     ),
                   ),
                 ),
@@ -378,38 +298,23 @@ class _NewHomePageState extends State<NewHomePage>
                   child: Container(
                     width: screenWidth * 0.32,
                     height: screenWidth * 0.32,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(
-                        color: const Color(0xFFB8956A),
-                        width: 2,
+                      border: Border.fromBorderSide(
+                        BorderSide(color: AppColors.accent, width: 2),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFB8956A).withOpacity(0.3),
-                          blurRadius: 40,
-                          spreadRadius: 5,
-                        ),
-                      ],
+                      boxShadow: AppShadows.accentGlow,
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.add,
-                          color: const Color(0xFFB8956A),
+                          color: AppColors.accent,
                           size: screenWidth * 0.1,
                         ),
-                        SizedBox(height: screenHeight * 0.008),
-                        Text(
-                          l10n.create,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: screenWidth * 0.03,
-                            letterSpacing: 3,
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text(l10n.create, style: AppTextStyles.createLabel),
                       ],
                     ),
                   ),
@@ -421,7 +326,7 @@ class _NewHomePageState extends State<NewHomePage>
                     width: screenWidth * 0.015,
                     height: screenWidth * 0.015,
                     decoration: const BoxDecoration(
-                      color: Color(0xFFB8956A),
+                      color: AppColors.accent,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -432,8 +337,8 @@ class _NewHomePageState extends State<NewHomePage>
                   child: Container(
                     width: screenWidth * 0.012,
                     height: screenWidth * 0.012,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.3),
+                    decoration: const BoxDecoration(
+                      color: AppColors.textSubtle,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -442,10 +347,8 @@ class _NewHomePageState extends State<NewHomePage>
             ),
           ),
         ),
-
-        // Action Buttons
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
           child: Row(
             children: [
               Expanded(
@@ -453,11 +356,9 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.image_outlined,
                   label: l10n.selectImage,
                   onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
                 ),
               ),
-              SizedBox(width: screenWidth * 0.04),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: _ActionButton(
                   icon: Icons.videocam_outlined,
@@ -469,23 +370,14 @@ class _NewHomePageState extends State<NewHomePage>
                       generatingMessage: l10n.videoGenerating,
                     ),
                   ),
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
                 ),
               ),
             ],
           ),
         ),
-
-        SizedBox(height: screenHeight * 0.02),
-
-        // Recent Videos Section
-        Expanded(
-          flex: 4,
-          child: RecentVideosWidget(),
-        ),
-
-        SizedBox(height: screenHeight * 0.02),
+        const SizedBox(height: AppSpacing.lg),
+        const Expanded(flex: 4, child: RecentVideosWidget()),
+        const SizedBox(height: AppSpacing.lg),
       ],
     );
   }
@@ -500,41 +392,25 @@ class _NewHomePageState extends State<NewHomePage>
   ) {
     return Column(
       children: [
-        // Image Preview
         Expanded(
           flex: videoPath != null ? 4 : 5,
           child: Padding(
-            padding: EdgeInsets.all(screenWidth * 0.04),
+            padding: const EdgeInsets.all(AppSpacing.lg),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(screenWidth * 0.04),
-                border: Border.all(
-                  color: const Color(0xFFB8956A).withOpacity(0.3),
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFFB8956A).withOpacity(0.2),
-                    blurRadius: 30,
-                    spreadRadius: 5,
-                  ),
-                ],
+                borderRadius: AppRadius.lgAll,
+                border: Border.all(color: AppColors.accentBorder, width: 2),
+                boxShadow: AppShadows.accentSubtle,
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(screenWidth * 0.035),
-                child: Image.file(
-                  imageFile,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+                borderRadius: AppRadius.lgAll,
+                child: Image.file(imageFile, width: double.infinity, fit: BoxFit.cover),
               ),
             ),
           ),
         ),
-
-        // Action Buttons
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
           child: Row(
             children: [
               Expanded(
@@ -542,11 +418,9 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.image_outlined,
                   label: l10n.changeImage,
                   onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
                 ),
               ),
-              SizedBox(width: screenWidth * 0.04),
+              const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: _ActionButton(
                   icon: Icons.videocam_outlined,
@@ -558,103 +432,62 @@ class _NewHomePageState extends State<NewHomePage>
                       generatingMessage: l10n.videoGenerating,
                     ),
                   ),
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
                 ),
               ),
             ],
           ),
         ),
-
-        SizedBox(height: screenHeight * 0.02),
-
-        // Show Video Ready Section OR Recent Videos
+        const SizedBox(height: AppSpacing.lg),
         Expanded(
-          flex: videoPath != null ? 3 : 3,
+          flex: 3,
           child: videoPath != null
-              ? _buildVideoReadySection(
-                  context,
-                  screenWidth,
-                  screenHeight,
-                  videoPath,
-                  l10n,
-                )
-              : _buildRecentVideos(screenWidth, screenHeight, l10n),
+              ? _buildVideoReadySection(context, videoPath, l10n)
+              : const RecentVideosWidget(),
         ),
-
-        SizedBox(height: screenHeight * 0.02),
+        const SizedBox(height: AppSpacing.lg),
       ],
     );
   }
 
   Widget _buildVideoReadySection(
     BuildContext context,
-    double screenWidth,
-    double screenHeight,
     String videoPath,
     AppLocalizations l10n,
   ) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
       child: Container(
-        padding: EdgeInsets.all(screenWidth * 0.04),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         decoration: BoxDecoration(
-          color: const Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(screenWidth * 0.04),
-          border: Border.all(
-            color: const Color(0xFFB8956A).withOpacity(0.3),
-            width: 1,
-          ),
+          color: AppColors.surface,
+          borderRadius: AppRadius.lgAll,
+          border: Border.all(color: AppColors.accentBorder, width: 1),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(screenWidth * 0.03),
+              padding: const EdgeInsets.all(AppSpacing.md),
               decoration: const BoxDecoration(
-                color: Color(0xFFB8956A),
+                color: AppColors.accent,
                 shape: BoxShape.circle,
               ),
-              child: Icon(
-                Icons.check,
-                color: const Color(0xFF0A0A0A),
-                size: screenWidth * 0.06,
-              ),
+              child: const Icon(Icons.check, color: AppColors.background, size: 24),
             ),
-            SizedBox(height: screenHeight * 0.012),
-            Text(
-              l10n.videoReady,
-              style: TextStyle(
-                fontSize: screenWidth * 0.035,
-                letterSpacing: 2.5,
-                fontWeight: FontWeight.w300,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.018),
+            const SizedBox(height: AppSpacing.sm),
+            Text(l10n.videoReady, style: AppTextStyles.videoReadyTitle),
+            const SizedBox(height: AppSpacing.lg),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: () => _showVideoPreview(context, videoPath),
-                icon: Icon(
-                  Icons.play_circle_outline,
-                  size: screenWidth * 0.055,
-                ),
-                label: Text(
-                  l10n.previewVideo,
-                  style: TextStyle(
-                    letterSpacing: 2,
-                    fontSize: screenWidth * 0.03,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                onPressed: () => context.push(AppRoutes.videoPreview, extra: videoPath),
+                icon: const Icon(Icons.play_circle_outline, size: 22),
+                label: Text(l10n.previewVideo, style: AppTextStyles.previewButtonLabel),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFB8956A),
-                  foregroundColor: const Color(0xFF0A0A0A),
-                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.016),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(screenWidth * 0.03),
-                  ),
+                  backgroundColor: AppColors.accent,
+                  foregroundColor: AppColors.background,
+                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
                   elevation: 0,
                 ),
               ),
@@ -664,202 +497,153 @@ class _NewHomePageState extends State<NewHomePage>
       ),
     );
   }
-
-  // new_home_page.dart - _buildRecentVideos method
-  Widget _buildRecentVideos(
-    double screenWidth,
-    double screenHeight,
-    AppLocalizations? l10n,
-  ) {
-    return RecentVideosWidget();
-  }
 }
 
+// ── Recent Videos ────────────────────────────────────────────────────────────
+
 class RecentVideosWidget extends StatelessWidget {
-  const RecentVideosWidget({
-    super.key,
-  });
+  const RecentVideosWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     final l10n = AppLocalizations.of(context);
+
     return BlocBuilder<HistoryBloc, HistoryState>(
       builder: (context, state) {
         if (state is RecentVideosLoaded) {
           if (state.videos.isEmpty) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                  child: Text(
-                    l10n?.recentVideos ?? 'RECENT VIDEOS',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                      fontSize: screenWidth * 0.03,
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ),
-                SizedBox(height: screenHeight * 0.02),
-                Center(
-                  child: Text(
-                    l10n?.noVideos ?? 'No videos yet',
-                    style: TextStyle(
-                      color: Colors.white38,
-                      fontSize: screenWidth * 0.032,
-                    ),
-                  ),
-                ),
-              ],
-            );
+            return _buildEmpty(l10n);
           }
-
-          final videos = state.videos;
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      l10n?.recentVideos ?? 'RECENT VIDEOS',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontSize: screenWidth * 0.03,
-                        letterSpacing: 2,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        context.push(AppRoutes.history);
-                      },
-                      child: Text(
-                        l10n.viewAll ?? 'VIEW ALL',
-                        style: TextStyle(
-                          color: const Color(0xFFB8956A),
-                          fontSize: screenWidth * 0.03,
-                          letterSpacing: 1.5,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: screenHeight * 0.01),
-              Expanded(
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-                  itemCount: videos.length,
-                  itemBuilder: (context, index) {
-                    final video = videos[index];
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        right: index < videos.length - 1
-                            ? screenWidth * 0.04
-                            : 0,
-                      ),
-                      child: _RecentVideoItem(
-                        video: video,
-                        screenWidth: screenWidth,
-                        screenHeight: screenHeight,
-                        onTap: () {
-                          context.push(AppRoutes.videoPreview, extra: video.videoPath);
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
+          return _buildList(context, state.videos, screenWidth, l10n);
         }
-
-        // Loading or initial state
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-              child: Text(
-                l10n?.recentVideos ?? 'RECENT VIDEOS',
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.5),
-                  fontSize: screenWidth * 0.03,
-                  letterSpacing: 2,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.02),
-            const Center(
-              child: CircularProgressIndicator(color: Color(0xFFB8956A)),
-            ),
-          ],
-        );
+        return _buildLoading(l10n);
       },
     );
   }
+
+  Widget _buildEmpty(AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Text(l10n.recentVideos, style: AppTextStyles.sectionLabel),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        Center(child: Text(l10n.noVideos, style: AppTextStyles.noContentText)),
+      ],
+    );
+  }
+
+  Widget _buildList(
+    BuildContext context,
+    List<VideoHistoryData> videos,
+    double screenWidth,
+    AppLocalizations l10n,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(l10n.recentVideos, style: AppTextStyles.sectionLabel),
+              TextButton(
+                onPressed: () {
+                  context.read<HistoryBloc>().add(LoadHistoryEvent());
+                  context.push(AppRoutes.history);
+                },
+                child: Text(l10n.viewAll, style: AppTextStyles.sectionAction),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Expanded(
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+            itemCount: videos.length,
+            itemBuilder: (context, index) {
+              final video = videos[index];
+              return Padding(
+                padding: EdgeInsets.only(
+                  right: index < videos.length - 1 ? AppSpacing.lg : 0,
+                ),
+                child: _RecentVideoItem(
+                  video: video,
+                  screenWidth: screenWidth,
+                  onTap: () => context.push(AppRoutes.videoPreview, extra: video.videoPath),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLoading(AppLocalizations l10n) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Text(l10n.recentVideos, style: AppTextStyles.sectionLabel),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        const Center(
+          child: CircularProgressIndicator(color: AppColors.accent),
+        ),
+      ],
+    );
+  }
 }
+
+// ── Action Button ─────────────────────────────────────────────────────────────
 
 class _ActionButton extends StatelessWidget {
   final IconData icon;
   final String label;
   final bool isAccent;
   final VoidCallback onTap;
-  final double screenWidth;
-  final double screenHeight;
 
   const _ActionButton({
     required this.icon,
     required this.label,
     this.isAccent = false,
     required this.onTap,
-    required this.screenWidth,
-    required this.screenHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isAccent ? const Color(0xFFE6B84D) : const Color(0xFF1A1A1A),
-      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+      color: isAccent ? AppColors.accentStrong : AppColors.surface,
+      borderRadius: AppRadius.mdAll,
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(screenWidth * 0.03),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: screenHeight * 0.02),
+        borderRadius: AppRadius.mdAll,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 icon,
-                color: isAccent
-                    ? const Color(0xFF1A1A1A)
-                    : const Color(0xFFB8956A),
-                size: screenWidth * 0.07,
+                color: isAccent ? AppColors.surface : AppColors.accent,
+                size: 26,
               ),
-              SizedBox(height: screenHeight * 0.008),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 label,
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: isAccent ? const Color(0xFF1A1A1A) : Colors.white,
-                  fontSize: screenWidth * 0.026,
-                  letterSpacing: 1.3,
-                  fontWeight: FontWeight.w600,
-                  height: 1.2,
+                style: AppTextStyles.actionButton.copyWith(
+                  color: isAccent ? AppColors.surface : AppColors.textPrimary,
                 ),
               ),
             ],
@@ -870,17 +654,16 @@ class _ActionButton extends StatelessWidget {
   }
 }
 
-// new_home_page.dart - _RecentVideoItem
+// ── Recent Video Item ─────────────────────────────────────────────────────────
+
 class _RecentVideoItem extends StatelessWidget {
   final VideoHistoryData video;
   final double screenWidth;
-  final double screenHeight;
   final VoidCallback onTap;
 
   const _RecentVideoItem({
     required this.video,
     required this.screenWidth,
-    required this.screenHeight,
     required this.onTap,
   });
 
@@ -890,23 +673,22 @@ class _RecentVideoItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: screenWidth * 0.35,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(screenWidth * 0.04),
-          border: Border.all(
-            color: const Color(0xFFB8956A).withOpacity(0.2),
-            width: 1,
+        decoration: const BoxDecoration(
+          borderRadius: AppRadius.lgAll,
+          border: Border.fromBorderSide(
+            BorderSide(color: AppColors.accentBorderLight, width: 1),
           ),
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF2A2A2A), Color(0xFF1A1A1A)],
+            colors: [AppColors.surfaceElevated, AppColors.surface],
           ),
         ),
         child: Stack(
           children: [
             if (video.imagePath != null)
               ClipRRect(
-                borderRadius: BorderRadius.circular(screenWidth * 0.04),
+                borderRadius: AppRadius.lgAll,
                 child: Image.file(
                   File(video.imagePath!),
                   width: double.infinity,
@@ -914,45 +696,38 @@ class _RecentVideoItem extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(screenWidth * 0.025),
+            const Center(
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
+                  color: AppColors.overlayDark,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: screenWidth * 0.07,
+                child: Padding(
+                  padding: EdgeInsets.all(AppSpacing.sm),
+                  child: Icon(Icons.play_arrow, color: AppColors.textPrimary, size: 26),
                 ),
               ),
             ),
             Positioned(
-              bottom: screenHeight * 0.01,
-              left: screenWidth * 0.025,
-              right: screenWidth * 0.025,
+              bottom: AppSpacing.sm,
+              left: AppSpacing.sm,
+              right: AppSpacing.sm,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(screenWidth * 0.02),
+                borderRadius: AppRadius.smAll,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.02,
-                      vertical: screenHeight * 0.006,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.sm,
+                      vertical: AppSpacing.xs,
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(screenWidth * 0.02),
+                    decoration: const BoxDecoration(
+                      color: AppColors.overlayMedium,
+                      borderRadius: AppRadius.smAll,
                     ),
                     child: Text(
                       video.title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: screenWidth * 0.024,
-                        letterSpacing: 0.8,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppTextStyles.recentVideoTitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
