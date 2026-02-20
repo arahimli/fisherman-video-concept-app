@@ -119,6 +119,39 @@ class AppLocalizationsRu extends AppLocalizations {
   String get loadMore => 'Load More';
 
   @override
+  String get videoPreviewTitle => 'ПРОСМОТР';
+
+  @override
+  String get shareSheet => 'ПОДЕЛИТЬСЯ';
+
+  @override
+  String get save => 'Сохранить';
+
+  @override
+  String get saving => 'Сохранение...';
+
+  @override
+  String get saveToGallery => 'Сохранить в галерею';
+
+  @override
+  String get saveToGalleryDesc => 'Будет сохранено в галерею телефона';
+
+  @override
+  String get videoSavedSuccess => '✓ Видео сохранено в галерею';
+
+  @override
+  String get share => 'Поделиться';
+
+  @override
+  String get shareSubtitle => 'WhatsApp, Telegram и другие приложения';
+
+  @override
+  String get shareVideoText => 'Посмотри моё видео!';
+
+  @override
+  String shareError(Object error) => 'Ошибка при отправке: $error';
+
+  @override
   String videosCount(int count) {
     return '$count videos';
   }

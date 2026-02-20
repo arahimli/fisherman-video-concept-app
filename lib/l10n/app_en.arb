@@ -37,6 +37,22 @@
   "allDates": "All Dates",
   "loadMore": "Load More",
   "videosCount": "{count} videos",
+  "videoPreviewTitle": "PREVIEW",
+  "shareSheet": "SHARE",
+  "save": "Save",
+  "saving": "Saving...",
+  "saveToGallery": "Save to gallery",
+  "saveToGalleryDesc": "Will be saved to your phone's gallery",
+  "videoSavedSuccess": "✓ Video saved to gallery",
+  "share": "Share",
+  "shareSubtitle": "WhatsApp, Telegram and other apps",
+  "shareVideoText": "Look at my video!",
+  "shareError": "Share error: {error}",
+  "@shareError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  }
   "@videosCount": {
     "placeholders": {
       "count": {

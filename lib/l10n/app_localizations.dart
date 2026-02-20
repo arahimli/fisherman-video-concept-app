@@ -323,6 +323,39 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} videos'**
   String videosCount(int count);
+
+  /// Video preview page title.
+  String get videoPreviewTitle;
+
+  /// Bottom sheet title for share options.
+  String get shareSheet;
+
+  /// Save button label.
+  String get save;
+
+  /// Saving in-progress label.
+  String get saving;
+
+  /// Save to gallery tile title.
+  String get saveToGallery;
+
+  /// Save to gallery tile subtitle.
+  String get saveToGalleryDesc;
+
+  /// Success message after saving to gallery.
+  String get videoSavedSuccess;
+
+  /// Share button / tile label.
+  String get share;
+
+  /// Share tile subtitle listing apps.
+  String get shareSubtitle;
+
+  /// Text sent alongside the shared video.
+  String get shareVideoText;
+
+  /// Share error message with error detail.
+  String shareError(Object error);
 }
 
 class _AppLocalizationsDelegate
