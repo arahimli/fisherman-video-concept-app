@@ -36,43 +36,43 @@ class AppLocalizationsRu extends AppLocalizations {
   String get viewAll => 'ВСЕ';
 
   @override
-  String get history => 'History';
+  String get history => 'История';
 
   @override
-  String get allVideos => 'All Videos';
+  String get allVideos => 'Все видео';
 
   @override
-  String get today => 'Today';
+  String get today => 'Сегодня';
 
   @override
-  String get yesterday => 'Yesterday';
+  String get yesterday => 'Вчера';
 
   @override
-  String get thisWeek => 'This Week';
+  String get thisWeek => 'На этой неделе';
 
   @override
-  String get thisMonth => 'This Month';
+  String get thisMonth => 'В этом месяце';
 
   @override
-  String get older => 'Older';
+  String get older => 'Старые';
 
   @override
-  String get noVideos => 'No videos yet';
+  String get noVideos => 'Видео пока нет';
 
   @override
-  String get noVideosDesc => 'Create your first video to see it here';
+  String get noVideosDesc => 'Создайте первое видео, чтобы оно появилось здесь';
 
   @override
-  String get deleteVideo => 'Delete Video';
+  String get deleteVideo => 'Удалить видео';
 
   @override
-  String get deleteConfirm => 'Are you sure you want to delete this video?';
+  String get deleteConfirm => 'Вы уверены, что хотите удалить это видео?';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Удалить';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Отмена';
 
   @override
   String get reset => 'Сбросить';
@@ -110,51 +110,49 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get filterByDate => 'Filter by Date';
+  String get filterByDate => 'Фильтр по дате';
 
   @override
-  String get allDates => 'All Dates';
+  String get allDates => 'Все даты';
 
   @override
-  String get loadMore => 'Load More';
+  String get loadMore => 'Загрузить ещё';
 
   @override
   String videosCount(int count) {
-    return '$count videos';
+    return '$count видео';
   }
 
   @override
-  String get videoPreviewTitle => 'PREVIEW';
+  String get videoPreviewTitle => 'ПРОСМОТР';
 
   @override
-  String get shareSheet => 'SHARE';
+  String get shareSheet => 'ПОДЕЛИТЬСЯ';
 
   @override
-  String get save => 'Save';
+  String get save => 'Сохранить';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Сохранение...';
 
   @override
-  String get saveToGallery => 'Save to gallery';
+  String get saveToGallery => 'Сохранить в галерею';
 
   @override
-  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
+  String get saveToGalleryDesc => 'Будет сохранено в галерею телефона';
 
   @override
-  String get videoSavedSuccess => '✓ Video saved to gallery';
+  String get videoSavedSuccess => '✓ Видео сохранено в галерею';
 
   @override
-  String get share => 'Share';
+  String get share => 'Поделиться';
 
   @override
-  String get shareSubtitle => 'WhatsApp, Telegram and other apps';
+  String get shareSubtitle => 'WhatsApp, Telegram и другие приложения';
 
   @override
-  String get shareVideoText => 'Look at my video!';
+  String get shareVideoText => 'Посмотри моё видео!';
 
   @override
-  String shareError(String error) {
-    return 'Share error: $error';
-  }
+  String shareError(Object error) => 'Ошибка при отправке: $error';
 }

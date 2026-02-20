@@ -36,43 +36,43 @@ class AppLocalizationsTr extends AppLocalizations {
   String get viewAll => 'TÜMÜ';
 
   @override
-  String get history => 'History';
+  String get history => 'Geçmiş';
 
   @override
-  String get allVideos => 'All Videos';
+  String get allVideos => 'Tüm Videolar';
 
   @override
-  String get today => 'Today';
+  String get today => 'Bugün';
 
   @override
-  String get yesterday => 'Yesterday';
+  String get yesterday => 'Dün';
 
   @override
-  String get thisWeek => 'This Week';
+  String get thisWeek => 'Bu Hafta';
 
   @override
-  String get thisMonth => 'This Month';
+  String get thisMonth => 'Bu Ay';
 
   @override
-  String get older => 'Older';
+  String get older => 'Eski';
 
   @override
-  String get noVideos => 'No videos yet';
+  String get noVideos => 'Henüz video yok';
 
   @override
-  String get noVideosDesc => 'Create your first video to see it here';
+  String get noVideosDesc => 'İlk videonuzu oluşturun ve burada görün';
 
   @override
-  String get deleteVideo => 'Delete Video';
+  String get deleteVideo => 'Videoyu Sil';
 
   @override
-  String get deleteConfirm => 'Are you sure you want to delete this video?';
+  String get deleteConfirm => 'Bu videoyu silmek istediğinize emin misiniz?';
 
   @override
-  String get delete => 'Delete';
+  String get delete => 'Sil';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'İptal';
 
   @override
   String get reset => 'Sıfırla';
@@ -111,51 +111,49 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get filterByDate => 'Filter by Date';
+  String get filterByDate => 'Tarihe Göre Filtrele';
 
   @override
-  String get allDates => 'All Dates';
+  String get allDates => 'Tüm Tarihler';
 
   @override
-  String get loadMore => 'Load More';
+  String get loadMore => 'Daha Fazla Yükle';
 
   @override
   String videosCount(int count) {
-    return '$count videos';
+    return '$count video';
   }
 
   @override
-  String get videoPreviewTitle => 'PREVIEW';
+  String get videoPreviewTitle => 'ÖNİZLEME';
 
   @override
-  String get shareSheet => 'SHARE';
+  String get shareSheet => 'PAYLAŞ';
 
   @override
-  String get save => 'Save';
+  String get save => 'Kaydet';
 
   @override
-  String get saving => 'Saving...';
+  String get saving => 'Kaydediliyor...';
 
   @override
-  String get saveToGallery => 'Save to gallery';
+  String get saveToGallery => 'Galeriye kaydet';
 
   @override
-  String get saveToGalleryDesc => 'Will be saved to your phone\'s gallery';
+  String get saveToGalleryDesc => 'Telefonunuzun galerisine kaydedilecek';
 
   @override
-  String get videoSavedSuccess => '✓ Video saved to gallery';
+  String get videoSavedSuccess => '✓ Video galeriye kaydedildi';
 
   @override
-  String get share => 'Share';
+  String get share => 'Paylaş';
 
   @override
-  String get shareSubtitle => 'WhatsApp, Telegram and other apps';
+  String get shareSubtitle => 'WhatsApp, Telegram ve diğer uygulamalar';
 
   @override
-  String get shareVideoText => 'Look at my video!';
+  String get shareVideoText => 'Videoma bak!';
 
   @override
-  String shareError(String error) {
-    return 'Share error: $error';
-  }
+  String shareError(Object error) => 'Paylaşım hatası: $error';
 }

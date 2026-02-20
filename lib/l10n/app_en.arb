@@ -33,10 +33,20 @@
   "videoGenerationError": "Error occurred while generating video",
   "selectImageFirst": "Please select an image first",
   "error": "Error: {error}",
+  "@error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
   "filterByDate": "Filter by Date",
   "allDates": "All Dates",
   "loadMore": "Load More",
   "videosCount": "{count} videos",
+  "@videosCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
   "videoPreviewTitle": "PREVIEW",
   "shareSheet": "SHARE",
   "save": "Save",
@@ -50,14 +60,7 @@
   "shareError": "Share error: {error}",
   "@shareError": {
     "placeholders": {
-      "error": { "type": "String" }
-    }
-  },
-  "@videosCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "error": { "type": "Object" }
     }
   }
 }
