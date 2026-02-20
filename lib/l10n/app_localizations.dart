@@ -323,6 +323,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count} videos'**
   String videosCount(int count);
+
+  /// No description provided for @videoPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PREVIEW'**
+  String get videoPreviewTitle;
+
+  /// No description provided for @shareSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'SHARE'**
+  String get shareSheet;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// No description provided for @saveToGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to gallery'**
+  String get saveToGallery;
+
+  /// No description provided for @saveToGalleryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Will be saved to your phone\'s gallery'**
+  String get saveToGalleryDesc;
+
+  /// No description provided for @videoSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Video saved to gallery'**
+  String get videoSavedSuccess;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @shareSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp, Telegram and other apps'**
+  String get shareSubtitle;
+
+  /// No description provided for @shareVideoText.
+  ///
+  /// In en, this message translates to:
+  /// **'Look at my video!'**
+  String get shareVideoText;
+
+  /// No description provided for @shareError.
+  ///
+  /// In en, this message translates to:
+  /// **'Share error: {error}'**
+  String shareError(String error);
 }
 
 class _AppLocalizationsDelegate

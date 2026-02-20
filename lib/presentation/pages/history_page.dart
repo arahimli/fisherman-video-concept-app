@@ -1,12 +1,12 @@
-// pages/history_page.dart
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
-
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
@@ -43,14 +43,11 @@ class _HistoryPageState extends State<HistoryPage> {
   bool get _isBottom {
     if (!_scrollController.hasClients) return false;
     final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.offset;
-    return currentScroll >= (maxScroll * 0.9);
+    return _scrollController.offset >= maxScroll * 0.9;
   }
 
   void _applyFilter(String filter) {
-    setState(() {
-      _selectedFilter = filter;
-    });
+    setState(() => _selectedFilter = filter);
 
     DateTime? startDate;
     DateTime? endDate = DateTime.now();
@@ -75,34 +72,23 @@ class _HistoryPageState extends State<HistoryPage> {
         endDate = null;
     }
 
-    context.read<HistoryBloc>().add(FilterByDateEvent(
-      startDate: startDate,
-      endDate: endDate,
-    ));
+    context.read<HistoryBloc>().add(
+      FilterByDateEvent(startDate: startDate, endDate: endDate),
+    );
   }
 
   void _deleteVideo(BuildContext context, int videoId) {
     final l10n = AppLocalizations.of(context);
-
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A1A),
-        title: Text(
-          l10n.deleteVideo,
-          style: const TextStyle(color: Colors.white),
-        ),
-        content: Text(
-          l10n.deleteConfirm,
-          style: const TextStyle(color: Colors.white70),
-        ),
+        backgroundColor: AppColors.surface,
+        title: Text(l10n.deleteVideo, style: AppTextStyles.dialogTitle),
+        content: Text(l10n.deleteConfirm, style: AppTextStyles.dialogContent),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: Text(
-              l10n.cancel,
-              style: const TextStyle(color: Colors.white70),
-            ),
+            child: Text(l10n.cancel, style: AppTextStyles.dialogContent),
           ),
           TextButton(
             onPressed: () {
@@ -111,7 +97,7 @@ class _HistoryPageState extends State<HistoryPage> {
             },
             child: Text(
               l10n.delete,
-              style: const TextStyle(color: Colors.red),
+              style: AppTextStyles.dialogContent.copyWith(color: AppColors.error),
             ),
           ),
         ],
@@ -121,53 +107,38 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final l10n = AppLocalizations.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFF0A0A0A),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0A0A0A),
+        backgroundColor: AppColors.background,
         elevation: 0,
-        title: Text(
-          l10n.history,
-          style: TextStyle(
-            fontSize: screenWidth * 0.045,
-            fontStyle: FontStyle.italic,
-            letterSpacing: 2,
-            color: Colors.white,
-            fontWeight: FontWeight.w300,
-          ),
-        ),
+        title: Text(l10n.history, style: AppTextStyles.appBarTitle),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
       ),
       body: Column(
         children: [
-          _buildFilterChips(screenWidth, l10n),
+          _buildFilterChips(l10n),
           Expanded(
             child: BlocBuilder<HistoryBloc, HistoryState>(
               builder: (context, state) {
                 if (state is HistoryLoading) {
                   return const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xFFB8956A),
-                    ),
+                    child: CircularProgressIndicator(color: AppColors.accent),
                   );
-                } else if (state is HistoryLoaded) {
-                  if (state.videos.isEmpty) {
-                    return _buildEmptyState(screenWidth, l10n);
-                  }
-                  return _buildVideoGrid(context, state, screenWidth);
-                } else if (state is HistoryError) {
+                }
+                if (state is HistoryLoaded) {
+                  if (state.videos.isEmpty) return _buildEmptyState(l10n);
+                  return _buildVideoGrid(context, state);
+                }
+                if (state is HistoryError) {
                   return Center(
-                    child: Text(
-                      state.message,
-                      style: const TextStyle(color: Colors.red),
-                    ),
+                    child: Text(state.message, style: const TextStyle(color: AppColors.error)),
                   );
                 }
                 return const SizedBox();
@@ -179,207 +150,199 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
-  Widget _buildFilterChips(double screenWidth, AppLocalizations? l10n) {
-    return Container(
+  // ── Filter chips ────────────────────────────────────────────────────────────
+
+  Widget _buildFilterChips(AppLocalizations l10n) {
+    return SizedBox(
       height: 60,
-      padding: EdgeInsets.symmetric(vertical: 10),
       child: ListView(
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.xl,
+          vertical: AppSpacing.sm,
+        ),
         children: [
-          _buildFilterChip(l10n?.allDates ?? 'All', 'all', screenWidth),
-          SizedBox(width: 8),
-          _buildFilterChip(l10n?.today ?? 'Today', 'today', screenWidth),
-          SizedBox(width: 8),
-          _buildFilterChip(l10n?.yesterday ?? 'Yesterday', 'yesterday', screenWidth),
-          SizedBox(width: 8),
-          _buildFilterChip(l10n?.thisWeek ?? 'This Week', 'week', screenWidth),
-          SizedBox(width: 8),
-          _buildFilterChip(l10n?.thisMonth ?? 'This Month', 'month', screenWidth),
+          _FilterChip(label: l10n.allDates,  value: 'all',       selected: _selectedFilter, onTap: _applyFilter),
+          const SizedBox(width: AppSpacing.sm),
+          _FilterChip(label: l10n.today,     value: 'today',     selected: _selectedFilter, onTap: _applyFilter),
+          const SizedBox(width: AppSpacing.sm),
+          _FilterChip(label: l10n.yesterday, value: 'yesterday', selected: _selectedFilter, onTap: _applyFilter),
+          const SizedBox(width: AppSpacing.sm),
+          _FilterChip(label: l10n.thisWeek,  value: 'week',      selected: _selectedFilter, onTap: _applyFilter),
+          const SizedBox(width: AppSpacing.sm),
+          _FilterChip(label: l10n.thisMonth, value: 'month',     selected: _selectedFilter, onTap: _applyFilter),
         ],
       ),
     );
   }
 
-  Widget _buildFilterChip(String label, String value, double screenWidth) {
-    final isSelected = _selectedFilter == value;
-    return GestureDetector(
-      onTap: () => _applyFilter(value),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.04,
-          vertical: 8,
-        ),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFB8956A) : const Color(0xFF1A1A1A),
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(
-            color: isSelected
-                ? const Color(0xFFB8956A)
-                : const Color(0xFFB8956A).withOpacity(0.3),
-            width: 1,
-          ),
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? const Color(0xFF0A0A0A) : Colors.white,
-            fontSize: screenWidth * 0.032,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.5,
-          ),
-        ),
-      ),
-    );
-  }
+  // ── Empty state ─────────────────────────────────────────────────────────────
 
-  Widget _buildEmptyState(double screenWidth, AppLocalizations? l10n) {
+  Widget _buildEmptyState(AppLocalizations l10n) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.video_library_outlined,
-            size: screenWidth * 0.2,
-            color: Colors.white24,
-          ),
-          SizedBox(height: 20),
-          Text(
-            l10n?.noVideos ?? 'No videos yet',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: screenWidth * 0.045,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            l10n?.noVideosDesc ?? 'Create your first video to see it here',
-            style: TextStyle(
-              color: Colors.white54,
-              fontSize: screenWidth * 0.035,
-            ),
-          ),
+          const Icon(Icons.video_library_outlined, size: 72, color: AppColors.textHint),
+          const SizedBox(height: AppSpacing.xl),
+          Text(l10n.noVideos, style: AppTextStyles.emptyStateTitle),
+          const SizedBox(height: AppSpacing.sm),
+          Text(l10n.noVideosDesc, style: AppTextStyles.emptyStateBody),
         ],
       ),
     );
   }
 
-  Widget _buildVideoGrid(
-      BuildContext context,
-      HistoryLoaded state,
-      double screenWidth,
-      ) {
+  // ── Grid ────────────────────────────────────────────────────────────────────
+
+  Widget _buildVideoGrid(BuildContext context, HistoryLoaded state) {
     return GridView.builder(
       controller: _scrollController,
-      padding: EdgeInsets.all(screenWidth * 0.04),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      padding: const EdgeInsets.all(AppSpacing.lg),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: screenWidth * 0.04,
-        mainAxisSpacing: screenWidth * 0.04,
+        crossAxisSpacing: AppSpacing.lg,
+        mainAxisSpacing: AppSpacing.lg,
         childAspectRatio: 0.75,
       ),
       itemCount: state.videos.length + (state.hasMore ? 1 : 0),
       itemBuilder: (context, index) {
         if (index >= state.videos.length) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xFFB8956A),
-            ),
+            child: CircularProgressIndicator(color: AppColors.accent),
           );
         }
-
-        final video = state.videos[index];
-        return _buildVideoCard(context, video, screenWidth);
+        return _VideoCard(
+          video: state.videos[index],
+          onTap: () => context.push(AppRoutes.videoPreview, extra: state.videos[index].videoPath),
+          onLongPress: () => _deleteVideo(context, state.videos[index].id),
+        );
       },
     );
   }
+}
 
-  Widget _buildVideoCard(
-      BuildContext context,
-      VideoHistoryData video,
-      double screenWidth,
-      ) {
+// ── Filter Chip ───────────────────────────────────────────────────────────────
+
+class _FilterChip extends StatelessWidget {
+  final String label;
+  final String value;
+  final String selected;
+  final void Function(String) onTap;
+
+  const _FilterChip({
+    required this.label,
+    required this.value,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = selected == value;
     return GestureDetector(
-      onTap: () {
-        context.push(AppRoutes.videoPreview, extra: video.videoPath);
-      },
-      onLongPress: () => _deleteVideo(context, video.id),
+      onTap: () => onTap(value),
       child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.sm,
+        ),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(screenWidth * 0.04),
+          color: isSelected ? AppColors.accent : AppColors.surface,
+          borderRadius: AppRadius.pillAll,
           border: Border.all(
-            color: const Color(0xFFB8956A).withOpacity(0.3), width: 1,
+            color: isSelected ? AppColors.accent : AppColors.accentBorder,
+            width: 1,
           ),
-          gradient: const LinearGradient(
+        ),
+        child: Text(
+          label,
+          style: AppTextStyles.filterChip.copyWith(
+            color: isSelected ? AppColors.background : AppColors.textPrimary,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Video Card ────────────────────────────────────────────────────────────────
+
+class _VideoCard extends StatelessWidget {
+  final VideoHistoryData video;
+  final VoidCallback onTap;
+  final VoidCallback onLongPress;
+
+  const _VideoCard({
+    required this.video,
+    required this.onTap,
+    required this.onLongPress,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: AppRadius.lgAll,
+          border: Border.fromBorderSide(
+            BorderSide(color: AppColors.accentBorder, width: 1),
+          ),
+          gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [Color(0xFF2A2A2A), Color(0xFF1A1A1A)],
+            colors: [AppColors.surfaceElevated, AppColors.surface],
           ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Video thumbnail placeholder
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(screenWidth * 0.04),
-                    topRight: Radius.circular(screenWidth * 0.04),
-                  ),
-                  color: const Color(0xFF3A3A3A),
-                ),
-                child: video.imagePath != null
-                    ? ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(screenWidth * 0.04),
-                    topRight: Radius.circular(screenWidth * 0.04),
-                  ),
-                  child: Image.file(
-                    File(video.imagePath!),
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                )
-                    : Center(
-                  child: Icon(
-                    Icons.play_circle_outline,
-                    size: screenWidth * 0.12,
-                    color: const Color(0xFFB8956A),
-                  ),
-                ),
-              ),
-            ),
+            Expanded(child: _buildThumbnail()),
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.03),
+              padding: const EdgeInsets.all(AppSpacing.md),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     video.title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: screenWidth * 0.032,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 0.5,
-                    ),
+                    style: AppTextStyles.historyCardTitle,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: AppSpacing.xs),
                   Text(
                     DateFormat('MMM dd, yyyy • HH:mm').format(video.createdAt),
-                    style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: screenWidth * 0.028,
-                    ),
+                    style: AppTextStyles.historyCardDate,
                   ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildThumbnail() {
+    if (video.imagePath != null) {
+      return ClipRRect(
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+        child: Image.file(
+          File(video.imagePath!),
+          fit: BoxFit.cover,
+          width: double.infinity,
+        ),
+      );
+    }
+    return Container(
+      decoration: const BoxDecoration(
+        color: AppColors.surfaceHighest,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+      ),
+      child: const Center(
+        child: Icon(Icons.play_circle_outline, size: 48, color: AppColors.accent),
       ),
     );
   }

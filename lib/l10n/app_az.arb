@@ -33,8 +33,34 @@
   "videoGenerationError": "Video yaradılarkən xəta baş verdi",
   "selectImageFirst": "Əvvəlcə şəkil seçin",
   "error": "Xəta: {error}",
+  "@error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
   "filterByDate": "Tarixə görə süz",
   "allDates": "Bütün Tarixlər",
   "loadMore": "Daha çox yüklə",
-  "videosCount": "{count} video"
+  "videosCount": "{count} video",
+  "@videosCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "videoPreviewTitle": "ÖNİZLƏMƏ",
+  "shareSheet": "PAYLAŞ",
+  "save": "Saxla",
+  "saving": "Saxlanılır...",
+  "saveToGallery": "Qalereya saxla",
+  "saveToGalleryDesc": "Telefonun qaleresinda saxlanacaq",
+  "videoSavedSuccess": "✓ Video qalereya saxlanıldı",
+  "share": "Paylaş",
+  "shareSubtitle": "WhatsApp, Telegram və digər tətbiqlər",
+  "shareVideoText": "Bu videomu bax!",
+  "shareError": "Paylaşma xətası: {error}",
+  "@shareError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  }
 }

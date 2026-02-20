@@ -33,15 +33,34 @@
   "videoGenerationError": "Error occurred while generating video",
   "selectImageFirst": "Please select an image first",
   "error": "Error: {error}",
+  "@error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
   "filterByDate": "Filter by Date",
   "allDates": "All Dates",
   "loadMore": "Load More",
   "videosCount": "{count} videos",
   "@videosCount": {
     "placeholders": {
-      "count": {
-        "type": "int"
-      }
+      "count": { "type": "int" }
+    }
+  },
+  "videoPreviewTitle": "PREVIEW",
+  "shareSheet": "SHARE",
+  "save": "Save",
+  "saving": "Saving...",
+  "saveToGallery": "Save to gallery",
+  "saveToGalleryDesc": "Will be saved to your phone's gallery",
+  "videoSavedSuccess": "✓ Video saved to gallery",
+  "share": "Share",
+  "shareSubtitle": "WhatsApp, Telegram and other apps",
+  "shareVideoText": "Look at my video!",
+  "shareError": "Share error: {error}",
+  "@shareError": {
+    "placeholders": {
+      "error": { "type": "Object" }
     }
   }
 }

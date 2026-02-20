@@ -9,6 +9,19 @@
   "previewVideo": "VİDEOYU İZLE",
   "recentVideos": "SON VİDEOLAR",
   "viewAll": "TÜMÜ",
+  "history": "Geçmiş",
+  "allVideos": "Tüm Videolar",
+  "today": "Bugün",
+  "yesterday": "Dün",
+  "thisWeek": "Bu Hafta",
+  "thisMonth": "Bu Ay",
+  "older": "Eski",
+  "noVideos": "Henüz video yok",
+  "noVideosDesc": "İlk videonuzu oluşturun ve burada görün",
+  "deleteVideo": "Videoyu Sil",
+  "deleteConfirm": "Bu videoyu silmek istediğinize emin misiniz?",
+  "delete": "Sil",
+  "cancel": "İptal",
   "reset": "Sıfırla",
   "resetConfirmTitle": "Sıfırla",
   "resetConfirmMessage": "Tüm değişiklikleri sıfırlamak istiyor musunuz?",
@@ -19,5 +32,35 @@
   "videoGenerated": "Video hazırlandı ✓",
   "videoGenerationError": "Video oluşturulurken hata oluştu",
   "selectImageFirst": "Önce bir resim seçin",
-  "error": "Hata: {error}"
+  "error": "Hata: {error}",
+  "@error": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  },
+  "filterByDate": "Tarihe Göre Filtrele",
+  "allDates": "Tüm Tarihler",
+  "loadMore": "Daha Fazla Yükle",
+  "videosCount": "{count} video",
+  "@videosCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "videoPreviewTitle": "ÖNİZLEME",
+  "shareSheet": "PAYLAŞ",
+  "save": "Kaydet",
+  "saving": "Kaydediliyor...",
+  "saveToGallery": "Galeriye kaydet",
+  "saveToGalleryDesc": "Telefonunuzun galerisine kaydedilecek",
+  "videoSavedSuccess": "✓ Video galeriye kaydedildi",
+  "share": "Paylaş",
+  "shareSubtitle": "WhatsApp, Telegram ve diğer uygulamalar",
+  "shareVideoText": "Videoma bak!",
+  "shareError": "Paylaşım hatası: {error}",
+  "@shareError": {
+    "placeholders": {
+      "error": { "type": "Object" }
+    }
+  }
 }
