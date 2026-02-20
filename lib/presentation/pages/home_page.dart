@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/router/app_routes.dart';
+
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
@@ -71,7 +73,7 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   void _showVideoPreview(BuildContext context, String videoPath) {
-    context.push('/video-preview', extra: videoPath);
+    context.push(AppRoutes.videoPreview, extra: videoPath);
   }
 
   @override
@@ -171,7 +173,7 @@ class _NewHomePageState extends State<NewHomePage>
                       ),
                       onPressed: () {
                         context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        context.push('/history');
+                        context.push(AppRoutes.history);
                       },
                     ),
                     BlocBuilder<VideoBloc, VideoState>(
@@ -739,7 +741,7 @@ class RecentVideosWidget extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         context.read<HistoryBloc>().add(LoadHistoryEvent());
-                        context.push('/history');
+                        context.push(AppRoutes.history);
                       },
                       child: Text(
                         l10n.viewAll ?? 'VIEW ALL',
@@ -772,7 +774,7 @@ class RecentVideosWidget extends StatelessWidget {
                         screenWidth: screenWidth,
                         screenHeight: screenHeight,
                         onTap: () {
-                          context.push('/video-preview', extra: video.videoPath);
+                          context.push(AppRoutes.videoPreview, extra: video.videoPath);
                         },
                       ),
                     );
