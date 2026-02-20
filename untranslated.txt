@@ -1,1 +1,41 @@
-{}
+{
+  "ru": [
+    "history",
+    "allVideos",
+    "today",
+    "yesterday",
+    "thisWeek",
+    "thisMonth",
+    "older",
+    "noVideos",
+    "noVideosDesc",
+    "deleteVideo",
+    "deleteConfirm",
+    "delete",
+    "cancel",
+    "filterByDate",
+    "allDates",
+    "loadMore",
+    "videosCount"
+  ],
+
+  "tr": [
+    "history",
+    "allVideos",
+    "today",
+    "yesterday",
+    "thisWeek",
+    "thisMonth",
+    "older",
+    "noVideos",
+    "noVideosDesc",
+    "deleteVideo",
+    "deleteConfirm",
+    "delete",
+    "cancel",
+    "filterByDate",
+    "allDates",
+    "loadMore",
+    "videosCount"
+  ]
+}
