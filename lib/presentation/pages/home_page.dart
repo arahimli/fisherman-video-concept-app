@@ -404,12 +404,14 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.videocam_outlined,
                   label: l10n.generateVideo,
                   isAccent: true,
-                  onTap: () => context.read<VideoBloc>().add(
-                    GenerateVideoEvent(
-                      processingMessage: l10n.imageProcessing,
-                      generatingMessage: l10n.videoGenerating,
-                    ),
-                  ),
+                  onTap: videoPath != null
+                      ? null
+                      : () => context.read<VideoBloc>().add(
+                            GenerateVideoEvent(
+                              processingMessage: l10n.imageProcessing,
+                              generatingMessage: l10n.videoGenerating,
+                            ),
+                          ),
                 ),
               ),
             ],
