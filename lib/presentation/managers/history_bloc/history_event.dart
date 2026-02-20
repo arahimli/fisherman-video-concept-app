@@ -14,8 +14,6 @@ class LoadHistoryEvent extends HistoryEvent {
   });
 }
 
-class LoadRecentVideosEvent extends HistoryEvent {}
-
 class DeleteVideoEvent extends HistoryEvent {
   final int videoId;
 

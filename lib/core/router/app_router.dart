@@ -1,5 +1,8 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/di/service_locator.dart';
+import '../../presentation/managers/history_bloc/bloc.dart';
 import '../../presentation/pages/history_page.dart';
 import '../../presentation/pages/home_page.dart';
 import '../../presentation/pages/video_preview_page.dart';
@@ -14,7 +17,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.history,
-      builder: (context, state) => const HistoryPage(),
+      builder: (context, state) => BlocProvider<HistoryBloc>(
+        create: (_) => sl<HistoryBloc>()..add(LoadHistoryEvent()),
+        child: const HistoryPage(),
+      ),
     ),
     GoRoute(
       path: AppRoutes.videoPreview,

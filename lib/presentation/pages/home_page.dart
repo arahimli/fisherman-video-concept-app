@@ -9,7 +9,7 @@ import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
-import '../managers/history_bloc/bloc.dart';
+import '../managers/recent_videos_bloc/bloc.dart';
 import '../managers/video_bloc/bloc.dart';
 
 class NewHomePage extends StatefulWidget {
@@ -72,7 +72,7 @@ class _NewHomePageState extends State<NewHomePage>
         BlocListener<VideoBloc, VideoState>(
           listener: (context, state) {
             if (state is VideoGeneratedState) {
-              context.read<HistoryBloc>().add(LoadRecentVideosEvent());
+              context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(l10n.videoGenerated),
@@ -125,10 +125,7 @@ class _NewHomePageState extends State<NewHomePage>
                 onPressed: () => _showResetDialog(context, [
                   IconButton(
                     icon: const Icon(Icons.history, color: AppColors.accent, size: 26),
-                    onPressed: () {
-                      context.read<HistoryBloc>().add(LoadHistoryEvent());
-                      context.push(AppRoutes.history);
-                    },
+                    onPressed: () => context.push(AppRoutes.history),
                   ),
                   BlocBuilder<VideoBloc, VideoState>(
                     builder: (context, state) {
@@ -140,27 +137,13 @@ class _NewHomePageState extends State<NewHomePage>
                           onPressed: () {},
                         );
                       }
-                      return IconButton(
-                        icon: const Icon(
-                          Icons.account_circle_outlined,
-                          color: AppColors.textPrimary,
-                          size: 26,
-                        ),
-                        onPressed: () {},
-                      );
+                      return SizedBox();
                     },
                   ),
                 ]),
               );
             }
-            return IconButton(
-              icon: const Icon(
-                Icons.account_circle_outlined,
-                color: AppColors.textPrimary,
-                size: 26,
-              ),
-              onPressed: () {},
-            );
+            return SizedBox();
           },
         ),
       ],
@@ -509,7 +492,7 @@ class RecentVideosWidget extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final l10n = AppLocalizations.of(context);
 
-    return BlocBuilder<HistoryBloc, HistoryState>(
+    return BlocBuilder<RecentVideosBloc, RecentVideosState>(
       builder: (context, state) {
         if (state is RecentVideosLoaded) {
           if (state.videos.isEmpty) {
@@ -553,10 +536,7 @@ class RecentVideosWidget extends StatelessWidget {
             children: [
               Text(l10n.recentVideos, style: AppTextStyles.sectionLabel),
               TextButton(
-                onPressed: () {
-                  context.read<HistoryBloc>().add(LoadHistoryEvent());
-                  context.push(AppRoutes.history);
-                },
+                onPressed: () => context.push(AppRoutes.history),
                 child: Text(l10n.viewAll, style: AppTextStyles.sectionAction),
               ),
             ],
