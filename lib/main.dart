@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/di/service_locator.dart';
+import 'core/router/app_router.dart';
 import 'l10n/app_localizations.dart';
 import 'presentation/managers/video_bloc/bloc.dart';
-import 'presentation/pages/home_page.dart';
 
 void main() {
   setupServiceLocator();
@@ -22,8 +22,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<HistoryBloc>(
           create: (context) => sl<HistoryBloc>()..add(LoadRecentVideosEvent()),
         ),
+        BlocProvider<VideoBloc>(
+          create: (context) => sl<VideoBloc>(),
+        ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: appRouter,
         title: 'Vogue Motion',
         locale: const Locale('en'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -34,10 +38,6 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Georgia',
         ),
         debugShowCheckedModeBanner: false,
-        home: BlocProvider<VideoBloc>(
-          create: (context) => sl<VideoBloc>(),
-          child: const NewHomePage(),
-        ),
       ),
     );
   }
