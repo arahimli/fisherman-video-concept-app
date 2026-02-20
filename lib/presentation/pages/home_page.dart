@@ -137,27 +137,13 @@ class _NewHomePageState extends State<NewHomePage>
                           onPressed: () {},
                         );
                       }
-                      return IconButton(
-                        icon: const Icon(
-                          Icons.account_circle_outlined,
-                          color: AppColors.textPrimary,
-                          size: 26,
-                        ),
-                        onPressed: () {},
-                      );
+                      return SizedBox();
                     },
                   ),
                 ]),
               );
             }
-            return IconButton(
-              icon: const Icon(
-                Icons.account_circle_outlined,
-                color: AppColors.textPrimary,
-                size: 26,
-              ),
-              onPressed: () {},
-            );
+            return SizedBox();
           },
         ),
       ],
