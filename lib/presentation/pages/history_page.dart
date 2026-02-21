@@ -12,6 +12,7 @@ import '../../core/router/app_routes.dart';
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
+import '../managers/recent_videos_bloc/bloc.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -240,6 +241,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       onPressed: () {
                         Navigator.pop(sheetContext);
                         context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
+                        context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.error,
