@@ -154,6 +154,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get shareVideoText => 'Посмотри моё видео!';
 
   @override
+  String get selectFromGallery => 'Выбрать из библиотеки';
+
+  @override
+  String get takePhoto => 'Сделать фото';
+
+  @override
+  String get takePhotoDesc => 'Открыть камеру и сделать новое фото';
+
+  @override
   String shareError(Object error) {
     return 'Ошибка при отправке: $error';
   }

@@ -19,7 +19,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
       Emitter<VideoState> emit,
       ) async {
     try {
-      final picked = await _picker.pickImage(source: ImageSource.gallery);
+      final picked = await _picker.pickImage(source: event.source);
 
       if (picked != null) {
         emit(ImagePickedState(File(picked.path)));

@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
@@ -54,6 +55,70 @@ class _NewHomePageState extends State<NewHomePage>
     _animationController.dispose();
     _orbitController.dispose();
     super.dispose();
+  }
+
+  void _showImageSourceSheet(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.surface,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+      builder: (sheetContext) => SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 40,
+                height: 4,
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceHighest,
+                  borderRadius: AppRadius.xsAll,
+                ),
+              ),
+              const SizedBox(height: AppSpacing.xl),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.photo_library_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.selectImage.replaceAll('\n', ' '), style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.selectFromGallery, style: AppTextStyles.historyCardDate),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.gallery));
+                },
+              ),
+              const Divider(color: AppColors.surfaceElevated),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Container(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  decoration: const BoxDecoration(
+                    color: AppColors.surfaceElevated,
+                    borderRadius: AppRadius.smAll,
+                  ),
+                  child: const Icon(Icons.camera_alt_outlined, color: AppColors.accent, size: 22),
+                ),
+                title: Text(l10n.takePhoto, style: AppTextStyles.historyCardTitle),
+                subtitle: Text(l10n.takePhotoDesc, style: AppTextStyles.historyCardDate),
+                onTap: () {
+                  Navigator.pop(sheetContext);
+                  context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.camera));
+                },
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   void _showResetSheet(BuildContext context) {
@@ -298,7 +363,7 @@ class _NewHomePageState extends State<NewHomePage>
                     return Transform.scale(
                       scale: _pulseAnimation.value,
                       child: GestureDetector(
-                        onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
+                        onTap: () => _showImageSourceSheet(context),
                         child: Container(
                           width: screenWidth * 0.32,
                           height: screenWidth * 0.32,
@@ -338,7 +403,7 @@ class _NewHomePageState extends State<NewHomePage>
                 child: _ActionButton(
                   icon: Icons.image_outlined,
                   label: l10n.selectImage,
-                  onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
+                  onTap: () => _showImageSourceSheet(context),
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),
@@ -394,7 +459,7 @@ class _NewHomePageState extends State<NewHomePage>
                 child: _ActionButton(
                   icon: Icons.image_outlined,
                   label: l10n.changeImage,
-                  onTap: () => context.read<VideoBloc>().add(PickImageEvent()),
+                  onTap: () => _showImageSourceSheet(context),
                 ),
               ),
               const SizedBox(width: AppSpacing.lg),
@@ -536,7 +601,7 @@ class _NewHomePageState extends State<NewHomePage>
             children: [
               Expanded(
                 child: OutlinedButton.icon(
-                  onPressed: () => context.read<VideoBloc>().add(PickImageEvent()),
+                  onPressed: () => _showImageSourceSheet(context),
                   icon: const Icon(Icons.image_outlined, size: 20),
                   label: Text(l10n.changeImage.replaceAll('\n', ' ')),
                   style: OutlinedButton.styleFrom(

@@ -154,6 +154,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shareVideoText => 'Look at my video!';
 
   @override
+  String get selectFromGallery => 'Choose from your photo library';
+
+  @override
+  String get takePhoto => 'Take Photo';
+
+  @override
+  String get takePhotoDesc => 'Open camera and take a new photo';
+
+  @override
   String shareError(Object error) {
     return 'Share error: $error';
   }

@@ -384,6 +384,24 @@ abstract class AppLocalizations {
   /// **'Look at my video!'**
   String get shareVideoText;
 
+  /// No description provided for @selectFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from your photo library'**
+  String get selectFromGallery;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// No description provided for @takePhotoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Open camera and take a new photo'**
+  String get takePhotoDesc;
+
   /// No description provided for @shareError.
   ///
   /// In en, this message translates to:
