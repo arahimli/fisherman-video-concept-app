@@ -110,7 +110,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     color: AppColors.surfaceElevated,
                     borderRadius: AppRadius.smAll,
                   ),
-                  child: const Icon(Icons.send_outlined, color: AppColors.accent, size: 22),
+                  child: const Icon(Icons.ios_share_outlined, color: AppColors.accent, size: 22),
                 ),
                 title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
                 subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
@@ -272,7 +272,7 @@ class _HistoryPageState extends State<HistoryPage> {
         title: Text(l10n.history, style: AppTextStyles.appBarTitle),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
       ),
