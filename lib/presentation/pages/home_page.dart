@@ -137,12 +137,6 @@ class _NewHomePageState extends State<NewHomePage>
           listener: (context, state) {
             if (state is VideoGeneratedState) {
               context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(l10n.videoGenerated),
-                  backgroundColor: AppColors.accent,
-                ),
-              );
             } else if (state is VideoErrorState) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -261,24 +255,15 @@ class _NewHomePageState extends State<NewHomePage>
     VideoState state,
     AppLocalizations l10n,
   ) {
-    if (state is ImagePickedState ||
-        state is VideoGeneratedState ||
-        state is VideoErrorState) {
-      File? imageFile;
-      String? videoPath;
-
-      if (state is ImagePickedState) {
-        imageFile = state.imageFile;
-      } else if (state is VideoGeneratedState) {
-        imageFile = state.imageFile;
-        videoPath = state.videoPath;
-      } else if (state is VideoErrorState) {
-        imageFile = state.imageFile;
-      }
-
-      return _buildImagePreviewMode(
-        context, screenWidth, screenHeight, imageFile!, videoPath, l10n,
-      );
+    if (state is VideoGeneratedState) {
+      return _buildVideoReadyMode(context, state.imageFile, state.videoPath, l10n);
+    }
+    if (state is ImagePickedState || state is VideoErrorState) {
+      final imageFile = state is ImagePickedState
+          ? state.imageFile
+          : (state as VideoErrorState).imageFile;
+      if (imageFile == null) return _buildCreateMode(context, screenWidth, screenHeight, l10n);
+      return _buildImagePreviewMode(context, screenWidth, screenHeight, imageFile, l10n);
     }
     return _buildCreateMode(context, screenWidth, screenHeight, l10n);
   }
@@ -380,13 +365,12 @@ class _NewHomePageState extends State<NewHomePage>
     double screenWidth,
     double screenHeight,
     File imageFile,
-    String? videoPath,
     AppLocalizations l10n,
   ) {
     return Column(
       children: [
         Expanded(
-          flex: videoPath != null ? 4 : 5,
+          flex: 5,
           child: Padding(
             padding: const EdgeInsets.all(AppSpacing.lg),
             child: Container(
@@ -419,77 +403,170 @@ class _NewHomePageState extends State<NewHomePage>
                   icon: Icons.videocam_outlined,
                   label: l10n.generateVideo,
                   isAccent: true,
-                  onTap: videoPath != null
-                      ? null
-                      : () => context.read<VideoBloc>().add(
-                            GenerateVideoEvent(
-                              processingMessage: l10n.imageProcessing,
-                              generatingMessage: l10n.videoGenerating,
-                            ),
-                          ),
+                  onTap: () => context.read<VideoBloc>().add(
+                        GenerateVideoEvent(
+                          processingMessage: l10n.imageProcessing,
+                          generatingMessage: l10n.videoGenerating,
+                        ),
+                      ),
                 ),
               ),
             ],
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        Expanded(
-          flex: 3,
-          child: videoPath != null
-              ? _buildVideoReadySection(context, videoPath, l10n)
-              : const RecentVideosWidget(),
-        ),
+        const Expanded(flex: 3, child: RecentVideosWidget()),
         const SizedBox(height: AppSpacing.lg),
       ],
     );
   }
 
-  Widget _buildVideoReadySection(
+  Widget _buildVideoReadyMode(
     BuildContext context,
+    File imageFile,
     String videoPath,
     AppLocalizations l10n,
   ) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
-      child: Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: AppRadius.lgAll,
-          border: Border.all(color: AppColors.accentBorder, width: 1),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: const BoxDecoration(
-                color: AppColors.accent,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.check, color: AppColors.background, size: 24),
+    return Column(
+      children: [
+        // ── Image with play overlay ────────────────────────────────────────
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg, AppSpacing.sm, AppSpacing.lg, AppSpacing.lg,
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(l10n.videoReady, style: AppTextStyles.videoReadyTitle),
-            const SizedBox(height: AppSpacing.lg),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () => context.push(AppRoutes.videoPreview, extra: videoPath),
-                icon: const Icon(Icons.play_circle_outline, size: 22),
-                label: Text(l10n.previewVideo, style: AppTextStyles.previewButtonLabel),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.accent,
-                  foregroundColor: AppColors.background,
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
-                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
-                  elevation: 0,
+            child: GestureDetector(
+              onTap: () => context.push(AppRoutes.videoPreview, extra: videoPath),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: AppRadius.lgAll,
+                  border: Border.all(color: AppColors.accentBorder, width: 2),
+                  boxShadow: AppShadows.accentSubtle,
+                ),
+                child: ClipRRect(
+                  borderRadius: AppRadius.lgAll,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.file(imageFile, fit: BoxFit.cover),
+                      // Dimmed overlay
+                      const ColoredBox(color: Color(0x55000000)),
+                      // Play button
+                      Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(AppSpacing.lg),
+                          decoration: BoxDecoration(
+                            color: AppColors.accent.withValues(alpha: 0.9),
+                            shape: BoxShape.circle,
+                            boxShadow: AppShadows.accentGlow,
+                          ),
+                          child: const Icon(
+                            Icons.play_arrow_rounded,
+                            color: AppColors.background,
+                            size: 48,
+                          ),
+                        ),
+                      ),
+                      // Video ready badge
+                      Positioned(
+                        top: AppSpacing.md,
+                        right: AppSpacing.md,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.md,
+                            vertical: AppSpacing.xs,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.accent,
+                            borderRadius: AppRadius.pillAll,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.check_circle_outline,
+                                  color: AppColors.background, size: 13),
+                              const SizedBox(width: AppSpacing.xs),
+                              Text(
+                                l10n.videoReady,
+                                style: const TextStyle(
+                                  color: AppColors.background,
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+
+        // ── Preview button ────────────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => context.push(AppRoutes.videoPreview, extra: videoPath),
+              icon: const Icon(Icons.play_circle_outline, size: 20),
+              label: Text(l10n.previewVideo, style: AppTextStyles.previewButtonLabel),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: AppColors.background,
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                elevation: 0,
+              ),
+            ),
+          ),
+        ),
+
+        const SizedBox(height: AppSpacing.md),
+
+        // ── Change image + Home ───────────────────────────────────────────
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => context.read<VideoBloc>().add(PickImageEvent()),
+                  icon: const Icon(Icons.image_outlined, size: 18),
+                  label: Text(l10n.changeImage.replaceAll('\n', ' ')),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.textPrimary,
+                    side: const BorderSide(color: AppColors.accentBorder),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                  ),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => context.read<VideoBloc>().add(ResetEvent()),
+                  icon: const Icon(Icons.home_outlined, size: 18),
+                  label: const Text('Home'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppColors.textPrimary,
+                    side: const BorderSide(color: AppColors.accentBorder),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: AppSpacing.lg),
+      ],
     );
   }
 }

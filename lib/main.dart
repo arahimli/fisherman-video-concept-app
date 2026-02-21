@@ -36,6 +36,16 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           scaffoldBackgroundColor: const Color(0xFF0A0A0A),
           fontFamily: 'Georgia',
+          snackBarTheme: SnackBarThemeData(
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            insetPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
+          ),
         ),
         debugShowCheckedModeBanner: false,
       ),
