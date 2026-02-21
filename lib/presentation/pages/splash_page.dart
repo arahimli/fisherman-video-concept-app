@@ -17,14 +17,10 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  // Logo: fade + scale (Uber style)
-  late Animation<double> _logoFade;
-  late Animation<double> _logoScale;
-
   // Exit
   late Animation<double> _exitFade;
 
-  static const _totalMs = 3200;
+  static const _totalMs = 2400;
 
   @override
   void initState() {
@@ -35,27 +31,11 @@ class _SplashPageState extends State<SplashPage>
       duration: const Duration(milliseconds: _totalMs),
     );
 
-    // 0–35%: logo fades in
-    _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.35, curve: Curves.easeOut),
-      ),
-    );
-
-    // 0–40%: logo scales from slightly small to natural size
-    _logoScale = Tween<double>(begin: 0.82, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.0, 0.40, curve: Curves.easeOutCubic),
-      ),
-    );
-
-    // 78–100%: everything fades out
+    // 70–100%: fade out to home
     _exitFade = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.78, 1.0, curve: Curves.easeIn),
+        curve: const Interval(0.70, 1.0, curve: Curves.easeIn),
       ),
     );
 
@@ -77,7 +57,6 @@ class _SplashPageState extends State<SplashPage>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    final logoSize = size.width * 0.68;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -97,7 +76,7 @@ class _SplashPageState extends State<SplashPage>
                   willChange: false,
                 ),
 
-                // ── Radial vignette (darker edges, lighter center) ────────
+                // ── Radial vignette ───────────────────────────────────────
                 DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: RadialGradient(
@@ -107,22 +86,6 @@ class _SplashPageState extends State<SplashPage>
                         Colors.transparent,
                         Colors.black.withValues(alpha: 0.65),
                       ],
-                    ),
-                  ),
-                ),
-
-                // ── Logo ─────────────────────────────────────────────────
-                Center(
-                  child: Opacity(
-                    opacity: _logoFade.value,
-                    child: Transform.scale(
-                      scale: _logoScale.value,
-                      child: Image.asset(
-                        'assets/images/logo_main.png',
-                        width: logoSize,
-                        height: logoSize,
-                        fit: BoxFit.contain,
-                      ),
                     ),
                   ),
                 ),
