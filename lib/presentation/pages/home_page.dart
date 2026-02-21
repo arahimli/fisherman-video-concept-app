@@ -454,16 +454,16 @@ class _NewHomePageState extends State<NewHomePage>
                       // Play button
                       Center(
                         child: Container(
-                          padding: const EdgeInsets.all(AppSpacing.lg),
+                          padding: const EdgeInsets.all(AppSpacing.xl),
                           decoration: BoxDecoration(
-                            color: AppColors.accent.withValues(alpha: 0.9),
+                            color: AppColors.accent.withValues(alpha: 0.92),
                             shape: BoxShape.circle,
                             boxShadow: AppShadows.accentGlow,
                           ),
                           child: const Icon(
                             Icons.play_arrow_rounded,
                             color: AppColors.background,
-                            size: 48,
+                            size: 72,
                           ),
                         ),
                       ),
@@ -514,12 +514,12 @@ class _NewHomePageState extends State<NewHomePage>
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: () => context.push(AppRoutes.videoPreview, extra: videoPath),
-              icon: const Icon(Icons.play_circle_outline, size: 20),
-              label: Text(l10n.previewVideo, style: AppTextStyles.previewButtonLabel),
+              icon: const Icon(Icons.play_circle_outline, size: 22),
+              label: Text(l10n.previewVideo, style: AppTextStyles.previewButtonLabel.copyWith(fontSize: 13)),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.accent,
                 foregroundColor: AppColors.background,
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                 shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
                 elevation: 0,
               ),
@@ -537,12 +537,12 @@ class _NewHomePageState extends State<NewHomePage>
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => context.read<VideoBloc>().add(PickImageEvent()),
-                  icon: const Icon(Icons.image_outlined, size: 18),
+                  icon: const Icon(Icons.image_outlined, size: 20),
                   label: Text(l10n.changeImage.replaceAll('\n', ' ')),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     side: const BorderSide(color: AppColors.accentBorder),
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
                   ),
                 ),
@@ -551,12 +551,12 @@ class _NewHomePageState extends State<NewHomePage>
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => context.read<VideoBloc>().add(ResetEvent()),
-                  icon: const Icon(Icons.home_outlined, size: 18),
+                  icon: const Icon(Icons.home_outlined, size: 20),
                   label: const Text('Home'),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     side: const BorderSide(color: AppColors.accentBorder),
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
                     shape: const RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
                   ),
                 ),
