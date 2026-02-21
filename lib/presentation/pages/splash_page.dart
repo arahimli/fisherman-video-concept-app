@@ -17,14 +17,15 @@ class _SplashPageState extends State<SplashPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  // Logo: fade + scale (Uber style)
-  late Animation<double> _logoFade;
-  late Animation<double> _logoScale;
+  // Entry: small → natural size, fades in
+  late Animation<double> _entryScale;
+  late Animation<double> _entryFade;
 
-  // Exit
+  // Exit: natural size → oversized, fades out (burst)
+  late Animation<double> _exitScale;
   late Animation<double> _exitFade;
 
-  static const _totalMs = 3200;
+  static const _totalMs = 4500;
 
   @override
   void initState() {
@@ -35,27 +36,33 @@ class _SplashPageState extends State<SplashPage>
       duration: const Duration(milliseconds: _totalMs),
     );
 
-    // 0–35%: logo fades in
-    _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+    // 0–38%: logo scales in from 0.70 → 1.0 and fades in
+    _entryScale = Tween<double>(begin: 0.70, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.35, curve: Curves.easeOut),
+        curve: const Interval(0.0, 0.38, curve: Curves.easeOutCubic),
       ),
     );
 
-    // 0–40%: logo scales from slightly small to natural size
-    _logoScale = Tween<double>(begin: 0.82, end: 1.0).animate(
+    _entryFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.0, 0.40, curve: Curves.easeOutCubic),
+        curve: const Interval(0.0, 0.65, curve: Curves.easeOut),
       ),
     );
 
-    // 78–100%: everything fades out
+    // 62–100%: logo bursts toward viewer (1.0 → 1.6) and fades out
+    _exitScale = Tween<double>(begin: 1.0, end: 1.6).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.62, 1.0, curve: Curves.easeIn),
+      ),
+    );
+
     _exitFade = Tween<double>(begin: 1.0, end: 0.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.78, 1.0, curve: Curves.easeIn),
+        curve: const Interval(0.62, 1.0, curve: Curves.easeIn),
       ),
     );
 
@@ -111,12 +118,12 @@ class _SplashPageState extends State<SplashPage>
                   ),
                 ),
 
-                // ── Logo (Uber-style fade + scale) ────────────────────────
+                // ── Logo (grow in → burst out) ────────────────────────────
                 Center(
                   child: Opacity(
-                    opacity: _logoFade.value,
+                    opacity: (_entryFade.value * _exitFade.value).clamp(0.0, 1.0),
                     child: Transform.scale(
-                      scale: _logoScale.value,
+                      scale: _entryScale.value * _exitScale.value,
                       child: Image.asset(
                         'assets/images/logo_main.png',
                         width: logoSize,
