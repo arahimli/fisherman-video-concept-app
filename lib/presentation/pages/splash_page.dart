@@ -44,7 +44,7 @@ class _SplashPageState extends State<SplashPage>
       ),
     );
 
-    _entryFade = Tween<double>(begin: 0.0, end: 1.0).animate(
+    _entryFade = Tween<double>(begin: 0.0, end: 0.55).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(0.0, 0.65, curve: Curves.easeOut),
