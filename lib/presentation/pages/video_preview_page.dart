@@ -23,6 +23,8 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   late VideoPlayerController _videoPlayerController;
   ChewieController? _chewieController;
   bool _isSaving = false;
+  bool _isVideoCompleted = false;
+  bool _wasPlaying = false;
 
   @override
   void initState() {
@@ -33,6 +35,8 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   Future<void> _initializePlayer() async {
     _videoPlayerController = VideoPlayerController.file(File(widget.videoPath));
     await _videoPlayerController.initialize();
+
+    _videoPlayerController.addListener(_onVideoProgress);
 
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -71,6 +75,29 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     );
 
     setState(() {});
+  }
+
+  void _onVideoProgress() {
+    final v = _videoPlayerController.value;
+    if (!v.isInitialized || v.duration == Duration.zero) return;
+
+    final isPlaying = v.isPlaying;
+
+    // Detect transition: was playing → stopped at ≥95% of duration
+    if (_wasPlaying && !isPlaying) {
+      final progress = v.position.inMilliseconds / v.duration.inMilliseconds;
+      if (progress >= 0.95 && !_isVideoCompleted) {
+        if (mounted) setState(() => _isVideoCompleted = true);
+      }
+    }
+
+    _wasPlaying = isPlaying;
+  }
+
+  Future<void> _replay() async {
+    await _videoPlayerController.seekTo(Duration.zero);
+    await _videoPlayerController.play();
+    if (mounted) setState(() => _isVideoCompleted = false);
   }
 
   Future<void> _saveToGallery() async {
@@ -165,7 +192,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
               // Share
               _SheetTile(
-                icon: Icons.send_outlined,
+                icon: Icons.ios_share_outlined,
                 title: l10n.share,
                 subtitle: l10n.shareSubtitle,
                 onTap: () {
@@ -184,6 +211,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
   @override
   void dispose() {
+    _videoPlayerController.removeListener(_onVideoProgress);
     _videoPlayerController.dispose();
     _chewieController?.dispose();
     super.dispose();
@@ -198,7 +226,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
         title: Text(l10n.videoPreviewTitle, style: AppTextStyles.appBarTitle),
@@ -228,7 +256,40 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                   borderRadius: AppRadius.lgAll,
                   child: _chewieController != null &&
                           _chewieController!.videoPlayerController.value.isInitialized
-                      ? Chewie(controller: _chewieController!)
+                      ? Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Chewie(controller: _chewieController!),
+                            if (_isVideoCompleted)
+                              GestureDetector(
+                                onTap: _replay,
+                                child: const ColoredBox(
+                                  color: Color(0x66000000),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.replay_rounded,
+                                          color: Colors.white,
+                                          size: 56,
+                                        ),
+                                        SizedBox(height: 8),
+                                        Text(
+                                          'Tap to replay',
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                            fontSize: 13,
+                                            letterSpacing: 1,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        )
                       : const ColoredBox(
                           color: AppColors.surface,
                           child: Center(
@@ -278,7 +339,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
                 // Share — secondary button
                 Expanded(
                   child: _PreviewActionButton(
-                    icon: const Icon(Icons.send_outlined, size: 20),
+                    icon: const Icon(Icons.ios_share_outlined, size: 20),
                     label: l10n.share,
                     isAccent: false,
                     onTap: _shareVideo,

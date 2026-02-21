@@ -57,6 +57,9 @@
   "share": "Поделиться",
   "shareSubtitle": "WhatsApp, Telegram и другие приложения",
   "shareVideoText": "Посмотри моё видео!",
+  "selectFromGallery": "Выбрать из библиотеки",
+  "takePhoto": "Сделать фото",
+  "takePhotoDesc": "Открыть камеру и сделать новое фото",
   "shareError": "Ошибка при отправке: {error}",
   "@shareError": {
     "placeholders": {

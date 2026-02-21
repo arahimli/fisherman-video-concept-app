@@ -155,6 +155,15 @@ class AppLocalizationsAz extends AppLocalizations {
   String get shareVideoText => 'Bu videomu bax!';
 
   @override
+  String get selectFromGallery => 'Foto kitabxanandan seç';
+
+  @override
+  String get takePhoto => 'Şəkil çək';
+
+  @override
+  String get takePhotoDesc => 'Kameranı aç və yeni şəkil çək';
+
+  @override
   String shareError(Object error) {
     return 'Paylaşma xətası: $error';
   }

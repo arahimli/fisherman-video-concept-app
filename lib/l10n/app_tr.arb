@@ -57,6 +57,9 @@
   "share": "Paylaş",
   "shareSubtitle": "WhatsApp, Telegram ve diğer uygulamalar",
   "shareVideoText": "Videoma bak!",
+  "selectFromGallery": "Fotoğraf kitaplığından seç",
+  "takePhoto": "Fotoğraf Çek",
+  "takePhotoDesc": "Kamerayı aç ve yeni fotoğraf çek",
   "shareError": "Paylaşım hatası: {error}",
   "@shareError": {
     "placeholders": {

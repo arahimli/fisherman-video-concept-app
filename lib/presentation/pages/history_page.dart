@@ -12,6 +12,7 @@ import '../../core/router/app_routes.dart';
 import '../../data/database/app_database.dart';
 import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
+import '../managers/recent_videos_bloc/bloc.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
@@ -110,7 +111,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     color: AppColors.surfaceElevated,
                     borderRadius: AppRadius.smAll,
                   ),
-                  child: const Icon(Icons.send_outlined, color: AppColors.accent, size: 22),
+                  child: const Icon(Icons.ios_share_outlined, color: AppColors.accent, size: 22),
                 ),
                 title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
                 subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
@@ -240,6 +241,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       onPressed: () {
                         Navigator.pop(sheetContext);
                         context.read<HistoryBloc>().add(DeleteVideoEvent(videoId));
+                        context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.error,
@@ -272,7 +274,7 @@ class _HistoryPageState extends State<HistoryPage> {
         title: Text(l10n.history, style: AppTextStyles.appBarTitle),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
+          icon: const Icon(Icons.arrow_back_ios_new, color: AppColors.textPrimary),
           onPressed: () => context.pop(),
         ),
       ),
