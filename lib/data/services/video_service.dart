@@ -45,7 +45,7 @@ class VideoService {
       final extraInput = hasImageWatermark ? '-i "${watermark!.imagePath}" ' : '';
       final wmIndex = 7;
 
-      final pos = watermark?.position ?? WatermarkPosition.bottomRight;
+      final pos = watermark?.position ?? WatermarkPosition.topRight;
       final ox = _overlayX(pos);
       final oy = _overlayY(pos);
 
