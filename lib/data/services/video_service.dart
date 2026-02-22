@@ -50,8 +50,9 @@ class VideoService {
       );
       textPainter.layout();
 
-      final imgW = (textPainter.width + padding * 2).ceil();
-      final imgH = (textPainter.height + padding).ceil();
+      // H.264/yuv420p requires even dimensions
+      final imgW = _toEven(textPainter.width + padding * 2);
+      final imgH = _toEven(textPainter.height + padding);
 
       final recorder = ui.PictureRecorder();
       final canvas = ui.Canvas(recorder);
@@ -187,6 +188,12 @@ class VideoService {
       log("Error generating video: $e");
       return null;
     }
+  }
+
+  // Round up to nearest even integer (required by H.264/yuv420p)
+  static int _toEven(double v) {
+    final n = v.ceil();
+    return n.isEven ? n : n + 1;
   }
 
   // FFmpeg overlay coordinates based on watermark position
