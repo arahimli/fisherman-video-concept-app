@@ -140,7 +140,7 @@ class VideoService {
       if (imageWmIndex >= 0) {
         final nextLabel = textWmIndex >= 0 ? 'wm1' : 'outv';
         wmFilters +=
-            ';[$imageWmIndex:v]scale=220:-1[wm_img];[$lastLabel][wm_img]overlay=$ox:$oy[$nextLabel]';
+            ';[$imageWmIndex:v]scale=150:150:force_original_aspect_ratio=decrease,pad=150:150:(ow-iw)/2:(oh-ih)/2[wm_img];[$lastLabel][wm_img]overlay=$ox:$oy[$nextLabel]';
         lastLabel = nextLabel;
       }
 
