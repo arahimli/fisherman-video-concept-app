@@ -33,7 +33,7 @@ class SettingsService {
 
   Future<WatermarkPosition> getPosition() async {
     final index = (await _prefs).getInt(_keyPosition) ??
-        WatermarkPosition.bottomRight.index;
+        WatermarkPosition.topRight.index;
     return WatermarkPosition.values[index];
   }
 
