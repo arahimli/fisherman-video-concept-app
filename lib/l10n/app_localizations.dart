@@ -485,6 +485,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bottom Right'**
   String get positionBottomRight;
+
+  /// No description provided for @backToSelectImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get backToSelectImageTitle;
+
+  /// No description provided for @backToSelectImageMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to go back to select image mode?'**
+  String get backToSelectImageMessage;
+
+  /// No description provided for @pressBackAgainToExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Press back again to exit'**
+  String get pressBackAgainToExit;
 }
 
 class _AppLocalizationsDelegate

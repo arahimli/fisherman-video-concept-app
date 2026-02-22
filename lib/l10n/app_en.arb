@@ -78,5 +78,8 @@
   "positionTopLeft": "Top Left",
   "positionTopRight": "Top Right",
   "positionBottomLeft": "Bottom Left",
-  "positionBottomRight": "Bottom Right"
+  "positionBottomRight": "Bottom Right",
+  "backToSelectImageTitle": "Go Back",
+  "backToSelectImageMessage": "Are you sure you want to go back to select image mode?",
+  "pressBackAgainToExit": "Press back again to exit"
 }

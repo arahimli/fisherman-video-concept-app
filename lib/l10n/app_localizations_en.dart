@@ -206,4 +206,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get positionBottomRight => 'Bottom Right';
+
+  @override
+  String get backToSelectImageTitle => 'Go Back';
+
+  @override
+  String get backToSelectImageMessage =>
+      'Are you sure you want to go back to select image mode?';
+
+  @override
+  String get pressBackAgainToExit => 'Press back again to exit';
 }

@@ -78,5 +78,8 @@
   "positionTopLeft": "Yuxarı Sol",
   "positionTopRight": "Yuxarı Sağ",
   "positionBottomLeft": "Aşağı Sol",
-  "positionBottomRight": "Aşağı Sağ"
+  "positionBottomRight": "Aşağı Sağ",
+  "backToSelectImageTitle": "Geri Qayıt",
+  "backToSelectImageMessage": "Şəkil seçmə rejiminə qayıtmaq istədiyinizə əminsiniz?",
+  "pressBackAgainToExit": "Çıxmaq üçün yenidən geri basın"
 }

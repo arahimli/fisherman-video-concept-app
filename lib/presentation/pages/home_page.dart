@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,55 +16,87 @@ import '../widgets/home/image_preview_mode_widget.dart';
 import '../widgets/home/loading_state_widget.dart';
 import '../widgets/home/video_ready_mode_widget.dart';
 
-class NewHomePage extends StatelessWidget {
+class NewHomePage extends StatefulWidget {
   const NewHomePage({super.key});
+
+  @override
+  State<NewHomePage> createState() => _NewHomePageState();
+}
+
+class _NewHomePageState extends State<NewHomePage> {
+  DateTime? _lastBackPressed;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
 
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<VideoBloc, VideoState>(
-          listener: (context, state) {
-            if (state is VideoGeneratedState) {
-              context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
-            } else if (state is VideoErrorState) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage),
-                  backgroundColor: AppColors.error,
-                ),
-              );
-            }
-          },
-        ),
-      ],
-      child: Scaffold(
-        appBar: _HomeAppBar(l10n: l10n),
-        body: SafeArea(
-          top: false,
-          child: BlocBuilder<VideoBloc, VideoState>(
-            builder: (context, state) {
-              if (state is VideoLoadingState) {
-                return LoadingStateWidget(loadingMessage: state.loadingMessage);
-              }
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (didPop) return;
+        final videoState = context.read<VideoBloc>().state;
+        if (videoState is VideoGeneratedState) {
+          showBackToSelectImageSheet(context);
+          return;
+        }
+        final now = DateTime.now();
+        if (_lastBackPressed == null ||
+            now.difference(_lastBackPressed!) > const Duration(seconds: 2)) {
+          _lastBackPressed = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(l10n.pressBackAgainToExit),
+              duration: const Duration(seconds: 2),
+              backgroundColor: AppColors.surface,
+            ),
+          );
+          return;
+        }
+        SystemNavigator.pop();
+      },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<VideoBloc, VideoState>(
+            listener: (context, state) {
               if (state is VideoGeneratedState) {
-                return VideoReadyModeWidget(
-                  imageFile: state.imageFile,
-                  videoPath: state.videoPath,
+                context.read<RecentVideosBloc>().add(LoadRecentVideosEvent());
+              } else if (state is VideoErrorState) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.errorMessage),
+                    backgroundColor: AppColors.error,
+                  ),
                 );
               }
-              if (state is ImagePickedState || state is VideoErrorState) {
-                final File? imageFile = state is ImagePickedState
-                    ? state.imageFile
-                    : (state as VideoErrorState).imageFile;
-                if (imageFile != null) {
-                  return ImagePreviewModeWidget(imageFile: imageFile);
-                }
-              }
-              return const CreateModeWidget();
             },
+          ),
+        ],
+        child: Scaffold(
+          appBar: _HomeAppBar(l10n: l10n),
+          body: SafeArea(
+            top: false,
+            child: BlocBuilder<VideoBloc, VideoState>(
+              builder: (context, state) {
+                if (state is VideoLoadingState) {
+                  return LoadingStateWidget(loadingMessage: state.loadingMessage);
+                }
+                if (state is VideoGeneratedState) {
+                  return VideoReadyModeWidget(
+                    imageFile: state.imageFile,
+                    videoPath: state.videoPath,
+                  );
+                }
+                if (state is ImagePickedState || state is VideoErrorState) {
+                  final File? imageFile = state is ImagePickedState
+                      ? state.imageFile
+                      : (state as VideoErrorState).imageFile;
+                  if (imageFile != null) {
+                    return ImagePreviewModeWidget(imageFile: imageFile);
+                  }
+                }
+                return const CreateModeWidget();
+              },
+            ),
           ),
         ),
       ),

@@ -207,4 +207,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get positionBottomRight => 'Sağ Alt';
+
+  @override
+  String get backToSelectImageTitle => 'Geri Dön';
+
+  @override
+  String get backToSelectImageMessage =>
+      'Resim seçme moduna geri dönmek istediğinize emin misiniz?';
+
+  @override
+  String get pressBackAgainToExit => 'Çıkmak için tekrar geri basın';
 }

@@ -78,5 +78,8 @@
   "positionTopLeft": "Верх слева",
   "positionTopRight": "Верх справа",
   "positionBottomLeft": "Низ слева",
-  "positionBottomRight": "Низ справа"
+  "positionBottomRight": "Низ справа",
+  "backToSelectImageTitle": "Назад",
+  "backToSelectImageMessage": "Вы уверены, что хотите вернуться к выбору изображения?",
+  "pressBackAgainToExit": "Нажмите ещё раз для выхода"
 }

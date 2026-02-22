@@ -207,4 +207,14 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get positionBottomRight => 'Aşağı Sağ';
+
+  @override
+  String get backToSelectImageTitle => 'Geri Qayıt';
+
+  @override
+  String get backToSelectImageMessage =>
+      'Şəkil seçmə rejiminə qayıtmaq istədiyinizə əminsiniz?';
+
+  @override
+  String get pressBackAgainToExit => 'Çıxmaq üçün yenidən geri basın';
 }

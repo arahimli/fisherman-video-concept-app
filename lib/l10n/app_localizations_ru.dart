@@ -206,4 +206,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get positionBottomRight => 'Низ справа';
+
+  @override
+  String get backToSelectImageTitle => 'Назад';
+
+  @override
+  String get backToSelectImageMessage =>
+      'Вы уверены, что хотите вернуться к выбору изображения?';
+
+  @override
+  String get pressBackAgainToExit => 'Нажмите ещё раз для выхода';
 }

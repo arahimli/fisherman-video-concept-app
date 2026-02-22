@@ -70,6 +70,75 @@ void showImageSourceSheet(BuildContext context) {
   );
 }
 
+void showBackToSelectImageSheet(BuildContext context) {
+  final l10n = AppLocalizations.of(context);
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: AppColors.surface,
+    shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXl),
+    builder: (sheetContext) => SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 40,
+              height: 4,
+              decoration: const BoxDecoration(
+                color: AppColors.surfaceHighest,
+                borderRadius: AppRadius.xsAll,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            Text(l10n.backToSelectImageTitle, style: AppTextStyles.appBarTitle),
+            const SizedBox(height: AppSpacing.md),
+            Text(
+              l10n.backToSelectImageMessage,
+              style: AppTextStyles.dialogContent,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: () => Navigator.pop(sheetContext),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppColors.textPrimary,
+                      side: const BorderSide(color: AppColors.accentBorder),
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                    ),
+                    child: Text(l10n.no),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(sheetContext);
+                      context.read<VideoBloc>().add(ResetEvent());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.accent,
+                      foregroundColor: AppColors.background,
+                      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                      shape: RoundedRectangleBorder(borderRadius: AppRadius.mdAll),
+                    ),
+                    child: Text(l10n.yes),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 void showResetConfirmSheet(BuildContext context) {
   final l10n = AppLocalizations.of(context);
   showModalBottomSheet(

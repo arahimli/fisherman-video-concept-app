@@ -78,5 +78,8 @@
   "positionTopLeft": "Sol Üst",
   "positionTopRight": "Sağ Üst",
   "positionBottomLeft": "Sol Alt",
-  "positionBottomRight": "Sağ Alt"
+  "positionBottomRight": "Sağ Alt",
+  "backToSelectImageTitle": "Geri Dön",
+  "backToSelectImageMessage": "Resim seçme moduna geri dönmek istediğinize emin misiniz?",
+  "pressBackAgainToExit": "Çıkmak için tekrar geri basın"
 }
