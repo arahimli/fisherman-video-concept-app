@@ -81,5 +81,13 @@
   "positionBottomRight": "Низ справа",
   "backToSelectImageTitle": "Назад",
   "backToSelectImageMessage": "Вы уверены, что хотите вернуться к выбору изображения?",
-  "pressBackAgainToExit": "Нажмите ещё раз для выхода"
+  "pressBackAgainToExit": "Нажмите ещё раз для выхода",
+  "support": "Поддержка",
+  "supportDesc": "Посмотрите видеорекламу, чтобы помочь сохранить приложение бесплатным",
+  "shortVideo": "Короткое видео",
+  "shortVideoDesc": "Посмотрите короткую рекламу для поддержки",
+  "longVideo": "Длинное видео",
+  "longVideoDesc": "Посмотрите длинную рекламу для дополнительной поддержки",
+  "watchAd": "Смотреть",
+  "thankYouSupport": "Спасибо за вашу поддержку!"
 }

@@ -81,5 +81,13 @@
   "positionBottomRight": "Aşağı Sağ",
   "backToSelectImageTitle": "Geri Qayıt",
   "backToSelectImageMessage": "Şəkil seçmə rejiminə qayıtmaq istədiyinizə əminsiniz?",
-  "pressBackAgainToExit": "Çıxmaq üçün yenidən geri basın"
+  "pressBackAgainToExit": "Çıxmaq üçün yenidən geri basın",
+  "support": "Dəstək",
+  "supportDesc": "Tətbiqi pulsuz saxlamaq üçün video reklam izləyin",
+  "shortVideo": "Qısa Video",
+  "shortVideoDesc": "Dəstək üçün qısa reklam izləyin",
+  "longVideo": "Uzun Video",
+  "longVideoDesc": "Əlavə dəstək üçün uzun reklam izləyin",
+  "watchAd": "İzlə",
+  "thankYouSupport": "Dəstəyiniz üçün təşəkkür edirik!"
 }

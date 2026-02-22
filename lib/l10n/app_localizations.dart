@@ -503,6 +503,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Press back again to exit'**
   String get pressBackAgainToExit;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @supportDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a video ad to help keep the app free and support development'**
+  String get supportDesc;
+
+  /// No description provided for @shortVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Video'**
+  String get shortVideo;
+
+  /// No description provided for @shortVideoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a short ad to support the app'**
+  String get shortVideoDesc;
+
+  /// No description provided for @longVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Video'**
+  String get longVideo;
+
+  /// No description provided for @longVideoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a longer ad for extra support'**
+  String get longVideoDesc;
+
+  /// No description provided for @watchAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get watchAd;
+
+  /// No description provided for @thankYouSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your support!'**
+  String get thankYouSupport;
 }
 
 class _AppLocalizationsDelegate

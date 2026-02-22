@@ -216,4 +216,30 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'Нажмите ещё раз для выхода';
+
+  @override
+  String get support => 'Поддержка';
+
+  @override
+  String get supportDesc =>
+      'Посмотрите видеорекламу, чтобы помочь сохранить приложение бесплатным';
+
+  @override
+  String get shortVideo => 'Короткое видео';
+
+  @override
+  String get shortVideoDesc => 'Посмотрите короткую рекламу для поддержки';
+
+  @override
+  String get longVideo => 'Длинное видео';
+
+  @override
+  String get longVideoDesc =>
+      'Посмотрите длинную рекламу для дополнительной поддержки';
+
+  @override
+  String get watchAd => 'Смотреть';
+
+  @override
+  String get thankYouSupport => 'Спасибо за вашу поддержку!';
 }

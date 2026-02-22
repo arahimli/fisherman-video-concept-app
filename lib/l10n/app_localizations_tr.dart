@@ -217,4 +217,29 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'Çıkmak için tekrar geri basın';
+
+  @override
+  String get support => 'Destek';
+
+  @override
+  String get supportDesc =>
+      'Uygulamanın ücretsiz kalmasına yardımcı olmak için video reklam izleyin';
+
+  @override
+  String get shortVideo => 'Kısa Video';
+
+  @override
+  String get shortVideoDesc => 'Destek için kısa bir reklam izleyin';
+
+  @override
+  String get longVideo => 'Uzun Video';
+
+  @override
+  String get longVideoDesc => 'Ekstra destek için uzun bir reklam izleyin';
+
+  @override
+  String get watchAd => 'İzle';
+
+  @override
+  String get thankYouSupport => 'Desteğiniz için teşekkürler!';
 }

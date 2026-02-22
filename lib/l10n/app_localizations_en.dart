@@ -216,4 +216,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'Press back again to exit';
+
+  @override
+  String get support => 'Support';
+
+  @override
+  String get supportDesc =>
+      'Watch a video ad to help keep the app free and support development';
+
+  @override
+  String get shortVideo => 'Short Video';
+
+  @override
+  String get shortVideoDesc => 'Watch a short ad to support the app';
+
+  @override
+  String get longVideo => 'Long Video';
+
+  @override
+  String get longVideoDesc => 'Watch a longer ad for extra support';
+
+  @override
+  String get watchAd => 'Watch';
+
+  @override
+  String get thankYouSupport => 'Thank you for your support!';
 }
