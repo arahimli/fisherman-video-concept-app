@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'core/di/service_locator.dart';
 import 'core/router/app_router.dart';
@@ -7,7 +8,9 @@ import 'l10n/app_localizations.dart';
 import 'presentation/managers/recent_videos_bloc/bloc.dart';
 import 'presentation/managers/video_bloc/bloc.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MobileAds.instance.initialize();
   setupServiceLocator();
   runApp(const MyApp());
 }

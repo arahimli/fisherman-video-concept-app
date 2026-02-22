@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/design_system.dart';
@@ -263,57 +264,65 @@ class _NewHomePageState extends State<NewHomePage>
   }
 
   Widget _buildLoadingState(double screenWidth, String loadingMessage) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              AnimatedBuilder(
-                animation: _rotateAnimation,
-                builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _rotateAnimation.value * 2 * 3.14159,
-                    child: Container(
-                      width: screenWidth * 0.3,
-                      height: screenWidth * 0.3,
+    return Column(
+      children: [
+        const _BannerAdWidget(),
+        Expanded(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    AnimatedBuilder(
+                      animation: _rotateAnimation,
+                      builder: (context, child) {
+                        return Transform.rotate(
+                          angle: _rotateAnimation.value * 2 * 3.14159,
+                          child: Container(
+                            width: screenWidth * 0.3,
+                            height: screenWidth * 0.3,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: AppColors.accent, width: 3),
+                              gradient: const LinearGradient(
+                                colors: [AppColors.accent, AppColors.accentOverlay],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    Container(
+                      width: screenWidth * 0.2,
+                      height: screenWidth * 0.2,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        border: Border.all(color: AppColors.accent, width: 3),
-                        gradient: const LinearGradient(
-                          colors: [AppColors.accent, AppColors.accentOverlay],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                        color: AppColors.background,
+                        border: Border.all(color: AppColors.accentBorder, width: 2),
                       ),
                     ),
-                  );
-                },
-              ),
-              Container(
-                width: screenWidth * 0.2,
-                height: screenWidth * 0.2,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.background,
-                  border: Border.all(color: AppColors.accentBorder, width: 2),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xxxl),
-          Text(loadingMessage, style: AppTextStyles.loadingMessage),
-          const SizedBox(height: AppSpacing.md),
-          SizedBox(
-            width: screenWidth * 0.5,
-            child: const LinearProgressIndicator(
-              backgroundColor: Colors.white10,
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
+                const SizedBox(height: AppSpacing.xxxl),
+                Text(loadingMessage, style: AppTextStyles.loadingMessage),
+                const SizedBox(height: AppSpacing.md),
+                SizedBox(
+                  width: screenWidth * 0.5,
+                  child: const LinearProgressIndicator(
+                    backgroundColor: Colors.white10,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.accent),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+        const _BannerAdWidget(),
+      ],
     );
   }
 
@@ -881,6 +890,64 @@ class _RecentVideoItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ── Banner Ad ─────────────────────────────────────────────────────────────────
+
+class _BannerAdWidget extends StatefulWidget {
+  const _BannerAdWidget();
+
+  @override
+  State<_BannerAdWidget> createState() => _BannerAdWidgetState();
+}
+
+class _BannerAdWidgetState extends State<_BannerAdWidget> {
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  // Test ad unit IDs — replace with real IDs before release
+  static const String _androidAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
+  static const String _iosAdUnitId = 'ca-app-pub-3940256099942544/2934735716';
+
+  String get _adUnitId =>
+      Platform.isAndroid ? _androidAdUnitId : _iosAdUnitId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAd();
+  }
+
+  void _loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: _adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() => _isLoaded = true),
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          _bannerAd = null;
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isLoaded || _bannerAd == null) return const SizedBox.shrink();
+    return SizedBox(
+      width: _bannerAd!.size.width.toDouble(),
+      height: _bannerAd!.size.height.toDouble(),
+      child: AdWidget(ad: _bannerAd!),
     );
   }
 }
