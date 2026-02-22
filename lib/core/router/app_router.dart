@@ -19,7 +19,10 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.home,
-      builder: (context, state) => const NewHomePage(),
+      builder: (context, state) => BlocProvider<HistoryBloc>(
+        create: (_) => sl<HistoryBloc>(),
+        child: const NewHomePage(),
+      ),
     ),
     GoRoute(
       path: AppRoutes.history,

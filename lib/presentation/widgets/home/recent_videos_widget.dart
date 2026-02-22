@@ -7,6 +7,7 @@ import '../../../core/router/app_routes.dart';
 import '../../../data/database/app_database.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../managers/recent_videos_bloc/bloc.dart';
+import '../history/history_sheets.dart';
 import 'recent_video_item.dart';
 
 class RecentVideosWidget extends StatelessWidget {
@@ -83,6 +84,7 @@ class RecentVideosWidget extends StatelessWidget {
                   video: video,
                   screenWidth: screenWidth,
                   onTap: () => context.push(AppRoutes.videoPreview, extra: video.videoPath),
+                  onLongPress: () => showVideoOptionsSheet(context, video),
                 ),
               );
             },

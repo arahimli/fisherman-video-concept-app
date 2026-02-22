@@ -10,18 +10,21 @@ class RecentVideoItem extends StatelessWidget {
   final VideoHistoryData video;
   final double screenWidth;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const RecentVideoItem({
     super.key,
     required this.video,
     required this.screenWidth,
     required this.onTap,
+    this.onLongPress,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         width: screenWidth * 0.35,
         decoration: const BoxDecoration(
