@@ -4,4 +4,5 @@ abstract class AppRoutes {
   static const String history = '/history';
   static const String videoPreview = '/video-preview';
   static const String settings = '/settings';
+  static const String support = '/support';
 }

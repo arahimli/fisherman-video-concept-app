@@ -123,6 +123,10 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
+          icon: const Icon(Icons.favorite_outline, color: AppColors.textTertiary, size: 22),
+          onPressed: () => context.push(AppRoutes.support),
+        ),
+        IconButton(
           icon: const Icon(Icons.tune, color: AppColors.textTertiary, size: 22),
           onPressed: () => context.push(AppRoutes.settings),
         ),

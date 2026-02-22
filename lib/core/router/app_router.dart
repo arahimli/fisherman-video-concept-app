@@ -7,6 +7,7 @@ import '../../presentation/pages/history_page.dart';
 import '../../presentation/pages/home_page.dart';
 import '../../presentation/pages/splash_page.dart';
 import '../../presentation/pages/settings_page.dart';
+import '../../presentation/pages/support_page.dart';
 import '../../presentation/pages/video_preview_page.dart';
 import 'app_routes.dart';
 
@@ -41,6 +42,10 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.settings,
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.support,
+      builder: (context, state) => const SupportPage(),
     ),
   ],
 );
