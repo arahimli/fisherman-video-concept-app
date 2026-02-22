@@ -167,4 +167,54 @@ class AppLocalizationsTr extends AppLocalizations {
   String shareError(Object error) {
     return 'Paylaşım hatası: $error';
   }
+
+  @override
+  String get settings => 'Ayarlar';
+
+  @override
+  String get watermark => 'Filigran';
+
+  @override
+  String get imageWatermark => 'Görsel Filigran';
+
+  @override
+  String get imageWatermarkDesc => 'Videoya logo veya görsel ekle';
+
+  @override
+  String get watermarkPosition => 'Filigran Konumu';
+
+  @override
+  String get watermarkHint =>
+      'Herhangi bir katman olmadan video oluşturmak için filigranı devre dışı bırakın.';
+
+  @override
+  String get watermarkChangeImage => 'Görseli Değiştir';
+
+  @override
+  String get watermarkRemove => 'Kaldır';
+
+  @override
+  String get watermarkSelectImage => 'Görsel Seç';
+
+  @override
+  String get positionTopLeft => 'Sol Üst';
+
+  @override
+  String get positionTopRight => 'Sağ Üst';
+
+  @override
+  String get positionBottomLeft => 'Sol Alt';
+
+  @override
+  String get positionBottomRight => 'Sağ Alt';
+
+  @override
+  String get backToSelectImageTitle => 'Geri Dön';
+
+  @override
+  String get backToSelectImageMessage =>
+      'Resim seçme moduna geri dönmek istediğinize emin misiniz?';
+
+  @override
+  String get pressBackAgainToExit => 'Çıkmak için tekrar geri basın';
 }

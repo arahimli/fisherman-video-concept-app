@@ -65,5 +65,21 @@
     "placeholders": {
       "error": { "type": "Object" }
     }
-  }
+  },
+  "settings": "Ayarlar",
+  "watermark": "Filigran",
+  "imageWatermark": "Görsel Filigran",
+  "imageWatermarkDesc": "Videoya logo veya görsel ekle",
+  "watermarkPosition": "Filigran Konumu",
+  "watermarkHint": "Herhangi bir katman olmadan video oluşturmak için filigranı devre dışı bırakın.",
+  "watermarkChangeImage": "Görseli Değiştir",
+  "watermarkRemove": "Kaldır",
+  "watermarkSelectImage": "Görsel Seç",
+  "positionTopLeft": "Sol Üst",
+  "positionTopRight": "Sağ Üst",
+  "positionBottomLeft": "Sol Alt",
+  "positionBottomRight": "Sağ Alt",
+  "backToSelectImageTitle": "Geri Dön",
+  "backToSelectImageMessage": "Resim seçme moduna geri dönmek istediğinize emin misiniz?",
+  "pressBackAgainToExit": "Çıkmak için tekrar geri basın"
 }
