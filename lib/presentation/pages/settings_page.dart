@@ -17,11 +17,9 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   final _settings = SettingsService();
   final _picker = ImagePicker();
-  final _textController = TextEditingController();
 
   bool _imageEnabled = false;
   String? _imagePath;
-  bool _textEnabled = false;
   WatermarkPosition _position = WatermarkPosition.bottomRight;
   bool _loading = true;
 
@@ -31,19 +29,11 @@ class _SettingsPageState extends State<SettingsPage> {
     _load();
   }
 
-  @override
-  void dispose() {
-    _textController.dispose();
-    super.dispose();
-  }
-
   Future<void> _load() async {
     final s = await _settings.getWatermarkSettings();
-    _textController.text = s.text;
     setState(() {
       _imageEnabled = s.imageEnabled;
       _imagePath = s.imagePath;
-      _textEnabled = s.textEnabled;
       _position = s.position;
       _loading = false;
     });
@@ -113,75 +103,8 @@ class _SettingsPageState extends State<SettingsPage> {
                     ],
                   ),
 
-                  const SizedBox(height: AppSpacing.md),
-
-                  // ── Text watermark ────────────────────────────────────
-                  _SettingsCard(
-                    children: [
-                      _ToggleRow(
-                        icon: Icons.text_fields_outlined,
-                        title: 'Text Watermark',
-                        subtitle: 'Add custom text on the video',
-                        value: _textEnabled,
-                        onChanged: (v) {
-                          setState(() => _textEnabled = v);
-                          _settings.setTextWatermarkEnabled(v);
-                        },
-                      ),
-                      if (_textEnabled) ...[
-                        const Divider(color: AppColors.surfaceElevated, height: 1),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(
-                            AppSpacing.md,
-                            AppSpacing.md,
-                            AppSpacing.md,
-                            AppSpacing.md,
-                          ),
-                          child: TextField(
-                            controller: _textController,
-                            style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontSize: 14,
-                            ),
-                            maxLength: 60,
-                            decoration: InputDecoration(
-                              hintText: 'e.g. © Your Name 2025',
-                              hintStyle: const TextStyle(
-                                color: AppColors.textHint,
-                                fontSize: 14,
-                              ),
-                              counterStyle: const TextStyle(
-                                color: AppColors.textHint,
-                                fontSize: 11,
-                              ),
-                              filled: true,
-                              fillColor: AppColors.surfaceElevated,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: AppSpacing.lg,
-                                vertical: AppSpacing.md,
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: AppRadius.mdAll,
-                                borderSide: const BorderSide(
-                                  color: AppColors.accentBorder,
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: AppRadius.mdAll,
-                                borderSide: const BorderSide(
-                                  color: AppColors.accent,
-                                ),
-                              ),
-                            ),
-                            onChanged: (v) => _settings.setTextWatermarkContent(v),
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-
                   // ── Position ──────────────────────────────────────────
-                  if (_imageEnabled || _textEnabled) ...[
+                  if (_imageEnabled) ...[
                     const SizedBox(height: AppSpacing.md),
                     _SectionLabel('Watermark Position'),
                     const SizedBox(height: AppSpacing.sm),
@@ -203,7 +126,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
                   const SizedBox(height: AppSpacing.xl),
                   const Text(
-                    'Uncheck both watermarks to create videos without any overlay.',
+                    'Disable the watermark to create videos without any overlay.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: AppColors.textHint,

@@ -1,8 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:ui' as ui;
 
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
@@ -21,56 +19,6 @@ class VideoService {
     }
 
     return file.path;
-  }
-
-  // Renders text as a transparent PNG using Flutter's canvas.
-  // Avoids FFmpeg drawtext which requires system fonts unavailable on mobile.
-  static Future<String?> _renderTextAsImage(String text) async {
-    try {
-      const fontSize = 38.0;
-      const padding = 16.0;
-
-      final textPainter = TextPainter(
-        text: TextSpan(
-          text: text,
-          style: const TextStyle(
-            color: Color(0xA6FFFFFF), // white at ~65% opacity
-            fontSize: fontSize,
-            fontWeight: FontWeight.w500,
-            shadows: [
-              Shadow(
-                offset: Offset(1.5, 1.5),
-                blurRadius: 6,
-                color: Color(0x99000000),
-              ),
-            ],
-          ),
-        ),
-        textDirection: TextDirection.ltr,
-      );
-      textPainter.layout();
-
-      // H.264/yuv420p requires even dimensions
-      final imgW = _toEven(textPainter.width + padding * 2);
-      final imgH = _toEven(textPainter.height + padding);
-
-      final recorder = ui.PictureRecorder();
-      final canvas = ui.Canvas(recorder);
-      textPainter.paint(canvas, const Offset(padding, padding / 2));
-      final picture = recorder.endRecording();
-
-      final img = await picture.toImage(imgW, imgH);
-      final byteData = await img.toByteData(format: ui.ImageByteFormat.png);
-      if (byteData == null) return null;
-
-      final dir = await getTemporaryDirectory();
-      final file = File('${dir.path}/text_watermark_${DateTime.now().millisecondsSinceEpoch}.png');
-      await file.writeAsBytes(byteData.buffer.asUint8List());
-      return file.path;
-    } catch (e) {
-      log('Error rendering text watermark image: $e');
-      return null;
-    }
   }
 
   static Future<String?> generateVideo(
@@ -92,31 +40,11 @@ class VideoService {
       final musicPath = await copyMusicToTemp();
 
       final hasImageWatermark = watermark != null && watermark.hasImageWatermark;
-      final hasTextWatermark = watermark != null && watermark.hasTextWatermark;
 
-      // Pre-render text watermark as PNG (avoids FFmpeg font dependency)
-      String? textImagePath;
-      if (hasTextWatermark) {
-        textImagePath = await _renderTextAsImage(watermark!.text);
-      }
+      // [0–5]: video frames, [6]: audio, [7]: image watermark (if any)
+      final extraInput = hasImageWatermark ? '-i "${watermark!.imagePath}" ' : '';
+      final wmIndex = 7;
 
-      // Build extra inputs and their FFmpeg input indices
-      // [0–5]: video frames, [6]: audio, [7]: image wm, [7 or 8]: text wm
-      String extraInputs = '';
-      int imageWmIndex = -1;
-      int textWmIndex = -1;
-      int nextIndex = 7;
-
-      if (hasImageWatermark) {
-        extraInputs += '-i "${watermark!.imagePath}" ';
-        imageWmIndex = nextIndex++;
-      }
-      if (textImagePath != null) {
-        extraInputs += '-i "$textImagePath" ';
-        textWmIndex = nextIndex++;
-      }
-
-      final hasAnyWatermark = imageWmIndex >= 0 || textWmIndex >= 0;
       final pos = watermark?.position ?? WatermarkPosition.bottomRight;
       final ox = _overlayX(pos);
       final oy = _overlayY(pos);
@@ -130,26 +58,14 @@ class VideoService {
           '[4:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v4];'
           '[5:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v5];';
 
-      final concatLabel = hasAnyWatermark ? '[cat]' : '[outv]';
+      final concatLabel = hasImageWatermark ? '[cat]' : '[outv]';
       final concat = '[v0][v1][v2][v3][v4][v5]concat=n=6:v=1:a=0$concatLabel';
 
-      // Chain watermark overlays
-      String wmFilters = '';
-      String lastLabel = hasAnyWatermark ? 'cat' : 'outv';
+      final wmFilter = hasImageWatermark
+          ? ';[$wmIndex:v]scale=150:150:force_original_aspect_ratio=decrease,pad=150:150:(ow-iw)/2:(oh-ih)/2[wm];[cat][wm]overlay=$ox:$oy[outv]'
+          : '';
 
-      if (imageWmIndex >= 0) {
-        final nextLabel = textWmIndex >= 0 ? 'wm1' : 'outv';
-        wmFilters +=
-            ';[$imageWmIndex:v]scale=150:150:force_original_aspect_ratio=decrease,pad=150:150:(ow-iw)/2:(oh-ih)/2[wm_img];[$lastLabel][wm_img]overlay=$ox:$oy[$nextLabel]';
-        lastLabel = nextLabel;
-      }
-
-      if (textWmIndex >= 0) {
-        wmFilters +=
-            ';[$textWmIndex:v][$lastLabel]overlay=$ox:$oy[outv]';
-      }
-
-      final filterComplex = '"$scaleFilters$concat$wmFilters"';
+      final filterComplex = '"$scaleFilters$concat$wmFilter"';
 
       final command = '-y '
           '-loop 1 -t 2 -i "${images['original']}" '
@@ -159,7 +75,7 @@ class VideoService {
           '-loop 1 -t 2 -i "${images['right_half_black']}" '
           '-loop 1 -t 12 -i "${images['right_symmetry']}" '
           '-i "$musicPath" '
-          '$extraInputs'
+          '$extraInput'
           '-filter_complex $filterComplex '
           '-map "[outv]" '
           '-map 6:a '
@@ -188,12 +104,6 @@ class VideoService {
       log("Error generating video: $e");
       return null;
     }
-  }
-
-  // Round up to nearest even integer (required by H.264/yuv420p)
-  static int _toEven(double v) {
-    final n = v.ceil();
-    return n.isEven ? n : n + 1;
   }
 
   // FFmpeg overlay coordinates based on watermark position

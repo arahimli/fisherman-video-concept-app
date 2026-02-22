@@ -5,8 +5,6 @@ enum WatermarkPosition { topLeft, topRight, bottomLeft, bottomRight }
 class SettingsService {
   static const _keyImageEnabled = 'watermark_image_enabled';
   static const _keyImagePath = 'watermark_image_path';
-  static const _keyTextEnabled = 'watermark_text_enabled';
-  static const _keyTextContent = 'watermark_text_content';
   static const _keyPosition = 'watermark_position';
 
   Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
@@ -31,24 +29,11 @@ class SettingsService {
     }
   }
 
-  // ── Text watermark ───────────────────────────────────────────────────────
-
-  Future<bool> getTextWatermarkEnabled() async =>
-      (await _prefs).getBool(_keyTextEnabled) ?? false;
-
-  Future<void> setTextWatermarkEnabled(bool value) async =>
-      (await _prefs).setBool(_keyTextEnabled, value);
-
-  Future<String> getTextWatermarkContent() async =>
-      (await _prefs).getString(_keyTextContent) ?? '';
-
-  Future<void> setTextWatermarkContent(String value) async =>
-      (await _prefs).setString(_keyTextContent, value);
-
   // ── Position ─────────────────────────────────────────────────────────────
 
   Future<WatermarkPosition> getPosition() async {
-    final index = (await _prefs).getInt(_keyPosition) ?? WatermarkPosition.bottomRight.index;
+    final index = (await _prefs).getInt(_keyPosition) ??
+        WatermarkPosition.bottomRight.index;
     return WatermarkPosition.values[index];
   }
 
@@ -60,14 +45,10 @@ class SettingsService {
   Future<WatermarkSettings> getWatermarkSettings() async {
     final imageEnabled = await getImageWatermarkEnabled();
     final imagePath = await getImageWatermarkPath();
-    final textEnabled = await getTextWatermarkEnabled();
-    final text = await getTextWatermarkContent();
     final position = await getPosition();
     return WatermarkSettings(
       imageEnabled: imageEnabled,
       imagePath: imagePath,
-      textEnabled: textEnabled,
-      text: text,
       position: position,
     );
   }
@@ -76,19 +57,14 @@ class SettingsService {
 class WatermarkSettings {
   final bool imageEnabled;
   final String? imagePath;
-  final bool textEnabled;
-  final String text;
   final WatermarkPosition position;
 
   const WatermarkSettings({
     required this.imageEnabled,
     this.imagePath,
-    required this.textEnabled,
-    required this.text,
     required this.position,
   });
 
   bool get hasImageWatermark => imageEnabled && imagePath != null;
-  bool get hasTextWatermark => textEnabled && text.isNotEmpty;
-  bool get hasAnyWatermark => hasImageWatermark || hasTextWatermark;
+  bool get hasAnyWatermark => hasImageWatermark;
 }
