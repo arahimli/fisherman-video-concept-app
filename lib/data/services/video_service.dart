@@ -66,17 +66,23 @@ class VideoService {
       String watermarkFilters = '';
       String lastLabel = hasImageWatermark || hasTextWatermark ? 'cat' : 'outv';
 
+      final pos = watermark?.position ?? WatermarkPosition.bottomRight;
+      final overlayX = _overlayX(pos);
+      final overlayY = _overlayY(pos);
+      final textX = _textX(pos);
+      final textY = _textY(pos);
+
       if (hasImageWatermark) {
         final nextLabel = hasTextWatermark ? 'overlaid' : 'outv';
         watermarkFilters +=
-            ';[$watermarkIndex:v]scale=220:-1[wm];[$lastLabel][wm]overlay=W-w-40:H-h-80[$nextLabel]';
+            ';[$watermarkIndex:v]scale=220:-1[wm];[$lastLabel][wm]overlay=$overlayX:$overlayY[$nextLabel]';
         lastLabel = nextLabel;
       }
 
       if (hasTextWatermark) {
         final escaped = _escapeDrawtext(watermark!.text);
         watermarkFilters +=
-            ';[$lastLabel]drawtext=text=\'$escaped\':fontsize=38:fontcolor=white:alpha=0.65:x=w-tw-40:y=h-th-80[outv]';
+            ';[$lastLabel]drawtext=text=\'$escaped\':fontsize=38:fontcolor=white:alpha=0.65:x=$textX:y=$textY[outv]';
       }
 
       final filterComplex =
@@ -128,4 +134,26 @@ class VideoService {
         .replaceAll("'", "\\'")
         .replaceAll(':', '\\:');
   }
+
+  // FFmpeg overlay coordinates for image watermark
+  static String _overlayX(WatermarkPosition pos) =>
+      (pos == WatermarkPosition.topLeft || pos == WatermarkPosition.bottomLeft)
+          ? '40'
+          : 'W-w-40';
+
+  static String _overlayY(WatermarkPosition pos) =>
+      (pos == WatermarkPosition.topLeft || pos == WatermarkPosition.topRight)
+          ? '40'
+          : 'H-h-80';
+
+  // FFmpeg drawtext coordinates for text watermark
+  static String _textX(WatermarkPosition pos) =>
+      (pos == WatermarkPosition.topLeft || pos == WatermarkPosition.bottomLeft)
+          ? '40'
+          : 'w-tw-40';
+
+  static String _textY(WatermarkPosition pos) =>
+      (pos == WatermarkPosition.topLeft || pos == WatermarkPosition.topRight)
+          ? '40'
+          : 'h-th-80';
 }

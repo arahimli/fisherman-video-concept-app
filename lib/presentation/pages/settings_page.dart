@@ -22,6 +22,7 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _imageEnabled = false;
   String? _imagePath;
   bool _textEnabled = false;
+  WatermarkPosition _position = WatermarkPosition.bottomRight;
   bool _loading = true;
 
   @override
@@ -43,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
       _imageEnabled = s.imageEnabled;
       _imagePath = s.imagePath;
       _textEnabled = s.textEnabled;
+      _position = s.position;
       _loading = false;
     });
   }
@@ -177,6 +179,27 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                     ],
                   ),
+
+                  // ── Position ──────────────────────────────────────────
+                  if (_imageEnabled || _textEnabled) ...[
+                    const SizedBox(height: AppSpacing.md),
+                    _SectionLabel('Watermark Position'),
+                    const SizedBox(height: AppSpacing.sm),
+                    _SettingsCard(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(AppSpacing.lg),
+                          child: _PositionSelector(
+                            selected: _position,
+                            onChanged: (p) {
+                              setState(() => _position = p);
+                              _settings.setPosition(p);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
 
                   const SizedBox(height: AppSpacing.xl),
                   const Text(
@@ -359,6 +382,135 @@ class _ImagePreview extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Position selector ─────────────────────────────────────────────────────────
+
+class _PositionSelector extends StatelessWidget {
+  final WatermarkPosition selected;
+  final ValueChanged<WatermarkPosition> onChanged;
+
+  const _PositionSelector({required this.selected, required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            _PosTile(
+              label: 'Top Left',
+              dotAlignment: Alignment.topLeft,
+              selected: selected == WatermarkPosition.topLeft,
+              onTap: () => onChanged(WatermarkPosition.topLeft),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            _PosTile(
+              label: 'Top Right',
+              dotAlignment: Alignment.topRight,
+              selected: selected == WatermarkPosition.topRight,
+              onTap: () => onChanged(WatermarkPosition.topRight),
+            ),
+          ],
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Row(
+          children: [
+            _PosTile(
+              label: 'Bottom Left',
+              dotAlignment: Alignment.bottomLeft,
+              selected: selected == WatermarkPosition.bottomLeft,
+              onTap: () => onChanged(WatermarkPosition.bottomLeft),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+            _PosTile(
+              label: 'Bottom Right',
+              dotAlignment: Alignment.bottomRight,
+              selected: selected == WatermarkPosition.bottomRight,
+              onTap: () => onChanged(WatermarkPosition.bottomRight),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _PosTile extends StatelessWidget {
+  final String label;
+  final Alignment dotAlignment;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _PosTile({
+    required this.label,
+    required this.dotAlignment,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: GestureDetector(
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          height: 72,
+          decoration: BoxDecoration(
+            color: selected
+                ? AppColors.accentOverlay
+                : AppColors.surfaceElevated,
+            borderRadius: AppRadius.mdAll,
+            border: Border.all(
+              color: selected ? AppColors.accent : AppColors.accentBorderFaint,
+              width: selected ? 1.5 : 1,
+            ),
+          ),
+          child: Stack(
+            children: [
+              // Corner dot indicator
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.sm),
+                  child: Align(
+                    alignment: dotAlignment,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: selected
+                            ? AppColors.accent
+                            : AppColors.textHint,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Label
+              Center(
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 11,
+                    color: selected
+                        ? AppColors.accent
+                        : AppColors.textTertiary,
+                    fontWeight: selected
+                        ? FontWeight.w600
+                        : FontWeight.w400,
+                    letterSpacing: 0.3,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
