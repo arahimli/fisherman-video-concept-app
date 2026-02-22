@@ -5,6 +5,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
+import 'settings_service.dart';
+
 class VideoService {
   static Future<String> copyMusicToTemp() async {
     final dir = await getTemporaryDirectory();
@@ -20,7 +22,10 @@ class VideoService {
     return file.path;
   }
 
-  static Future<String?> generateVideo(Map<String, String> images) async {
+  static Future<String?> generateVideo(
+    Map<String, String> images, {
+    WatermarkSettings? watermark,
+  }) async {
     try {
       // Validate input images
       for (var entry in images.entries) {
@@ -31,33 +36,62 @@ class VideoService {
       }
 
       final dir = await getTemporaryDirectory();
-      final outputPath = "${dir.path}/output_${DateTime.now().millisecondsSinceEpoch}.mp4";
+      final outputPath =
+          "${dir.path}/output_${DateTime.now().millisecondsSinceEpoch}.mp4";
       final musicPath = await copyMusicToTemp();
 
-      // Video strukturu - 30 saniyə:
-      // 0-2s: Original şəkil
-      // 2-5s: Sol yarı qara (3s)
-      // 5-15s: Sol simmetriya (10s)
-      // 15-17s: Original şəkil (2s)
-      // 17-19s: Sağ yarı qara (2s)
-      // 19-30s: Sağ simmetriya (11s)
+      final hasImageWatermark =
+          watermark != null && watermark.hasImageWatermark;
+      final hasTextWatermark = watermark != null && watermark.hasTextWatermark;
 
-      final command = '-y '
-          '-loop 1 -t 2 -i "${images['original']}" '           // [0] Original (0-2s)
-          '-loop 1 -t 3 -i "${images['left_half_black']}" '    // [1] Sol yarı qara (2-5s)
-          '-loop 1 -t 10 -i "${images['left_symmetry']}" '      // [2] Sol simmetriya (5-15s)
-          '-loop 1 -t 2 -i "${images['original']}" '           // [3] Original (15-17s)
-          '-loop 1 -t 2 -i "${images['right_half_black']}" '   // [4] Sağ yarı qara (17-19s)
-          '-loop 1 -t 12 -i "${images['right_symmetry']}" '    // [5] Sağ simmetriya (19-30s)
-          '-i "$musicPath" '                                    // [6] Audio
-          '-filter_complex "'
+      // Audio is input [6], image watermark (if any) is input [7]
+      final watermarkInput =
+          hasImageWatermark ? '-i "${watermark.imagePath}" ' : '';
+      final watermarkIndex = 7; // index of watermark image input
+
+      // Build filter_complex
+      final scaleFilters =
           '[0:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v0];'
           '[1:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v1];'
           '[2:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v2];'
           '[3:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v3];'
           '[4:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v4];'
-          '[5:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v5];'
-          '[v0][v1][v2][v3][v4][v5]concat=n=6:v=1:a=0[outv]" '
+          '[5:v]scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2,setsar=1,fps=30[v5];';
+
+      final concatOutput =
+          hasImageWatermark || hasTextWatermark ? '[cat]' : '[outv]';
+      final concat =
+          '[v0][v1][v2][v3][v4][v5]concat=n=6:v=1:a=0$concatOutput';
+
+      String watermarkFilters = '';
+      String lastLabel = hasImageWatermark || hasTextWatermark ? 'cat' : 'outv';
+
+      if (hasImageWatermark) {
+        final nextLabel = hasTextWatermark ? 'overlaid' : 'outv';
+        watermarkFilters +=
+            ';[$watermarkIndex:v]scale=220:-1[wm];[$lastLabel][wm]overlay=W-w-40:H-h-80[$nextLabel]';
+        lastLabel = nextLabel;
+      }
+
+      if (hasTextWatermark) {
+        final escaped = _escapeDrawtext(watermark!.text);
+        watermarkFilters +=
+            ';[$lastLabel]drawtext=text=\'$escaped\':fontsize=38:fontcolor=white:alpha=0.65:x=w-tw-40:y=h-th-80[outv]';
+      }
+
+      final filterComplex =
+          '"$scaleFilters$concat$watermarkFilters"';
+
+      final command = '-y '
+          '-loop 1 -t 2 -i "${images['original']}" '
+          '-loop 1 -t 3 -i "${images['left_half_black']}" '
+          '-loop 1 -t 10 -i "${images['left_symmetry']}" '
+          '-loop 1 -t 2 -i "${images['original']}" '
+          '-loop 1 -t 2 -i "${images['right_half_black']}" '
+          '-loop 1 -t 12 -i "${images['right_symmetry']}" '
+          '-i "$musicPath" '
+          '$watermarkInput'
+          '-filter_complex $filterComplex '
           '-map "[outv]" '
           '-map 6:a '
           '-t 30 '
@@ -85,5 +119,13 @@ class VideoService {
       log("Error generating video: $e");
       return null;
     }
+  }
+
+  // Escape special characters for FFmpeg drawtext filter
+  static String _escapeDrawtext(String text) {
+    return text
+        .replaceAll('\\', '\\\\')
+        .replaceAll("'", "\\'")
+        .replaceAll(':', '\\:');
   }
 }

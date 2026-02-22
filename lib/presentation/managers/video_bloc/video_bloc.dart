@@ -57,7 +57,11 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
 
       emit(VideoLoadingState(
           imageFile, event.generatingMessage ?? 'Generating video...'));
-      final videoFile = await VideoService.generateVideo(images);
+      final watermark = await SettingsService().getWatermarkSettings();
+      final videoFile = await VideoService.generateVideo(
+        images,
+        watermark: watermark,
+      );
 
       if (videoFile != null) {
         // Save to database using Drift
