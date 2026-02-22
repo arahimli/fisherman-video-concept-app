@@ -65,5 +65,18 @@
     "placeholders": {
       "error": { "type": "Object" }
     }
-  }
+  },
+  "settings": "Settings",
+  "watermark": "Watermark",
+  "imageWatermark": "Image Watermark",
+  "imageWatermarkDesc": "Overlay a logo or image on the video",
+  "watermarkPosition": "Watermark Position",
+  "watermarkHint": "Disable the watermark to create videos without any overlay.",
+  "watermarkChangeImage": "Change Image",
+  "watermarkRemove": "Remove",
+  "watermarkSelectImage": "Select Image",
+  "positionTopLeft": "Top Left",
+  "positionTopRight": "Top Right",
+  "positionBottomLeft": "Bottom Left",
+  "positionBottomRight": "Bottom Right"
 }

@@ -166,4 +166,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String shareError(Object error) {
     return 'Share error: $error';
   }
+
+  @override
+  String get settings => 'Settings';
+
+  @override
+  String get watermark => 'Watermark';
+
+  @override
+  String get imageWatermark => 'Image Watermark';
+
+  @override
+  String get imageWatermarkDesc => 'Overlay a logo or image on the video';
+
+  @override
+  String get watermarkPosition => 'Watermark Position';
+
+  @override
+  String get watermarkHint =>
+      'Disable the watermark to create videos without any overlay.';
+
+  @override
+  String get watermarkChangeImage => 'Change Image';
+
+  @override
+  String get watermarkRemove => 'Remove';
+
+  @override
+  String get watermarkSelectImage => 'Select Image';
+
+  @override
+  String get positionTopLeft => 'Top Left';
+
+  @override
+  String get positionTopRight => 'Top Right';
+
+  @override
+  String get positionBottomLeft => 'Bottom Left';
+
+  @override
+  String get positionBottomRight => 'Bottom Right';
 }

@@ -1,0 +1,76 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../core/design/design_system.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../managers/video_bloc/bloc.dart';
+import 'action_button.dart';
+import 'home_sheets.dart';
+import 'recent_videos_widget.dart';
+
+class ImagePreviewModeWidget extends StatelessWidget {
+  final File imageFile;
+
+  const ImagePreviewModeWidget({super.key, required this.imageFile});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final l10n = AppLocalizations.of(context);
+
+    return Column(
+      children: [
+        Expanded(
+          flex: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: AppRadius.lgAll,
+                border: Border.all(color: AppColors.accentBorder, width: 2),
+                boxShadow: AppShadows.accentSubtle,
+              ),
+              child: ClipRRect(
+                borderRadius: AppRadius.lgAll,
+                child: Image.file(imageFile, width: double.infinity, fit: BoxFit.cover),
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+          child: Row(
+            children: [
+              Expanded(
+                child: HomeActionButton(
+                  icon: Icons.image_outlined,
+                  label: l10n.changeImage,
+                  onTap: () => showImageSourceSheet(context),
+                ),
+              ),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: HomeActionButton(
+                  icon: Icons.videocam_outlined,
+                  label: l10n.generateVideo,
+                  isAccent: true,
+                  onTap: () => context.read<VideoBloc>().add(
+                        GenerateVideoEvent(
+                          processingMessage: l10n.imageProcessing,
+                          generatingMessage: l10n.videoGenerating,
+                        ),
+                      ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        const Expanded(flex: 3, child: RecentVideosWidget()),
+        const SizedBox(height: AppSpacing.lg),
+      ],
+    );
+  }
+}

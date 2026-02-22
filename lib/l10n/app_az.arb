@@ -65,5 +65,18 @@
     "placeholders": {
       "error": { "type": "Object" }
     }
-  }
+  },
+  "settings": "Parametrlər",
+  "watermark": "Su İzi",
+  "imageWatermark": "Şəkil Su İzi",
+  "imageWatermarkDesc": "Videoya loqo və ya şəkil əlavə et",
+  "watermarkPosition": "Su İzinin Mövqeyi",
+  "watermarkHint": "Su izini söndürün ki, örtüksüz video yaratasınız.",
+  "watermarkChangeImage": "Şəkili Dəyiş",
+  "watermarkRemove": "Sil",
+  "watermarkSelectImage": "Şəkil Seç",
+  "positionTopLeft": "Yuxarı Sol",
+  "positionTopRight": "Yuxarı Sağ",
+  "positionBottomLeft": "Aşağı Sol",
+  "positionBottomRight": "Aşağı Sağ"
 }

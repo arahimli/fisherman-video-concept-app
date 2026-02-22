@@ -65,5 +65,18 @@
     "placeholders": {
       "error": { "type": "Object" }
     }
-  }
+  },
+  "settings": "Настройки",
+  "watermark": "Водяной знак",
+  "imageWatermark": "Изображение-водяной знак",
+  "imageWatermarkDesc": "Наложить логотип или изображение на видео",
+  "watermarkPosition": "Положение водяного знака",
+  "watermarkHint": "Отключите водяной знак, чтобы создать видео без наложения.",
+  "watermarkChangeImage": "Изменить изображение",
+  "watermarkRemove": "Удалить",
+  "watermarkSelectImage": "Выбрать изображение",
+  "positionTopLeft": "Верх слева",
+  "positionTopRight": "Верх справа",
+  "positionBottomLeft": "Низ слева",
+  "positionBottomRight": "Низ справа"
 }

@@ -166,4 +166,44 @@ class AppLocalizationsRu extends AppLocalizations {
   String shareError(Object error) {
     return 'Ошибка при отправке: $error';
   }
+
+  @override
+  String get settings => 'Настройки';
+
+  @override
+  String get watermark => 'Водяной знак';
+
+  @override
+  String get imageWatermark => 'Изображение-водяной знак';
+
+  @override
+  String get imageWatermarkDesc => 'Наложить логотип или изображение на видео';
+
+  @override
+  String get watermarkPosition => 'Положение водяного знака';
+
+  @override
+  String get watermarkHint =>
+      'Отключите водяной знак, чтобы создать видео без наложения.';
+
+  @override
+  String get watermarkChangeImage => 'Изменить изображение';
+
+  @override
+  String get watermarkRemove => 'Удалить';
+
+  @override
+  String get watermarkSelectImage => 'Выбрать изображение';
+
+  @override
+  String get positionTopLeft => 'Верх слева';
+
+  @override
+  String get positionTopRight => 'Верх справа';
+
+  @override
+  String get positionBottomLeft => 'Низ слева';
+
+  @override
+  String get positionBottomRight => 'Низ справа';
 }

@@ -167,4 +167,44 @@ class AppLocalizationsAz extends AppLocalizations {
   String shareError(Object error) {
     return 'Paylaşma xətası: $error';
   }
+
+  @override
+  String get settings => 'Parametrlər';
+
+  @override
+  String get watermark => 'Su İzi';
+
+  @override
+  String get imageWatermark => 'Şəkil Su İzi';
+
+  @override
+  String get imageWatermarkDesc => 'Videoya loqo və ya şəkil əlavə et';
+
+  @override
+  String get watermarkPosition => 'Su İzinin Mövqeyi';
+
+  @override
+  String get watermarkHint =>
+      'Su izini söndürün ki, örtüksüz video yaratasınız.';
+
+  @override
+  String get watermarkChangeImage => 'Şəkili Dəyiş';
+
+  @override
+  String get watermarkRemove => 'Sil';
+
+  @override
+  String get watermarkSelectImage => 'Şəkil Seç';
+
+  @override
+  String get positionTopLeft => 'Yuxarı Sol';
+
+  @override
+  String get positionTopRight => 'Yuxarı Sağ';
+
+  @override
+  String get positionBottomLeft => 'Aşağı Sol';
+
+  @override
+  String get positionBottomRight => 'Aşağı Sağ';
 }

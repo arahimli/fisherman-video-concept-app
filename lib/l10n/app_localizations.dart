@@ -407,6 +407,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Share error: {error}'**
   String shareError(Object error);
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @watermark.
+  ///
+  /// In en, this message translates to:
+  /// **'Watermark'**
+  String get watermark;
+
+  /// No description provided for @imageWatermark.
+  ///
+  /// In en, this message translates to:
+  /// **'Image Watermark'**
+  String get imageWatermark;
+
+  /// No description provided for @imageWatermarkDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Overlay a logo or image on the video'**
+  String get imageWatermarkDesc;
+
+  /// No description provided for @watermarkPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Watermark Position'**
+  String get watermarkPosition;
+
+  /// No description provided for @watermarkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable the watermark to create videos without any overlay.'**
+  String get watermarkHint;
+
+  /// No description provided for @watermarkChangeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get watermarkChangeImage;
+
+  /// No description provided for @watermarkRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get watermarkRemove;
+
+  /// No description provided for @watermarkSelectImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image'**
+  String get watermarkSelectImage;
+
+  /// No description provided for @positionTopLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Left'**
+  String get positionTopLeft;
+
+  /// No description provided for @positionTopRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Right'**
+  String get positionTopRight;
+
+  /// No description provided for @positionBottomLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom Left'**
+  String get positionBottomLeft;
+
+  /// No description provided for @positionBottomRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom Right'**
+  String get positionBottomRight;
 }
 
 class _AppLocalizationsDelegate
