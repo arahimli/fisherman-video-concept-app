@@ -241,6 +241,10 @@ class _NewHomePageState extends State<NewHomePage>
       title: Text(l10n.appTitle, style: AppTextStyles.appBarTitle),
       centerTitle: true,
       actions: [
+        IconButton(
+          icon: const Icon(Icons.tune, color: AppColors.textTertiary, size: 22),
+          onPressed: () => context.push(AppRoutes.settings),
+        ),
         BlocBuilder<VideoBloc, VideoState>(
           builder: (context, state) {
             if (state is ImagePickedState ||

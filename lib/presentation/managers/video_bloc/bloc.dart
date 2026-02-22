@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 
 import '../../../data/database/app_database.dart';
 import '../../../data/services/image_service.dart';
+import '../../../data/services/settings_service.dart';
 import '../../../data/services/video_service.dart' show VideoService;
 import 'package:drift/drift.dart' as drift;
 
