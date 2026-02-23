@@ -245,4 +245,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get adsWatched => 'İzlenen reklamlar';
+
+  @override
+  String get adsWatchedToday => 'Bugün';
+
+  @override
+  String get adsWatchedTotal => 'Toplam';
 }

@@ -90,5 +90,7 @@
   "longVideoDesc": "Посмотрите длинную рекламу для дополнительной поддержки",
   "watchAd": "Смотреть",
   "thankYouSupport": "Спасибо за вашу поддержку!",
-  "adsWatched": "Просмотрено реклам"
+  "adsWatched": "Просмотрено реклам",
+  "adsWatchedToday": "Сегодня",
+  "adsWatchedTotal": "Всего"
 }

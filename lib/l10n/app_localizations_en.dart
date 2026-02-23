@@ -244,4 +244,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adsWatched => 'Ads Watched';
+
+  @override
+  String get adsWatchedToday => 'Today';
+
+  @override
+  String get adsWatchedTotal => 'Total';
 }

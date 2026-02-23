@@ -26,7 +26,9 @@ class _SupportPageState extends State<SupportPage> {
       ? 'ca-app-pub-3940256099942544/5224354917'
       : 'ca-app-pub-3940256099942544/1712485313';
 
-  static const String _adsWatchedKey = 'ads_watched_count';
+  static const String _keyTotal = 'ads_watched_count';
+  static const String _keyToday = 'ads_watched_today';
+  static const String _keyDate = 'ads_watched_date';
 
   InterstitialAd? _interstitialAd;
   RewardedAd? _rewardedAd;
@@ -36,26 +38,51 @@ class _SupportPageState extends State<SupportPage> {
 
   late final ConfettiController _confettiController;
   int _adsWatched = 0;
+  int _adsWatchedToday = 0;
 
   @override
   void initState() {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 2));
-    _loadAdsWatched();
+    _loadCounts();
     _loadInterstitial();
     _loadRewarded();
   }
 
-  Future<void> _loadAdsWatched() async {
-    final prefs = await SharedPreferences.getInstance();
-    if (mounted) setState(() => _adsWatched = prefs.getInt(_adsWatchedKey) ?? 0);
+  String _todayString() {
+    final now = DateTime.now();
+    return '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}';
   }
 
-  Future<void> _incrementAdsWatched() async {
+  Future<void> _loadCounts() async {
     final prefs = await SharedPreferences.getInstance();
-    final newCount = _adsWatched + 1;
-    await prefs.setInt(_adsWatchedKey, newCount);
-    if (mounted) setState(() => _adsWatched = newCount);
+    final today = _todayString();
+    final storedDate = prefs.getString(_keyDate) ?? '';
+    final todayCount = storedDate == today ? (prefs.getInt(_keyToday) ?? 0) : 0;
+    if (mounted) {
+      setState(() {
+        _adsWatched = prefs.getInt(_keyTotal) ?? 0;
+        _adsWatchedToday = todayCount;
+      });
+    }
+  }
+
+  Future<void> _incrementCounts() async {
+    final prefs = await SharedPreferences.getInstance();
+    final today = _todayString();
+    final storedDate = prefs.getString(_keyDate) ?? '';
+    final currentToday = storedDate == today ? (prefs.getInt(_keyToday) ?? 0) : 0;
+    final newTotal = _adsWatched + 1;
+    final newToday = currentToday + 1;
+    await prefs.setInt(_keyTotal, newTotal);
+    await prefs.setInt(_keyToday, newToday);
+    await prefs.setString(_keyDate, today);
+    if (mounted) {
+      setState(() {
+        _adsWatched = newTotal;
+        _adsWatchedToday = newToday;
+      });
+    }
   }
 
   void _loadInterstitial() {
@@ -120,7 +147,7 @@ class _SupportPageState extends State<SupportPage> {
   }
 
   void _onAdWatched() {
-    _incrementAdsWatched();
+    _incrementCounts();
     _confettiController.play();
     _showThankYou();
   }
@@ -180,7 +207,23 @@ class _SupportPageState extends State<SupportPage> {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.lg),
-                _AdsWatchedCounter(count: _adsWatched, label: l10n.adsWatched),
+                Row(
+                  children: [
+                    Expanded(
+                      child: _StatCard(
+                        count: _adsWatchedToday,
+                        label: l10n.adsWatchedToday,
+                      ),
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                    Expanded(
+                      child: _StatCard(
+                        count: _adsWatched,
+                        label: l10n.adsWatchedTotal,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: AppSpacing.xxxl),
                 _AdCard(
                   icon: Icons.play_circle_outline,
@@ -209,7 +252,7 @@ class _SupportPageState extends State<SupportPage> {
             alignment: Alignment.topCenter,
             child: ConfettiWidget(
               confettiController: _confettiController,
-              blastDirection: pi / 2, // straight down
+              blastDirection: pi / 2,
               blastDirectionality: BlastDirectionality.explosive,
               numberOfParticles: 30,
               gravity: 0.3,
@@ -230,20 +273,20 @@ class _SupportPageState extends State<SupportPage> {
   }
 }
 
-// ── Ads watched counter ────────────────────────────────────────────────────────
+// ── Stat card ─────────────────────────────────────────────────────────────────
 
-class _AdsWatchedCounter extends StatelessWidget {
+class _StatCard extends StatelessWidget {
   final int count;
   final String label;
 
-  const _AdsWatchedCounter({required this.count, required this.label});
+  const _StatCard({required this.count, required this.label});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: AppSpacing.lg,
-        horizontal: AppSpacing.xl,
+        horizontal: AppSpacing.md,
       ),
       decoration: BoxDecoration(
         color: AppColors.surface,
@@ -252,13 +295,11 @@ class _AdsWatchedCounter extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.volunteer_activism, color: AppColors.accent, size: 20),
-          const SizedBox(height: AppSpacing.sm),
           Text(
             '$count',
             style: const TextStyle(
               color: AppColors.accent,
-              fontSize: 52,
+              fontSize: 40,
               fontWeight: FontWeight.bold,
               height: 1,
             ),
@@ -268,8 +309,8 @@ class _AdsWatchedCounter extends StatelessWidget {
             label,
             style: const TextStyle(
               color: AppColors.textSecondary,
-              fontSize: 13,
-              letterSpacing: 0.5,
+              fontSize: 12,
+              letterSpacing: 0.4,
             ),
           ),
         ],

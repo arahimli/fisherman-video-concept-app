@@ -244,4 +244,10 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get adsWatched => 'İzlənən reklamlar';
+
+  @override
+  String get adsWatchedToday => 'Bu gün';
+
+  @override
+  String get adsWatchedTotal => 'Ümumi';
 }

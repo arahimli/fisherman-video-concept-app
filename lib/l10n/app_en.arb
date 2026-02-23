@@ -90,5 +90,7 @@
   "longVideoDesc": "Watch a longer ad for extra support",
   "watchAd": "Watch",
   "thankYouSupport": "Thank you for your support!",
-  "adsWatched": "Ads Watched"
+  "adsWatched": "Ads Watched",
+  "adsWatchedToday": "Today",
+  "adsWatchedTotal": "Total"
 }

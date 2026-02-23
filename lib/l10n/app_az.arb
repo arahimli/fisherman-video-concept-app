@@ -90,5 +90,7 @@
   "longVideoDesc": "Əlavə dəstək üçün uzun reklam izləyin",
   "watchAd": "İzlə",
   "thankYouSupport": "Dəstəyiniz üçün təşəkkür edirik!",
-  "adsWatched": "İzlənən reklamlar"
+  "adsWatched": "İzlənən reklamlar",
+  "adsWatchedToday": "Bu gün",
+  "adsWatchedTotal": "Ümumi"
 }

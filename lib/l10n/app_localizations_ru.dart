@@ -245,4 +245,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get adsWatched => 'Просмотрено реклам';
+
+  @override
+  String get adsWatchedToday => 'Сегодня';
+
+  @override
+  String get adsWatchedTotal => 'Всего';
 }

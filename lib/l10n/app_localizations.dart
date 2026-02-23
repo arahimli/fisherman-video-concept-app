@@ -557,6 +557,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ads Watched'**
   String get adsWatched;
+
+  /// No description provided for @adsWatchedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get adsWatchedToday;
+
+  /// No description provided for @adsWatchedTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get adsWatchedTotal;
 }
 
 class _AppLocalizationsDelegate
