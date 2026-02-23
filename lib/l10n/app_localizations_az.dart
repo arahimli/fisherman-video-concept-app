@@ -217,4 +217,37 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get pressBackAgainToExit => 'Çıxmaq üçün yenidən geri basın';
+
+  @override
+  String get support => 'Dəstək';
+
+  @override
+  String get supportDesc => 'Tətbiqi pulsuz saxlamaq üçün video reklam izləyin';
+
+  @override
+  String get shortVideo => 'Qısa Video';
+
+  @override
+  String get shortVideoDesc => 'Dəstək üçün qısa reklam izləyin';
+
+  @override
+  String get longVideo => 'Uzun Video';
+
+  @override
+  String get longVideoDesc => 'Əlavə dəstək üçün uzun reklam izləyin';
+
+  @override
+  String get watchAd => 'İzlə';
+
+  @override
+  String get thankYouSupport => 'Dəstəyiniz üçün təşəkkür edirik!';
+
+  @override
+  String get adsWatched => 'İzlənən reklamlar';
+
+  @override
+  String get adsWatchedToday => 'Bu gün';
+
+  @override
+  String get adsWatchedTotal => 'Ümumi';
 }

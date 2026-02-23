@@ -81,5 +81,16 @@
   "positionBottomRight": "Sağ Alt",
   "backToSelectImageTitle": "Geri Dön",
   "backToSelectImageMessage": "Resim seçme moduna geri dönmek istediğinize emin misiniz?",
-  "pressBackAgainToExit": "Çıkmak için tekrar geri basın"
+  "pressBackAgainToExit": "Çıkmak için tekrar geri basın",
+  "support": "Destek",
+  "supportDesc": "Uygulamanın ücretsiz kalmasına yardımcı olmak için video reklam izleyin",
+  "shortVideo": "Kısa Video",
+  "shortVideoDesc": "Destek için kısa bir reklam izleyin",
+  "longVideo": "Uzun Video",
+  "longVideoDesc": "Ekstra destek için uzun bir reklam izleyin",
+  "watchAd": "İzle",
+  "thankYouSupport": "Desteğiniz için teşekkürler!",
+  "adsWatched": "İzlenen reklamlar",
+  "adsWatchedToday": "Bugün",
+  "adsWatchedTotal": "Toplam"
 }

@@ -81,5 +81,16 @@
   "positionBottomRight": "Bottom Right",
   "backToSelectImageTitle": "Go Back",
   "backToSelectImageMessage": "Are you sure you want to go back to select image mode?",
-  "pressBackAgainToExit": "Press back again to exit"
+  "pressBackAgainToExit": "Press back again to exit",
+  "support": "Support",
+  "supportDesc": "Watch a video ad to help keep the app free and support development",
+  "shortVideo": "Short Video",
+  "shortVideoDesc": "Watch a short ad to support the app",
+  "longVideo": "Long Video",
+  "longVideoDesc": "Watch a longer ad for extra support",
+  "watchAd": "Watch",
+  "thankYouSupport": "Thank you for your support!",
+  "adsWatched": "Ads Watched",
+  "adsWatchedToday": "Today",
+  "adsWatchedTotal": "Total"
 }
