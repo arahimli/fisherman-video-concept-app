@@ -242,4 +242,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get thankYouSupport => 'Спасибо за вашу поддержку!';
+
+  @override
+  String get adsWatched => 'Просмотрено реклам';
 }

@@ -241,4 +241,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get thankYouSupport => 'Thank you for your support!';
+
+  @override
+  String get adsWatched => 'Ads Watched';
 }

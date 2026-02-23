@@ -242,4 +242,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get thankYouSupport => 'Desteğiniz için teşekkürler!';
+
+  @override
+  String get adsWatched => 'İzlenen reklamlar';
 }

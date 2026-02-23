@@ -551,6 +551,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thank you for your support!'**
   String get thankYouSupport;
+
+  /// No description provided for @adsWatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads Watched'**
+  String get adsWatched;
 }
 
 class _AppLocalizationsDelegate

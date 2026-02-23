@@ -89,5 +89,6 @@
   "longVideo": "Long Video",
   "longVideoDesc": "Watch a longer ad for extra support",
   "watchAd": "Watch",
-  "thankYouSupport": "Thank you for your support!"
+  "thankYouSupport": "Thank you for your support!",
+  "adsWatched": "Ads Watched"
 }

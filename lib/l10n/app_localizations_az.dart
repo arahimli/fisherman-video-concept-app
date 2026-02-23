@@ -241,4 +241,7 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get thankYouSupport => 'Dəstəyiniz üçün təşəkkür edirik!';
+
+  @override
+  String get adsWatched => 'İzlənən reklamlar';
 }
