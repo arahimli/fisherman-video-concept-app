@@ -188,7 +188,8 @@ class VideoHistoryRepository {
     final now = DateTime.now();
 
     final todayStart = DateTime(now.year, now.month, now.day);
-    final weekStart = now.subtract(Duration(days: now.weekday - 1));
+    final weekStartDay = now.subtract(Duration(days: now.weekday - 1));
+    final weekStart = DateTime(weekStartDay.year, weekStartDay.month, weekStartDay.day);
     final monthStart = DateTime(now.year, now.month, 1);
 
     final todayCount = allVideos
