@@ -312,6 +312,10 @@ abstract class AppLocalizations {
   /// **'All Dates'**
   String get allDates;
 
+  /// No description provided for @allLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
   String get allLanguages;
 
   /// No description provided for @loadMore.
