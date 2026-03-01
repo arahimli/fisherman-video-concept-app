@@ -8,15 +8,17 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 import 'settings_service.dart';
 
-enum VideoLanguage { en, tr }
+enum VideoLanguage { en, tr, ru }
 
 class VideoService {
   static Future<String> copyVoiceToTemp(VideoLanguage language) async {
     final dir = await getTemporaryDirectory();
-    final assetPath = language == VideoLanguage.tr
-        ? 'assets/voices/tr_voice.mp3'
-        : 'assets/voices/en_voice.mp3';
-    final fileName = language == VideoLanguage.tr ? 'tr_voice.mp3' : 'en_voice.mp3';
+    final fileName = switch (language) {
+      VideoLanguage.tr => 'tr_voice.mp3',
+      VideoLanguage.ru => 'ru_voice.mp3',
+      VideoLanguage.en => 'en_voice.mp3',
+    };
+    final assetPath = 'assets/voices/$fileName';
     final file = File("${dir.path}/$fileName");
 
     if (!await file.exists()) {

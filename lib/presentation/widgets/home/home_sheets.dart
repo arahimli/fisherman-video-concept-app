@@ -73,6 +73,28 @@ void showVideoLanguageSheet(BuildContext context) {
                     ));
               },
             ),
+            const Divider(color: AppColors.surfaceElevated),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Container(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceElevated,
+                  borderRadius: AppRadius.smAll,
+                ),
+                child: const Text('🇷🇺', style: TextStyle(fontSize: 22)),
+              ),
+              title: Text(l10n.russianVoice, style: AppTextStyles.historyCardTitle),
+              subtitle: Text(l10n.russianVoiceDesc, style: AppTextStyles.historyCardDate),
+              onTap: () {
+                Navigator.pop(sheetContext);
+                context.read<VideoBloc>().add(GenerateVideoEvent(
+                      processingMessage: l10n.imageProcessing,
+                      generatingMessage: l10n.videoGenerating,
+                      language: VideoLanguage.ru,
+                    ));
+              },
+            ),
             const SizedBox(height: AppSpacing.sm),
           ],
         ),

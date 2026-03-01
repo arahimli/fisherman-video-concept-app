@@ -97,5 +97,7 @@
   "englishVoice": "English",
   "englishVoiceDesc": "Generate video with English narration",
   "turkishVoice": "Turkish",
-  "turkishVoiceDesc": "Generate video with Turkish narration"
+  "turkishVoiceDesc": "Generate video with Turkish narration",
+  "russianVoice": "Russian",
+  "russianVoiceDesc": "Generate video with Russian narration"
 }

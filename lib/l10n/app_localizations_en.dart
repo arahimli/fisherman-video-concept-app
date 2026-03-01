@@ -265,4 +265,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get turkishVoiceDesc => 'Generate video with Turkish narration';
+
+  @override
+  String get russianVoice => 'Russian';
+
+  @override
+  String get russianVoiceDesc => 'Generate video with Russian narration';
 }

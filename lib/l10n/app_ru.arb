@@ -97,5 +97,7 @@
   "englishVoice": "Английский",
   "englishVoiceDesc": "Создать видео с английским озвучиванием",
   "turkishVoice": "Турецкий",
-  "turkishVoiceDesc": "Создать видео с турецким озвучиванием"
+  "turkishVoiceDesc": "Создать видео с турецким озвучиванием",
+  "russianVoice": "Русский",
+  "russianVoiceDesc": "Создать видео с русским озвучиванием"
 }

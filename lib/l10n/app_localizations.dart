@@ -599,6 +599,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate video with Turkish narration'**
   String get turkishVoiceDesc;
+
+  /// No description provided for @russianVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get russianVoice;
+
+  /// No description provided for @russianVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Russian narration'**
+  String get russianVoiceDesc;
 }
 
 class _AppLocalizationsDelegate

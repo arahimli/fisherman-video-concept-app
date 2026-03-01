@@ -97,5 +97,7 @@
   "englishVoice": "İngilis",
   "englishVoiceDesc": "İngilis dilində səsləndirmə ilə video yarat",
   "turkishVoice": "Türk",
-  "turkishVoiceDesc": "Türk dilində səsləndirmə ilə video yarat"
+  "turkishVoiceDesc": "Türk dilində səsləndirmə ilə video yarat",
+  "russianVoice": "Rus",
+  "russianVoiceDesc": "Rus dilində səsləndirmə ilə video yarat"
 }

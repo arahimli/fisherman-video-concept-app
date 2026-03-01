@@ -265,4 +265,10 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get turkishVoiceDesc => 'Türk dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get russianVoice => 'Rus';
+
+  @override
+  String get russianVoiceDesc => 'Rus dilində səsləndirmə ilə video yarat';
 }
