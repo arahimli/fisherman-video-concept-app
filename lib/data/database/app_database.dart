@@ -14,6 +14,7 @@ class VideoHistory extends Table {
   TextColumn get imagePath => text().nullable()();
   DateTimeColumn get createdAt => dateTime()();
   TextColumn get title => text()();
+  TextColumn get language => text().nullable()();
 }
 
 @DriftDatabase(tables: [VideoHistory])
@@ -24,7 +25,16 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(QueryExecutor executor) : super(executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.addColumn(videoHistory, videoHistory.language);
+          }
+        },
+      );
 
   // Create
   Future<int> createVideo(VideoHistoryCompanion video) async {
@@ -37,6 +47,7 @@ class AppDatabase extends _$AppDatabase {
     int? offset,
     DateTime? startDate,
     DateTime? endDate,
+    String? language,
   }) async {
     final query = select(videoHistory)
       ..orderBy([
@@ -47,6 +58,10 @@ class AppDatabase extends _$AppDatabase {
       query.where((tbl) =>
       tbl.createdAt.isBiggerOrEqualValue(startDate) &
       tbl.createdAt.isSmallerOrEqualValue(endDate));
+    }
+
+    if (language != null) {
+      query.where((tbl) => tbl.language.equals(language));
     }
 
     if (limit != null) {

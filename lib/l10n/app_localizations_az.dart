@@ -117,6 +117,9 @@ class AppLocalizationsAz extends AppLocalizations {
   String get allDates => 'Bütün Tarixlər';
 
   @override
+  String get allLanguages => 'Hamısı';
+
+  @override
   String get loadMore => 'Daha çox yüklə';
 
   @override

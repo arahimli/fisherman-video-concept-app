@@ -117,6 +117,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get allDates => 'Tüm Tarihler';
 
   @override
+  String get allLanguages => 'Hepsi';
+
+  @override
   String get loadMore => 'Daha Fazla Yükle';
 
   @override

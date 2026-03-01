@@ -312,6 +312,8 @@ abstract class AppLocalizations {
   /// **'All Dates'**
   String get allDates;
 
+  String get allLanguages;
+
   /// No description provided for @loadMore.
   ///
   /// In en, this message translates to:

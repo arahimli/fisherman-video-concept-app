@@ -40,6 +40,7 @@
   },
   "filterByDate": "Tarihe Göre Filtrele",
   "allDates": "Tüm Tarihler",
+  "allLanguages": "Hepsi",
   "loadMore": "Daha Fazla Yükle",
   "videosCount": "{count} video",
   "@videosCount": {

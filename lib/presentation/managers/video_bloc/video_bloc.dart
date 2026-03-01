@@ -87,6 +87,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           imagePath: drift.Value(imageFile.path),
           createdAt: drift.Value(DateTime.now()),
           title: drift.Value('MOTION_$timestamp'),
+          language: drift.Value(event.language.name),
         );
         await database.createVideo(videoHistory);
         emit(VideoGeneratedState(imageFile, videoFile));

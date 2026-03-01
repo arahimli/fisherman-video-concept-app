@@ -116,6 +116,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get allDates => 'All Dates';
 
   @override
+  String get allLanguages => 'All';
+
+  @override
   String get loadMore => 'Load More';
 
   @override

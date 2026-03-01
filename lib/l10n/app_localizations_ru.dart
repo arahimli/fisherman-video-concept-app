@@ -116,6 +116,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get allDates => 'Все даты';
 
   @override
+  String get allLanguages => 'Все';
+
+  @override
   String get loadMore => 'Загрузить ещё';
 
   @override

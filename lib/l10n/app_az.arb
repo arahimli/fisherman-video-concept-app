@@ -40,6 +40,7 @@
   },
   "filterByDate": "Tarixə görə süz",
   "allDates": "Bütün Tarixlər",
+  "allLanguages": "Hamısı",
   "loadMore": "Daha çox yüklə",
   "videosCount": "{count} video",
   "@videosCount": {
