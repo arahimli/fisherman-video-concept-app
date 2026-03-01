@@ -289,7 +289,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get chineseVoice => 'Çince';
 
   @override
-  String get chineseVoiceDesc => 'Mandarin Çincesi seslendirme ile video oluştur';
+  String get chineseVoiceDesc =>
+      'Mandarin Çincesi seslendirme ile video oluştur';
 
   @override
   String get spanishVoice => 'İspanyolca';

@@ -289,7 +289,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get chineseVoice => 'Китайский';
 
   @override
-  String get chineseVoiceDesc => 'Создать видео с озвучиванием на мандаринском китайском';
+  String get chineseVoiceDesc =>
+      'Создать видео с озвучиванием на мандаринском китайском';
 
   @override
   String get spanishVoice => 'Испанский';

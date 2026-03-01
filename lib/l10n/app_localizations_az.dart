@@ -288,7 +288,8 @@ class AppLocalizationsAz extends AppLocalizations {
   String get chineseVoice => 'Çin';
 
   @override
-  String get chineseVoiceDesc => 'Mandarin Çin dilində səsləndirmə ilə video yarat';
+  String get chineseVoiceDesc =>
+      'Mandarin Çin dilində səsləndirmə ilə video yarat';
 
   @override
   String get spanishVoice => 'İspan';
