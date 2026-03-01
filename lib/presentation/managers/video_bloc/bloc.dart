@@ -13,3 +13,11 @@ import 'package:drift/drift.dart' as drift;
 part 'video_event.dart';
 part 'video_state.dart';
 part 'video_bloc.dart';
+
+// Service function typedefs — used for injection in tests.
+typedef ProcessImageFn = Future<Map<String, String>> Function(File file);
+typedef GenerateVideoFn = Future<String?> Function(
+  Map<String, String> images, {
+  WatermarkSettings? watermark,
+});
+typedef GetWatermarkFn = Future<WatermarkSettings> Function();
