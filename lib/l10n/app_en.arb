@@ -92,5 +92,10 @@
   "thankYouSupport": "Thank you for your support!",
   "adsWatched": "Ads Watched",
   "adsWatchedToday": "Today",
-  "adsWatchedTotal": "Total"
+  "adsWatchedTotal": "Total",
+  "selectVideoLanguage": "Select Language",
+  "englishVoice": "English",
+  "englishVoiceDesc": "Generate video with English narration",
+  "turkishVoice": "Turkish",
+  "turkishVoiceDesc": "Generate video with Turkish narration"
 }

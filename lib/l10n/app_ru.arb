@@ -92,5 +92,10 @@
   "thankYouSupport": "Спасибо за вашу поддержку!",
   "adsWatched": "Просмотрено реклам",
   "adsWatchedToday": "Сегодня",
-  "adsWatchedTotal": "Всего"
+  "adsWatchedTotal": "Всего",
+  "selectVideoLanguage": "Выберите язык",
+  "englishVoice": "Английский",
+  "englishVoiceDesc": "Создать видео с английским озвучиванием",
+  "turkishVoice": "Турецкий",
+  "turkishVoiceDesc": "Создать видео с турецким озвучиванием"
 }

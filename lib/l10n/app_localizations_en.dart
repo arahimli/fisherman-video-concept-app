@@ -250,4 +250,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Total';
+
+  @override
+  String get selectVideoLanguage => 'Select Language';
+
+  @override
+  String get englishVoice => 'English';
+
+  @override
+  String get englishVoiceDesc => 'Generate video with English narration';
+
+  @override
+  String get turkishVoice => 'Turkish';
+
+  @override
+  String get turkishVoiceDesc => 'Generate video with Turkish narration';
 }

@@ -250,4 +250,19 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Ümumi';
+
+  @override
+  String get selectVideoLanguage => 'Dil seçin';
+
+  @override
+  String get englishVoice => 'İngilis';
+
+  @override
+  String get englishVoiceDesc => 'İngilis dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get turkishVoice => 'Türk';
+
+  @override
+  String get turkishVoiceDesc => 'Türk dilində səsləndirmə ilə video yarat';
 }

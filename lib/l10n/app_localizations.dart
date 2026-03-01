@@ -569,6 +569,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get adsWatchedTotal;
+
+  /// No description provided for @selectVideoLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectVideoLanguage;
+
+  /// No description provided for @englishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishVoice;
+
+  /// No description provided for @englishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with English narration'**
+  String get englishVoiceDesc;
+
+  /// No description provided for @turkishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get turkishVoice;
+
+  /// No description provided for @turkishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Turkish narration'**
+  String get turkishVoiceDesc;
 }
 
 class _AppLocalizationsDelegate

@@ -251,4 +251,19 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Всего';
+
+  @override
+  String get selectVideoLanguage => 'Выберите язык';
+
+  @override
+  String get englishVoice => 'Английский';
+
+  @override
+  String get englishVoiceDesc => 'Создать видео с английским озвучиванием';
+
+  @override
+  String get turkishVoice => 'Турецкий';
+
+  @override
+  String get turkishVoiceDesc => 'Создать видео с турецким озвучиванием';
 }

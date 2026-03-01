@@ -8,13 +8,19 @@ import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 import 'settings_service.dart';
 
+enum VideoLanguage { en, tr }
+
 class VideoService {
-  static Future<String> copyMusicToTemp() async {
+  static Future<String> copyVoiceToTemp(VideoLanguage language) async {
     final dir = await getTemporaryDirectory();
-    final file = File("${dir.path}/music.mp3");
+    final assetPath = language == VideoLanguage.tr
+        ? 'assets/voices/tr_voice.mp3'
+        : 'assets/voices/en_voice.mp3';
+    final fileName = language == VideoLanguage.tr ? 'tr_voice.mp3' : 'en_voice.mp3';
+    final file = File("${dir.path}/$fileName");
 
     if (!await file.exists()) {
-      final bytes = await rootBundle.load("assets/music.mp3");
+      final bytes = await rootBundle.load(assetPath);
       await file.writeAsBytes(bytes.buffer.asUint8List());
     }
 
@@ -24,6 +30,7 @@ class VideoService {
   static Future<String?> generateVideo(
     Map<String, String> images, {
     WatermarkSettings? watermark,
+    VideoLanguage language = VideoLanguage.en,
   }) async {
     try {
       // Validate input images
@@ -37,7 +44,7 @@ class VideoService {
       final dir = await getTemporaryDirectory();
       final outputPath =
           "${dir.path}/output_${DateTime.now().millisecondsSinceEpoch}.mp4";
-      final musicPath = await copyMusicToTemp();
+      final musicPath = await copyVoiceToTemp(language);
 
       final hasImageWatermark = watermark != null && watermark.hasImageWatermark;
 

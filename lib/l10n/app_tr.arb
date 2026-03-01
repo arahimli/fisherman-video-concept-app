@@ -92,5 +92,10 @@
   "thankYouSupport": "Desteğiniz için teşekkürler!",
   "adsWatched": "İzlenen reklamlar",
   "adsWatchedToday": "Bugün",
-  "adsWatchedTotal": "Toplam"
+  "adsWatchedTotal": "Toplam",
+  "selectVideoLanguage": "Dil Seçin",
+  "englishVoice": "İngilizce",
+  "englishVoiceDesc": "İngilizce seslendirme ile video oluştur",
+  "turkishVoice": "Türkçe",
+  "turkishVoiceDesc": "Türkçe seslendirme ile video oluştur"
 }

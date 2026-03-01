@@ -251,4 +251,19 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Toplam';
+
+  @override
+  String get selectVideoLanguage => 'Dil Seçin';
+
+  @override
+  String get englishVoice => 'İngilizce';
+
+  @override
+  String get englishVoiceDesc => 'İngilizce seslendirme ile video oluştur';
+
+  @override
+  String get turkishVoice => 'Türkçe';
+
+  @override
+  String get turkishVoiceDesc => 'Türkçe seslendirme ile video oluştur';
 }

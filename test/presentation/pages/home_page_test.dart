@@ -35,7 +35,7 @@ VideoBloc _makeVideoBloc(AppDatabase db, VideoState initialState) {
   final bloc = VideoBloc(
     database: db,
     processImageFn: (_) async => {},
-    generateVideoFn: (_, {watermark}) async => null,
+    generateVideoFn: (_, {watermark, language}) async => null,
     getWatermarkSettingsFn: () async => _noWatermark,
   );
   // @visibleForTesting — allowed in test code.
