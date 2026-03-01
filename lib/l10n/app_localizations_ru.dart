@@ -272,4 +272,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get russianVoiceDesc => 'Создать видео с русским озвучиванием';
+
+  @override
+  String get frenchVoice => 'Французский';
+
+  @override
+  String get frenchVoiceDesc => 'Создать видео с французским озвучиванием';
+
+  @override
+  String get arabicVoice => 'Арабский';
+
+  @override
+  String get arabicVoiceDesc => 'Создать видео с арабским озвучиванием';
+
+  @override
+  String get chineseVoice => 'Китайский';
+
+  @override
+  String get chineseVoiceDesc => 'Создать видео с озвучиванием на мандаринском китайском';
+
+  @override
+  String get spanishVoice => 'Испанский';
+
+  @override
+  String get spanishVoiceDesc => 'Создать видео с испанским озвучиванием';
+
+  @override
+  String get hindiVoice => 'Хинди';
+
+  @override
+  String get hindiVoiceDesc => 'Создать видео с озвучиванием на хинди';
 }

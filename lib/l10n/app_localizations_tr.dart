@@ -272,4 +272,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get russianVoiceDesc => 'Rusça seslendirme ile video oluştur';
+
+  @override
+  String get frenchVoice => 'Fransızca';
+
+  @override
+  String get frenchVoiceDesc => 'Fransızca seslendirme ile video oluştur';
+
+  @override
+  String get arabicVoice => 'Arapça';
+
+  @override
+  String get arabicVoiceDesc => 'Arapça seslendirme ile video oluştur';
+
+  @override
+  String get chineseVoice => 'Çince';
+
+  @override
+  String get chineseVoiceDesc => 'Mandarin Çincesi seslendirme ile video oluştur';
+
+  @override
+  String get spanishVoice => 'İspanyolca';
+
+  @override
+  String get spanishVoiceDesc => 'İspanyolca seslendirme ile video oluştur';
+
+  @override
+  String get hindiVoice => 'Hintçe';
+
+  @override
+  String get hindiVoiceDesc => 'Hintçe seslendirme ile video oluştur';
 }

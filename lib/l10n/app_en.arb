@@ -99,5 +99,15 @@
   "turkishVoice": "Turkish",
   "turkishVoiceDesc": "Generate video with Turkish narration",
   "russianVoice": "Russian",
-  "russianVoiceDesc": "Generate video with Russian narration"
+  "russianVoiceDesc": "Generate video with Russian narration",
+  "frenchVoice": "French",
+  "frenchVoiceDesc": "Generate video with French narration",
+  "arabicVoice": "Arabic",
+  "arabicVoiceDesc": "Generate video with Arabic narration",
+  "chineseVoice": "Chinese",
+  "chineseVoiceDesc": "Generate video with Mandarin Chinese narration",
+  "spanishVoice": "Spanish",
+  "spanishVoiceDesc": "Generate video with Spanish narration",
+  "hindiVoice": "Hindi",
+  "hindiVoiceDesc": "Generate video with Hindi narration"
 }

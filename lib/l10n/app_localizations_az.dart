@@ -271,4 +271,34 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get russianVoiceDesc => 'Rus dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get frenchVoice => 'Fransız';
+
+  @override
+  String get frenchVoiceDesc => 'Fransız dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get arabicVoice => 'Ərəb';
+
+  @override
+  String get arabicVoiceDesc => 'Ərəb dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get chineseVoice => 'Çin';
+
+  @override
+  String get chineseVoiceDesc => 'Mandarin Çin dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get spanishVoice => 'İspan';
+
+  @override
+  String get spanishVoiceDesc => 'İspan dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get hindiVoice => 'Hind';
+
+  @override
+  String get hindiVoiceDesc => 'Hind dilində səsləndirmə ilə video yarat';
 }

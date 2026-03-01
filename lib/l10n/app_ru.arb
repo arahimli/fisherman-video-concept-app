@@ -99,5 +99,15 @@
   "turkishVoice": "Турецкий",
   "turkishVoiceDesc": "Создать видео с турецким озвучиванием",
   "russianVoice": "Русский",
-  "russianVoiceDesc": "Создать видео с русским озвучиванием"
+  "russianVoiceDesc": "Создать видео с русским озвучиванием",
+  "frenchVoice": "Французский",
+  "frenchVoiceDesc": "Создать видео с французским озвучиванием",
+  "arabicVoice": "Арабский",
+  "arabicVoiceDesc": "Создать видео с арабским озвучиванием",
+  "chineseVoice": "Китайский",
+  "chineseVoiceDesc": "Создать видео с озвучиванием на мандаринском китайском",
+  "spanishVoice": "Испанский",
+  "spanishVoiceDesc": "Создать видео с испанским озвучиванием",
+  "hindiVoice": "Хинди",
+  "hindiVoiceDesc": "Создать видео с озвучиванием на хинди"
 }

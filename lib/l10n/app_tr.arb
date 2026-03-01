@@ -99,5 +99,15 @@
   "turkishVoice": "Türkçe",
   "turkishVoiceDesc": "Türkçe seslendirme ile video oluştur",
   "russianVoice": "Rusça",
-  "russianVoiceDesc": "Rusça seslendirme ile video oluştur"
+  "russianVoiceDesc": "Rusça seslendirme ile video oluştur",
+  "frenchVoice": "Fransızca",
+  "frenchVoiceDesc": "Fransızca seslendirme ile video oluştur",
+  "arabicVoice": "Arapça",
+  "arabicVoiceDesc": "Arapça seslendirme ile video oluştur",
+  "chineseVoice": "Çince",
+  "chineseVoiceDesc": "Mandarin Çincesi seslendirme ile video oluştur",
+  "spanishVoice": "İspanyolca",
+  "spanishVoiceDesc": "İspanyolca seslendirme ile video oluştur",
+  "hindiVoice": "Hintçe",
+  "hindiVoiceDesc": "Hintçe seslendirme ile video oluştur"
 }

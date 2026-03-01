@@ -611,6 +611,17 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate video with Russian narration'**
   String get russianVoiceDesc;
+
+  String get frenchVoice;
+  String get frenchVoiceDesc;
+  String get arabicVoice;
+  String get arabicVoiceDesc;
+  String get chineseVoice;
+  String get chineseVoiceDesc;
+  String get spanishVoice;
+  String get spanishVoiceDesc;
+  String get hindiVoice;
+  String get hindiVoiceDesc;
 }
 
 class _AppLocalizationsDelegate
