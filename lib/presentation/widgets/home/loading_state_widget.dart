@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../../core/ads/ads_config.dart';
 import '../../../core/design/design_system.dart';
 
 class LoadingStateWidget extends StatefulWidget {
@@ -24,9 +23,8 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
   bool _topBannerLoaded = false;
   bool _bottomBannerLoaded = false;
 
-  static final String _adUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/6300978111'
-      : 'ca-app-pub-3940256099942544/2934735716';
+  static final String _topAdUnitId = AdsConfig.bannerAdUnitId;
+  static final String _bottomAdUnitId = AdsConfig.bannerAdUnitId;
 
   @override
   void initState() {
@@ -45,7 +43,7 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
 
   void _loadBanners() {
     _topBannerAd = BannerAd(
-      adUnitId: _adUnitId,
+      adUnitId: _topAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -55,7 +53,7 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
     )..load();
 
     _bottomBannerAd = BannerAd(
-      adUnitId: _adUnitId,
+      adUnitId: _bottomAdUnitId,
       size: AdSize.banner,
       request: const AdRequest(),
       listener: BannerAdListener(
