@@ -116,6 +116,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get allDates => 'All Dates';
 
   @override
+  String get allLanguages => 'All';
+
+  @override
   String get loadMore => 'Load More';
 
   @override
@@ -250,4 +253,56 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Total';
+
+  @override
+  String get selectVideoLanguage => 'Select Language';
+
+  @override
+  String get englishVoice => 'English';
+
+  @override
+  String get englishVoiceDesc => 'Generate video with English narration';
+
+  @override
+  String get turkishVoice => 'Turkish';
+
+  @override
+  String get turkishVoiceDesc => 'Generate video with Turkish narration';
+
+  @override
+  String get russianVoice => 'Russian';
+
+  @override
+  String get russianVoiceDesc => 'Generate video with Russian narration';
+
+  @override
+  String get frenchVoice => 'French';
+
+  @override
+  String get frenchVoiceDesc => 'Generate video with French narration';
+
+  @override
+  String get arabicVoice => 'Arabic';
+
+  @override
+  String get arabicVoiceDesc => 'Generate video with Arabic narration';
+
+  @override
+  String get chineseVoice => 'Chinese';
+
+  @override
+  String get chineseVoiceDesc =>
+      'Generate video with Mandarin Chinese narration';
+
+  @override
+  String get spanishVoice => 'Spanish';
+
+  @override
+  String get spanishVoiceDesc => 'Generate video with Spanish narration';
+
+  @override
+  String get hindiVoice => 'Hindi';
+
+  @override
+  String get hindiVoiceDesc => 'Generate video with Hindi narration';
 }

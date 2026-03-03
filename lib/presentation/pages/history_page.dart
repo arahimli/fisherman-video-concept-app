@@ -8,6 +8,7 @@ import '../../l10n/app_localizations.dart';
 import '../managers/history_bloc/bloc.dart';
 import '../widgets/history/history_empty_state.dart';
 import '../widgets/history/history_filter_chips.dart';
+import '../widgets/history/history_language_filter_chips.dart';
 import '../widgets/history/history_sheets.dart';
 import '../widgets/history/history_video_card.dart';
 
@@ -21,6 +22,7 @@ class HistoryPage extends StatefulWidget {
 class _HistoryPageState extends State<HistoryPage> {
   final ScrollController _scrollController = ScrollController();
   String _selectedFilter = 'all';
+  String? _selectedLanguage;
 
   @override
   void initState() {
@@ -73,6 +75,11 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 
+  void _applyLanguageFilter(String? language) {
+    setState(() => _selectedLanguage = language);
+    context.read<HistoryBloc>().add(FilterByLanguageEvent(language: language));
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context);
@@ -96,6 +103,10 @@ class _HistoryPageState extends State<HistoryPage> {
             HistoryFilterChips(
               selectedFilter: _selectedFilter,
               onFilterChanged: _applyFilter,
+            ),
+            HistoryLanguageFilterChips(
+              selectedLanguage: _selectedLanguage,
+              onLanguageChanged: _applyLanguageFilter,
             ),
             Expanded(
               child: BlocBuilder<HistoryBloc, HistoryState>(

@@ -117,6 +117,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get allDates => 'Tüm Tarihler';
 
   @override
+  String get allLanguages => 'Hepsi';
+
+  @override
   String get loadMore => 'Daha Fazla Yükle';
 
   @override
@@ -251,4 +254,56 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Toplam';
+
+  @override
+  String get selectVideoLanguage => 'Dil Seçin';
+
+  @override
+  String get englishVoice => 'İngilizce';
+
+  @override
+  String get englishVoiceDesc => 'İngilizce seslendirme ile video oluştur';
+
+  @override
+  String get turkishVoice => 'Türkçe';
+
+  @override
+  String get turkishVoiceDesc => 'Türkçe seslendirme ile video oluştur';
+
+  @override
+  String get russianVoice => 'Rusça';
+
+  @override
+  String get russianVoiceDesc => 'Rusça seslendirme ile video oluştur';
+
+  @override
+  String get frenchVoice => 'Fransızca';
+
+  @override
+  String get frenchVoiceDesc => 'Fransızca seslendirme ile video oluştur';
+
+  @override
+  String get arabicVoice => 'Arapça';
+
+  @override
+  String get arabicVoiceDesc => 'Arapça seslendirme ile video oluştur';
+
+  @override
+  String get chineseVoice => 'Çince';
+
+  @override
+  String get chineseVoiceDesc =>
+      'Mandarin Çincesi seslendirme ile video oluştur';
+
+  @override
+  String get spanishVoice => 'İspanyolca';
+
+  @override
+  String get spanishVoiceDesc => 'İspanyolca seslendirme ile video oluştur';
+
+  @override
+  String get hindiVoice => 'Hintçe';
+
+  @override
+  String get hindiVoiceDesc => 'Hintçe seslendirme ile video oluştur';
 }

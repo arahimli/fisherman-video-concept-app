@@ -13,6 +13,7 @@ class HistoryLoaded extends HistoryState {
   final int currentPage;
   final DateTime? startDate;
   final DateTime? endDate;
+  final String? language;
 
   HistoryLoaded({
     required this.videos,
@@ -20,6 +21,7 @@ class HistoryLoaded extends HistoryState {
     this.currentPage = 0,
     this.startDate,
     this.endDate,
+    this.language,
   });
 
   HistoryLoaded copyWith({
@@ -28,6 +30,8 @@ class HistoryLoaded extends HistoryState {
     int? currentPage,
     DateTime? startDate,
     DateTime? endDate,
+    String? language,
+    bool clearLanguage = false,
   }) {
     return HistoryLoaded(
       videos: videos ?? this.videos,
@@ -35,6 +39,7 @@ class HistoryLoaded extends HistoryState {
       currentPage: currentPage ?? this.currentPage,
       startDate: startDate ?? this.startDate,
       endDate: endDate ?? this.endDate,
+      language: clearLanguage ? null : (language ?? this.language),
     );
   }
 }

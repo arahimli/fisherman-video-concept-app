@@ -117,6 +117,9 @@ class AppLocalizationsAz extends AppLocalizations {
   String get allDates => 'Bütün Tarixlər';
 
   @override
+  String get allLanguages => 'Hamısı';
+
+  @override
   String get loadMore => 'Daha çox yüklə';
 
   @override
@@ -250,4 +253,56 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get adsWatchedTotal => 'Ümumi';
+
+  @override
+  String get selectVideoLanguage => 'Dil seçin';
+
+  @override
+  String get englishVoice => 'İngilis';
+
+  @override
+  String get englishVoiceDesc => 'İngilis dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get turkishVoice => 'Türk';
+
+  @override
+  String get turkishVoiceDesc => 'Türk dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get russianVoice => 'Rus';
+
+  @override
+  String get russianVoiceDesc => 'Rus dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get frenchVoice => 'Fransız';
+
+  @override
+  String get frenchVoiceDesc => 'Fransız dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get arabicVoice => 'Ərəb';
+
+  @override
+  String get arabicVoiceDesc => 'Ərəb dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get chineseVoice => 'Çin';
+
+  @override
+  String get chineseVoiceDesc =>
+      'Mandarin Çin dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get spanishVoice => 'İspan';
+
+  @override
+  String get spanishVoiceDesc => 'İspan dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get hindiVoice => 'Hind';
+
+  @override
+  String get hindiVoiceDesc => 'Hind dilində səsləndirmə ilə video yarat';
 }

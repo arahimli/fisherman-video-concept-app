@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../l10n/app_localizations.dart';
-import '../../managers/video_bloc/bloc.dart';
 import 'action_button.dart';
 import 'home_sheets.dart';
 import 'recent_videos_widget.dart';
@@ -56,12 +54,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
                   icon: Icons.videocam_outlined,
                   label: l10n.generateVideo,
                   isAccent: true,
-                  onTap: () => context.read<VideoBloc>().add(
-                        GenerateVideoEvent(
-                          processingMessage: l10n.imageProcessing,
-                          generatingMessage: l10n.videoGenerating,
-                        ),
-                      ),
+                  onTap: () => showVideoLanguageSheet(context),
                 ),
               ),
             ],

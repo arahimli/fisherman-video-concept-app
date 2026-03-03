@@ -28,8 +28,9 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   static Future<String?> _defaultGenerateVideo(
     Map<String, String> images, {
     WatermarkSettings? watermark,
+    VideoLanguage? language,
   }) =>
-      VideoService.generateVideo(images, watermark: watermark);
+      VideoService.generateVideo(images, watermark: watermark, language: language ?? VideoLanguage.en);
 
   static Future<WatermarkSettings> _defaultGetWatermarkSettings() =>
       SettingsService().getWatermarkSettings();
@@ -77,7 +78,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
       emit(VideoLoadingState(
           imageFile, event.generatingMessage ?? 'Generating video...'));
       final watermark = await _getWatermarkSettings();
-      final videoFile = await _generateVideo(images, watermark: watermark);
+      final videoFile = await _generateVideo(images, watermark: watermark, language: event.language);
 
       if (videoFile != null) {
         final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
@@ -86,6 +87,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           imagePath: drift.Value(imageFile.path),
           createdAt: drift.Value(DateTime.now()),
           title: drift.Value('MOTION_$timestamp'),
+          language: drift.Value(event.language.name),
         );
         await database.createVideo(videoHistory);
         emit(VideoGeneratedState(imageFile, videoFile));

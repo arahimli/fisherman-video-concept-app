@@ -40,6 +40,7 @@
   },
   "filterByDate": "Filter by Date",
   "allDates": "All Dates",
+  "allLanguages": "All",
   "loadMore": "Load More",
   "videosCount": "{count} videos",
   "@videosCount": {
@@ -92,5 +93,22 @@
   "thankYouSupport": "Thank you for your support!",
   "adsWatched": "Ads Watched",
   "adsWatchedToday": "Today",
-  "adsWatchedTotal": "Total"
+  "adsWatchedTotal": "Total",
+  "selectVideoLanguage": "Select Language",
+  "englishVoice": "English",
+  "englishVoiceDesc": "Generate video with English narration",
+  "turkishVoice": "Turkish",
+  "turkishVoiceDesc": "Generate video with Turkish narration",
+  "russianVoice": "Russian",
+  "russianVoiceDesc": "Generate video with Russian narration",
+  "frenchVoice": "French",
+  "frenchVoiceDesc": "Generate video with French narration",
+  "arabicVoice": "Arabic",
+  "arabicVoiceDesc": "Generate video with Arabic narration",
+  "chineseVoice": "Chinese",
+  "chineseVoiceDesc": "Generate video with Mandarin Chinese narration",
+  "spanishVoice": "Spanish",
+  "spanishVoiceDesc": "Generate video with Spanish narration",
+  "hindiVoice": "Hindi",
+  "hindiVoiceDesc": "Generate video with Hindi narration"
 }

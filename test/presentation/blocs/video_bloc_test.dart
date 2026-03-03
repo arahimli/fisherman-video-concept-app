@@ -112,7 +112,7 @@ void main() {
       'emits Loading → Loading → Generated',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -128,7 +128,7 @@ void main() {
       'VideoGeneratedState carries the correct videoPath',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -148,7 +148,7 @@ void main() {
       'VideoGeneratedState carries the source imageFile',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -168,7 +168,7 @@ void main() {
       'saves video record to database on success',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -184,7 +184,7 @@ void main() {
       'works from a VideoErrorState that carries an imageFile',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => VideoErrorState('prior error', imageFile: _fakeImageFile),
@@ -204,7 +204,7 @@ void main() {
       'first VideoLoadingState uses processingMessage',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -226,7 +226,7 @@ void main() {
       'second VideoLoadingState uses generatingMessage',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -252,7 +252,7 @@ void main() {
       'emits VideoErrorState when generateVideo returns null',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => null,
+        generateVideoFn: (_, {watermark, language}) async => null,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -268,7 +268,7 @@ void main() {
       'emits VideoErrorState when processImage throws',
       build: () => _buildBloc(
         processImageFn: (_) async => throw Exception('decode failed'),
-        generateVideoFn: (_, {watermark}) async => _fakeVideoPath,
+        generateVideoFn: (_, {watermark, language}) async => _fakeVideoPath,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -283,7 +283,7 @@ void main() {
       'VideoErrorState on failure still carries the imageFile',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => null,
+        generateVideoFn: (_, {watermark, language}) async => null,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),
@@ -303,7 +303,7 @@ void main() {
       'does not save to DB when video generation fails',
       build: () => _buildBloc(
         processImageFn: (_) async => _fakeImages,
-        generateVideoFn: (_, {watermark}) async => null,
+        generateVideoFn: (_, {watermark, language}) async => null,
         getWatermarkSettingsFn: () async => _noWatermark,
       ),
       seed: () => ImagePickedState(_fakeImageFile),

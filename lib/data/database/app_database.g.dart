@@ -75,6 +75,17 @@ class $VideoHistoryTable extends VideoHistory
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _languageMeta = const VerificationMeta(
+    'language',
+  );
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+    'language',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -83,6 +94,7 @@ class $VideoHistoryTable extends VideoHistory
     imagePath,
     createdAt,
     title,
+    language,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -138,6 +150,12 @@ class $VideoHistoryTable extends VideoHistory
     } else if (isInserting) {
       context.missing(_titleMeta);
     }
+    if (data.containsKey('language')) {
+      context.handle(
+        _languageMeta,
+        language.isAcceptableOrUnknown(data['language']!, _languageMeta),
+      );
+    }
     return context;
   }
 
@@ -171,6 +189,10 @@ class $VideoHistoryTable extends VideoHistory
         DriftSqlType.string,
         data['${effectivePrefix}title'],
       )!,
+      language: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language'],
+      ),
     );
   }
 
@@ -188,6 +210,7 @@ class VideoHistoryData extends DataClass
   final String? imagePath;
   final DateTime createdAt;
   final String title;
+  final String? language;
   const VideoHistoryData({
     required this.id,
     required this.videoPath,
@@ -195,6 +218,7 @@ class VideoHistoryData extends DataClass
     this.imagePath,
     required this.createdAt,
     required this.title,
+    this.language,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -209,6 +233,9 @@ class VideoHistoryData extends DataClass
     }
     map['created_at'] = Variable<DateTime>(createdAt);
     map['title'] = Variable<String>(title);
+    if (!nullToAbsent || language != null) {
+      map['language'] = Variable<String>(language);
+    }
     return map;
   }
 
@@ -224,6 +251,9 @@ class VideoHistoryData extends DataClass
           : Value(imagePath),
       createdAt: Value(createdAt),
       title: Value(title),
+      language: language == null && nullToAbsent
+          ? const Value.absent()
+          : Value(language),
     );
   }
 
@@ -239,6 +269,7 @@ class VideoHistoryData extends DataClass
       imagePath: serializer.fromJson<String?>(json['imagePath']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       title: serializer.fromJson<String>(json['title']),
+      language: serializer.fromJson<String?>(json['language']),
     );
   }
   @override
@@ -251,6 +282,7 @@ class VideoHistoryData extends DataClass
       'imagePath': serializer.toJson<String?>(imagePath),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'title': serializer.toJson<String>(title),
+      'language': serializer.toJson<String?>(language),
     };
   }
 
@@ -261,6 +293,7 @@ class VideoHistoryData extends DataClass
     Value<String?> imagePath = const Value.absent(),
     DateTime? createdAt,
     String? title,
+    Value<String?> language = const Value.absent(),
   }) => VideoHistoryData(
     id: id ?? this.id,
     videoPath: videoPath ?? this.videoPath,
@@ -270,6 +303,7 @@ class VideoHistoryData extends DataClass
     imagePath: imagePath.present ? imagePath.value : this.imagePath,
     createdAt: createdAt ?? this.createdAt,
     title: title ?? this.title,
+    language: language.present ? language.value : this.language,
   );
   VideoHistoryData copyWithCompanion(VideoHistoryCompanion data) {
     return VideoHistoryData(
@@ -281,6 +315,7 @@ class VideoHistoryData extends DataClass
       imagePath: data.imagePath.present ? data.imagePath.value : this.imagePath,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       title: data.title.present ? data.title.value : this.title,
+      language: data.language.present ? data.language.value : this.language,
     );
   }
 
@@ -292,14 +327,22 @@ class VideoHistoryData extends DataClass
           ..write('thumbnailPath: $thumbnailPath, ')
           ..write('imagePath: $imagePath, ')
           ..write('createdAt: $createdAt, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('language: $language')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, videoPath, thumbnailPath, imagePath, createdAt, title);
+  int get hashCode => Object.hash(
+    id,
+    videoPath,
+    thumbnailPath,
+    imagePath,
+    createdAt,
+    title,
+    language,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -309,7 +352,8 @@ class VideoHistoryData extends DataClass
           other.thumbnailPath == this.thumbnailPath &&
           other.imagePath == this.imagePath &&
           other.createdAt == this.createdAt &&
-          other.title == this.title);
+          other.title == this.title &&
+          other.language == this.language);
 }
 
 class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
@@ -319,6 +363,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
   final Value<String?> imagePath;
   final Value<DateTime> createdAt;
   final Value<String> title;
+  final Value<String?> language;
   const VideoHistoryCompanion({
     this.id = const Value.absent(),
     this.videoPath = const Value.absent(),
@@ -326,6 +371,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
     this.imagePath = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.title = const Value.absent(),
+    this.language = const Value.absent(),
   });
   VideoHistoryCompanion.insert({
     this.id = const Value.absent(),
@@ -334,6 +380,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
     this.imagePath = const Value.absent(),
     required DateTime createdAt,
     required String title,
+    this.language = const Value.absent(),
   }) : videoPath = Value(videoPath),
        createdAt = Value(createdAt),
        title = Value(title);
@@ -344,6 +391,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
     Expression<String>? imagePath,
     Expression<DateTime>? createdAt,
     Expression<String>? title,
+    Expression<String>? language,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -352,6 +400,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
       if (imagePath != null) 'image_path': imagePath,
       if (createdAt != null) 'created_at': createdAt,
       if (title != null) 'title': title,
+      if (language != null) 'language': language,
     });
   }
 
@@ -362,6 +411,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
     Value<String?>? imagePath,
     Value<DateTime>? createdAt,
     Value<String>? title,
+    Value<String?>? language,
   }) {
     return VideoHistoryCompanion(
       id: id ?? this.id,
@@ -370,6 +420,7 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
       imagePath: imagePath ?? this.imagePath,
       createdAt: createdAt ?? this.createdAt,
       title: title ?? this.title,
+      language: language ?? this.language,
     );
   }
 
@@ -394,6 +445,9 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
     if (title.present) {
       map['title'] = Variable<String>(title.value);
     }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
     return map;
   }
 
@@ -405,7 +459,8 @@ class VideoHistoryCompanion extends UpdateCompanion<VideoHistoryData> {
           ..write('thumbnailPath: $thumbnailPath, ')
           ..write('imagePath: $imagePath, ')
           ..write('createdAt: $createdAt, ')
-          ..write('title: $title')
+          ..write('title: $title, ')
+          ..write('language: $language')
           ..write(')'))
         .toString();
   }
@@ -430,6 +485,7 @@ typedef $$VideoHistoryTableCreateCompanionBuilder =
       Value<String?> imagePath,
       required DateTime createdAt,
       required String title,
+      Value<String?> language,
     });
 typedef $$VideoHistoryTableUpdateCompanionBuilder =
     VideoHistoryCompanion Function({
@@ -439,6 +495,7 @@ typedef $$VideoHistoryTableUpdateCompanionBuilder =
       Value<String?> imagePath,
       Value<DateTime> createdAt,
       Value<String> title,
+      Value<String?> language,
     });
 
 class $$VideoHistoryTableFilterComposer
@@ -477,6 +534,11 @@ class $$VideoHistoryTableFilterComposer
 
   ColumnFilters<String> get title => $composableBuilder(
     column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get language => $composableBuilder(
+    column: $table.language,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -519,6 +581,11 @@ class $$VideoHistoryTableOrderingComposer
     column: $table.title,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get language => $composableBuilder(
+    column: $table.language,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$VideoHistoryTableAnnotationComposer
@@ -549,6 +616,9 @@ class $$VideoHistoryTableAnnotationComposer
 
   GeneratedColumn<String> get title =>
       $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
 }
 
 class $$VideoHistoryTableTableManager
@@ -588,6 +658,7 @@ class $$VideoHistoryTableTableManager
                 Value<String?> imagePath = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<String> title = const Value.absent(),
+                Value<String?> language = const Value.absent(),
               }) => VideoHistoryCompanion(
                 id: id,
                 videoPath: videoPath,
@@ -595,6 +666,7 @@ class $$VideoHistoryTableTableManager
                 imagePath: imagePath,
                 createdAt: createdAt,
                 title: title,
+                language: language,
               ),
           createCompanionCallback:
               ({
@@ -604,6 +676,7 @@ class $$VideoHistoryTableTableManager
                 Value<String?> imagePath = const Value.absent(),
                 required DateTime createdAt,
                 required String title,
+                Value<String?> language = const Value.absent(),
               }) => VideoHistoryCompanion.insert(
                 id: id,
                 videoPath: videoPath,
@@ -611,6 +684,7 @@ class $$VideoHistoryTableTableManager
                 imagePath: imagePath,
                 createdAt: createdAt,
                 title: title,
+                language: language,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

@@ -10,10 +10,12 @@ class PickImageEvent extends VideoEvent {
 class GenerateVideoEvent extends VideoEvent {
   final String? processingMessage;
   final String? generatingMessage;
+  final VideoLanguage language;
 
   GenerateVideoEvent({
     this.processingMessage,
     this.generatingMessage,
+    this.language = VideoLanguage.en,
   });
 }
 

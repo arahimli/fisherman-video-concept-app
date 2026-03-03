@@ -9,6 +9,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     on<LoadHistoryEvent>(_onLoadHistory);
     on<DeleteVideoEvent>(_onDeleteVideo);
     on<FilterByDateEvent>(_onFilterByDate);
+    on<FilterByLanguageEvent>(_onFilterByLanguage);
   }
 
   Future<void> _onLoadHistory(
@@ -25,6 +26,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           offset: nextPage * pageSize,
           startDate: event.startDate ?? currentState.startDate,
           endDate: event.endDate ?? currentState.endDate,
+          language: event.language ?? currentState.language,
         );
 
         emit(currentState.copyWith(
@@ -40,6 +42,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           offset: 0,
           startDate: event.startDate,
           endDate: event.endDate,
+          language: event.language,
         );
 
         emit(HistoryLoaded(
@@ -48,6 +51,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
           currentPage: 0,
           startDate: event.startDate,
           endDate: event.endDate,
+          language: event.language,
         ));
       }
     } catch (e) {
@@ -79,9 +83,23 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       FilterByDateEvent event,
       Emitter<HistoryState> emit,
       ) async {
+    final currentLanguage = state is HistoryLoaded ? (state as HistoryLoaded).language : null;
     add(LoadHistoryEvent(
       startDate: event.startDate,
       endDate: event.endDate,
+      language: currentLanguage,
+    ));
+  }
+
+  Future<void> _onFilterByLanguage(
+      FilterByLanguageEvent event,
+      Emitter<HistoryState> emit,
+      ) async {
+    final currentState = state is HistoryLoaded ? state as HistoryLoaded : null;
+    add(LoadHistoryEvent(
+      startDate: currentState?.startDate,
+      endDate: currentState?.endDate,
+      language: event.language,
     ));
   }
 }

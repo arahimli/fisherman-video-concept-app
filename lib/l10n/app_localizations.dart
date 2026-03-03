@@ -312,6 +312,12 @@ abstract class AppLocalizations {
   /// **'All Dates'**
   String get allDates;
 
+  /// No description provided for @allLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allLanguages;
+
   /// No description provided for @loadMore.
   ///
   /// In en, this message translates to:
@@ -569,6 +575,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Total'**
   String get adsWatchedTotal;
+
+  /// No description provided for @selectVideoLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectVideoLanguage;
+
+  /// No description provided for @englishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishVoice;
+
+  /// No description provided for @englishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with English narration'**
+  String get englishVoiceDesc;
+
+  /// No description provided for @turkishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get turkishVoice;
+
+  /// No description provided for @turkishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Turkish narration'**
+  String get turkishVoiceDesc;
+
+  /// No description provided for @russianVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get russianVoice;
+
+  /// No description provided for @russianVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Russian narration'**
+  String get russianVoiceDesc;
+
+  /// No description provided for @frenchVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get frenchVoice;
+
+  /// No description provided for @frenchVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with French narration'**
+  String get frenchVoiceDesc;
+
+  /// No description provided for @arabicVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabicVoice;
+
+  /// No description provided for @arabicVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Arabic narration'**
+  String get arabicVoiceDesc;
+
+  /// No description provided for @chineseVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese'**
+  String get chineseVoice;
+
+  /// No description provided for @chineseVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Mandarin Chinese narration'**
+  String get chineseVoiceDesc;
+
+  /// No description provided for @spanishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanishVoice;
+
+  /// No description provided for @spanishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Spanish narration'**
+  String get spanishVoiceDesc;
+
+  /// No description provided for @hindiVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Hindi'**
+  String get hindiVoice;
+
+  /// No description provided for @hindiVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Hindi narration'**
+  String get hindiVoiceDesc;
 }
 
 class _AppLocalizationsDelegate

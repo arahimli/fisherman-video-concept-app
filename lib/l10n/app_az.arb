@@ -40,6 +40,7 @@
   },
   "filterByDate": "Tarixə görə süz",
   "allDates": "Bütün Tarixlər",
+  "allLanguages": "Hamısı",
   "loadMore": "Daha çox yüklə",
   "videosCount": "{count} video",
   "@videosCount": {
@@ -92,5 +93,22 @@
   "thankYouSupport": "Dəstəyiniz üçün təşəkkür edirik!",
   "adsWatched": "İzlənən reklamlar",
   "adsWatchedToday": "Bu gün",
-  "adsWatchedTotal": "Ümumi"
+  "adsWatchedTotal": "Ümumi",
+  "selectVideoLanguage": "Dil seçin",
+  "englishVoice": "İngilis",
+  "englishVoiceDesc": "İngilis dilində səsləndirmə ilə video yarat",
+  "turkishVoice": "Türk",
+  "turkishVoiceDesc": "Türk dilində səsləndirmə ilə video yarat",
+  "russianVoice": "Rus",
+  "russianVoiceDesc": "Rus dilində səsləndirmə ilə video yarat",
+  "frenchVoice": "Fransız",
+  "frenchVoiceDesc": "Fransız dilində səsləndirmə ilə video yarat",
+  "arabicVoice": "Ərəb",
+  "arabicVoiceDesc": "Ərəb dilində səsləndirmə ilə video yarat",
+  "chineseVoice": "Çin",
+  "chineseVoiceDesc": "Mandarin Çin dilində səsləndirmə ilə video yarat",
+  "spanishVoice": "İspan",
+  "spanishVoiceDesc": "İspan dilində səsləndirmə ilə video yarat",
+  "hindiVoice": "Hind",
+  "hindiVoiceDesc": "Hind dilində səsləndirmə ilə video yarat"
 }
