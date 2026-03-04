@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:confetti/confetti.dart';
@@ -7,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../core/ads/ads_config.dart';
 import '../../core/design/design_system.dart';
 import '../../l10n/app_localizations.dart';
 
@@ -18,13 +18,8 @@ class SupportPage extends StatefulWidget {
 }
 
 class _SupportPageState extends State<SupportPage> {
-  static final String _interstitialAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/1033173712'
-      : 'ca-app-pub-3940256099942544/4411468910';
-
-  static final String _rewardedAdUnitId = Platform.isAndroid
-      ? 'ca-app-pub-3940256099942544/5224354917'
-      : 'ca-app-pub-3940256099942544/1712485313';
+  static final String _interstitialAdUnitId = AdsConfig.interstitialAdUnitId;
+  static final String _rewardedAdUnitId = AdsConfig.rewardedAdUnitId;
 
   static const String _keyTotal = 'ads_watched_count';
   static const String _keyToday = 'ads_watched_today';
