@@ -70,7 +70,6 @@ dev_dependencies:
 
   drift_dev: ^2.14.1
   build_runner: ^2.4.6
-  flutter_launcher_icons: ^0.14.3
   bloc_test: ^10.0.0
   flutter_native_splash: ^2.4.4
 # For information on the generic Dart part of this file, see the
@@ -92,15 +91,6 @@ flutter:
 #flutter_gen:
 #  output: lib/generated/
 #  line_length: 80
-
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/icon.png"
-  image_path_android: "assets/images/icon.png"
-  image_path_ios: "assets/images/icon.png"
-
-  remove_alpha_ios: true
 
 flutter_native_splash:
   color: "#0A0A0A"
