@@ -15,7 +15,7 @@ void main() async {
   MobileAds.instance.updateRequestConfiguration(
     RequestConfiguration(testDeviceIds: AdsConfig.testDeviceIds),
   );
-  setupServiceLocator();
+  await setupServiceLocator();
   runApp(const MyApp());
 }
 

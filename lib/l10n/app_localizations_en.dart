@@ -305,4 +305,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get hindiVoiceDesc => 'Generate video with Hindi narration';
+
+  @override
+  String get forceUpdateTitle => 'Update Required';
+
+  @override
+  String get forceUpdateMessage =>
+      'A new version is available. Please update to continue.';
+
+  @override
+  String get forceUpdateButton => 'UPDATE NOW';
 }

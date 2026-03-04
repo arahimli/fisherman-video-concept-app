@@ -306,4 +306,14 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get hindiVoiceDesc => 'Hintçe seslendirme ile video oluştur';
+
+  @override
+  String get forceUpdateTitle => 'Güncelleme Gerekli';
+
+  @override
+  String get forceUpdateMessage =>
+      'Yeni bir sürüm mevcut. Devam etmek için güncelleyin.';
+
+  @override
+  String get forceUpdateButton => 'ŞİMDİ GÜNCELLE';
 }

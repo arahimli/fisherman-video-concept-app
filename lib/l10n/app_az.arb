@@ -110,5 +110,8 @@
   "spanishVoice": "İspan",
   "spanishVoiceDesc": "İspan dilində səsləndirmə ilə video yarat",
   "hindiVoice": "Hind",
-  "hindiVoiceDesc": "Hind dilində səsləndirmə ilə video yarat"
+  "hindiVoiceDesc": "Hind dilində səsləndirmə ilə video yarat",
+  "forceUpdateTitle": "Yeniləmə Tələb Olunur",
+  "forceUpdateMessage": "Yeni versiya mövcuddur. Davam etmək üçün yeniləyin.",
+  "forceUpdateButton": "İNDİ YENİLƏ"
 }

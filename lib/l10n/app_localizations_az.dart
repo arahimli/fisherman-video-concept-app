@@ -305,4 +305,14 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get hindiVoiceDesc => 'Hind dilində səsləndirmə ilə video yarat';
+
+  @override
+  String get forceUpdateTitle => 'Yeniləmə Tələb Olunur';
+
+  @override
+  String get forceUpdateMessage =>
+      'Yeni versiya mövcuddur. Davam etmək üçün yeniləyin.';
+
+  @override
+  String get forceUpdateButton => 'İNDİ YENİLƏ';
 }
