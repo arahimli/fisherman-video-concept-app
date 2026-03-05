@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/design/design_system.dart';
+import '../../core/di/service_locator.dart';
 import '../../core/router/app_routes.dart';
+import '../../data/services/force_update_service.dart';
 import '../widgets/splash/concrete_wall_painter.dart';
 import '../widgets/splash/splash_logo_animation.dart';
 
@@ -27,9 +29,15 @@ class _SplashPageState extends State<SplashPage>
 
   static const _totalMs = 4500;
 
+  // Force update check runs in parallel with the animation
+  late final Future<ForceUpdateResult> _updateCheckFuture;
+
   @override
   void initState() {
     super.initState();
+
+    // Kick off update check immediately — runs in parallel with the animation
+    _updateCheckFuture = sl<ForceUpdateService>().fetchAndCheck();
 
     _controller = AnimationController(
       vsync: this,
@@ -67,9 +75,15 @@ class _SplashPageState extends State<SplashPage>
     );
 
     _controller.forward();
-    _controller.addStatusListener((status) {
+    _controller.addStatusListener((status) async {
       if (status == AnimationStatus.completed && mounted) {
-        context.go(AppRoutes.home);
+        final result = await _updateCheckFuture;
+        if (!mounted) return;
+        if (result.required) {
+          context.go(AppRoutes.forceUpdate, extra: result.storeUrl);
+        } else {
+          context.go(AppRoutes.home);
+        }
       }
     });
   }

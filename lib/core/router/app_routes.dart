@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const String videoPreview = '/video-preview';
   static const String settings = '/settings';
   static const String support = '/support';
+  static const String forceUpdate = '/force-update';
 }

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/di/service_locator.dart';
 import '../../presentation/managers/history_bloc/bloc.dart';
+import '../../presentation/pages/force_update_page.dart';
 import '../../presentation/pages/history_page.dart';
 import '../../presentation/pages/home_page.dart';
 import '../../presentation/pages/splash_page.dart';
@@ -46,6 +47,13 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.support,
       builder: (context, state) => const SupportPage(),
+    ),
+    GoRoute(
+      path: AppRoutes.forceUpdate,
+      builder: (context, state) {
+        final storeUrl = state.extra as String? ?? '';
+        return ForceUpdatePage(storeUrl: storeUrl);
+      },
     ),
   ],
 );

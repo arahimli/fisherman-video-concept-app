@@ -110,5 +110,8 @@
   "spanishVoice": "İspanyolca",
   "spanishVoiceDesc": "İspanyolca seslendirme ile video oluştur",
   "hindiVoice": "Hintçe",
-  "hindiVoiceDesc": "Hintçe seslendirme ile video oluştur"
+  "hindiVoiceDesc": "Hintçe seslendirme ile video oluştur",
+  "forceUpdateTitle": "Güncelleme Gerekli",
+  "forceUpdateMessage": "Yeni bir sürüm mevcut. Devam etmek için güncelleyin.",
+  "forceUpdateButton": "ŞİMDİ GÜNCELLE"
 }

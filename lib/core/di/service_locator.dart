@@ -1,14 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/database/app_database.dart';
 import '../../data/repositories/video_history_repository.dart';
+import '../../data/services/force_update_service.dart';
 import '../../presentation/managers/history_bloc/bloc.dart';
 import '../../presentation/managers/recent_videos_bloc/bloc.dart';
 import '../../presentation/managers/video_bloc/bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
-void setupServiceLocator() {
+Future<void> setupServiceLocator() async {
+  await Firebase.initializeApp();
+
+  sl.registerLazySingleton<ForceUpdateService>(() => ForceUpdateService());
   // Database
   sl.registerSingleton<AppDatabase>(AppDatabase());
 

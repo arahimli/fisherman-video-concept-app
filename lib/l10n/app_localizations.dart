@@ -677,6 +677,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate video with Hindi narration'**
   String get hindiVoiceDesc;
+
+  /// No description provided for @forceUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Required'**
+  String get forceUpdateTitle;
+
+  /// No description provided for @forceUpdateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is available. Please update to continue.'**
+  String get forceUpdateMessage;
+
+  /// No description provided for @forceUpdateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'UPDATE NOW'**
+  String get forceUpdateButton;
 }
 
 class _AppLocalizationsDelegate
