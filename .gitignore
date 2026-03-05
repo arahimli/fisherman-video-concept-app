@@ -50,3 +50,7 @@ app.*.map.json
 
 # local properties file which contains the path to the Android SDK, which is specific to each developer's machine
 /local-files
+
+# Android release signing — never commit these
+android/keystore/
+android/key.properties
