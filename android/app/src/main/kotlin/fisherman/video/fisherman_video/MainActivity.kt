@@ -1,4 +1,4 @@
-package fisherman.video.fisherman_video
+package old.fisherman.video.maker
 
 import io.flutter.embedding.android.FlutterActivity
 

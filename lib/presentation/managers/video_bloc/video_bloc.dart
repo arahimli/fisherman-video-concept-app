@@ -1,24 +1,46 @@
-
-
 part of 'bloc.dart';
 
-
 class VideoBloc extends Bloc<VideoEvent, VideoState> {
-  final ImagePicker _picker = ImagePicker();
+  final ImagePicker _picker;
+  final AppDatabase database;
+  final ProcessImageFn _processImage;
+  final GenerateVideoFn _generateVideo;
+  final GetWatermarkFn _getWatermarkSettings;
 
-  VideoBloc() : super(VideoInitial()) {
+  VideoBloc({
+    required this.database,
+    ImagePicker? picker,
+    ProcessImageFn? processImageFn,
+    GenerateVideoFn? generateVideoFn,
+    GetWatermarkFn? getWatermarkSettingsFn,
+  })  : _picker = picker ?? ImagePicker(),
+        _processImage = processImageFn ?? ImageService.processImage,
+        _generateVideo = generateVideoFn ?? _defaultGenerateVideo,
+        _getWatermarkSettings =
+            getWatermarkSettingsFn ?? _defaultGetWatermarkSettings,
+        super(VideoInitial()) {
     on<PickImageEvent>(_onPickImage);
     on<GenerateVideoEvent>(_onGenerateVideo);
     on<ResetEvent>(_onReset);
   }
 
-  Future<void> _onPickImage(
-      PickImageEvent event,
-      Emitter<VideoState> emit,
-      ) async {
-    try {
-      final picked = await _picker.pickImage(source: ImageSource.gallery);
+  // Default service implementations used in production.
+  static Future<String?> _defaultGenerateVideo(
+    Map<String, String> images, {
+    WatermarkSettings? watermark,
+    VideoLanguage? language,
+  }) =>
+      VideoService.generateVideo(images, watermark: watermark, language: language ?? VideoLanguage.en);
 
+  static Future<WatermarkSettings> _defaultGetWatermarkSettings() =>
+      SettingsService().getWatermarkSettings();
+
+  Future<void> _onPickImage(
+    PickImageEvent event,
+    Emitter<VideoState> emit,
+  ) async {
+    try {
+      final picked = await _picker.pickImage(source: event.source);
       if (picked != null) {
         emit(ImagePickedState(File(picked.path)));
       }
@@ -28,9 +50,9 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   }
 
   Future<void> _onGenerateVideo(
-      GenerateVideoEvent event,
-      Emitter<VideoState> emit,
-      ) async {
+    GenerateVideoEvent event,
+    Emitter<VideoState> emit,
+  ) async {
     if (state is! ImagePickedState && state is! VideoErrorState) {
       emit(VideoErrorState('Please select an image first'));
       return;
@@ -49,15 +71,25 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     }
 
     try {
-      // Processing image - message will be localized in UI
-      emit(VideoLoadingState(imageFile, event.processingMessage ?? 'Processing image...'));
-      final images = await ImageService.processImage(imageFile);
+      emit(VideoLoadingState(
+          imageFile, event.processingMessage ?? 'Processing image...'));
+      final images = await _processImage(imageFile);
 
-      // Generating video - message will be localized in UI
-      emit(VideoLoadingState(imageFile, event.generatingMessage ?? 'Generating video...'));
-      final videoFile = await VideoService.generateVideo(images);
+      emit(VideoLoadingState(
+          imageFile, event.generatingMessage ?? 'Generating video...'));
+      final watermark = await _getWatermarkSettings();
+      final videoFile = await _generateVideo(images, watermark: watermark, language: event.language);
 
       if (videoFile != null) {
+        final timestamp = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+        final videoHistory = VideoHistoryCompanion(
+          videoPath: drift.Value(videoFile),
+          imagePath: drift.Value(imageFile.path),
+          createdAt: drift.Value(DateTime.now()),
+          title: drift.Value('MOTION_$timestamp'),
+          language: drift.Value(event.language.name),
+        );
+        await database.createVideo(videoHistory);
         emit(VideoGeneratedState(imageFile, videoFile));
       } else {
         emit(VideoErrorState(
@@ -74,9 +106,9 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
   }
 
   Future<void> _onReset(
-      ResetEvent event,
-      Emitter<VideoState> emit,
-      ) async {
+    ResetEvent event,
+    Emitter<VideoState> emit,
+  ) async {
     emit(VideoInitial());
   }
 }

@@ -2,15 +2,20 @@ part of 'bloc.dart';
 
 abstract class VideoEvent {}
 
-class PickImageEvent extends VideoEvent {}
+class PickImageEvent extends VideoEvent {
+  final ImageSource source;
+  PickImageEvent({this.source = ImageSource.gallery});
+}
 
 class GenerateVideoEvent extends VideoEvent {
   final String? processingMessage;
   final String? generatingMessage;
+  final VideoLanguage language;
 
   GenerateVideoEvent({
     this.processingMessage,
     this.generatingMessage,
+    this.language = VideoLanguage.en,
   });
 }
 

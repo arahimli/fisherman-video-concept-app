@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "165320770152",
+    "project_id": "old-fisherman-80dad",
+    "storage_bucket": "old-fisherman-80dad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165320770152:android:c99c4272a8c350bc3fb1dd",
+        "android_client_info": {
+          "package_name": "old.fisherman.video.maker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYDN2sWw-kZkkJlZDiHPsA0KufcPkhTwk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

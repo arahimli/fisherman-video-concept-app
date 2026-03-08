@@ -105,7 +105,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'Vogue Motion'**
+  /// **'Old Fisherman'**
   String get appTitle;
 
   /// No description provided for @create.
@@ -117,13 +117,13 @@ abstract class AppLocalizations {
   /// No description provided for @selectImage.
   ///
   /// In en, this message translates to:
-  /// **'SELECT IMAGE'**
+  /// **'SELECT\nIMAGE'**
   String get selectImage;
 
   /// No description provided for @changeImage.
   ///
   /// In en, this message translates to:
-  /// **'CHANGE IMAGE'**
+  /// **'CHANGE\nIMAGE'**
   String get changeImage;
 
   /// No description provided for @generateVideo.
@@ -155,6 +155,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'VIEW ALL'**
   String get viewAll;
+
+  /// No description provided for @history.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get history;
+
+  /// No description provided for @allVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'All Videos'**
+  String get allVideos;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @thisMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'This Month'**
+  String get thisMonth;
+
+  /// No description provided for @older.
+  ///
+  /// In en, this message translates to:
+  /// **'Older'**
+  String get older;
+
+  /// No description provided for @noVideos.
+  ///
+  /// In en, this message translates to:
+  /// **'No videos yet'**
+  String get noVideos;
+
+  /// No description provided for @noVideosDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Create your first video to see it here'**
+  String get noVideosDesc;
+
+  /// No description provided for @deleteVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Video'**
+  String get deleteVideo;
+
+  /// No description provided for @deleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this video?'**
+  String get deleteConfirm;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
 
   /// No description provided for @reset.
   ///
@@ -220,7 +298,403 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Error: {error}'**
-  String error(String error);
+  String error(Object error);
+
+  /// No description provided for @filterByDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by Date'**
+  String get filterByDate;
+
+  /// No description provided for @allDates.
+  ///
+  /// In en, this message translates to:
+  /// **'All Dates'**
+  String get allDates;
+
+  /// No description provided for @allLanguages.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allLanguages;
+
+  /// No description provided for @loadMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Load More'**
+  String get loadMore;
+
+  /// No description provided for @videosCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} videos'**
+  String videosCount(int count);
+
+  /// No description provided for @videoPreviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'PREVIEW'**
+  String get videoPreviewTitle;
+
+  /// No description provided for @shareSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'SHARE'**
+  String get shareSheet;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// No description provided for @saveToGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to gallery'**
+  String get saveToGallery;
+
+  /// No description provided for @saveToGalleryDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Will be saved to your phone\'s gallery'**
+  String get saveToGalleryDesc;
+
+  /// No description provided for @videoSavedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'✓ Video saved to gallery'**
+  String get videoSavedSuccess;
+
+  /// No description provided for @share.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get share;
+
+  /// No description provided for @shareSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp, Telegram and other apps'**
+  String get shareSubtitle;
+
+  /// No description provided for @shareVideoText.
+  ///
+  /// In en, this message translates to:
+  /// **'Look at my video!'**
+  String get shareVideoText;
+
+  /// No description provided for @selectFromGallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from your photo library'**
+  String get selectFromGallery;
+
+  /// No description provided for @takePhoto.
+  ///
+  /// In en, this message translates to:
+  /// **'Take Photo'**
+  String get takePhoto;
+
+  /// No description provided for @takePhotoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Open camera and take a new photo'**
+  String get takePhotoDesc;
+
+  /// No description provided for @shareError.
+  ///
+  /// In en, this message translates to:
+  /// **'Share error: {error}'**
+  String shareError(Object error);
+
+  /// No description provided for @settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settings;
+
+  /// No description provided for @watermark.
+  ///
+  /// In en, this message translates to:
+  /// **'Watermark'**
+  String get watermark;
+
+  /// No description provided for @imageWatermark.
+  ///
+  /// In en, this message translates to:
+  /// **'Image Watermark'**
+  String get imageWatermark;
+
+  /// No description provided for @imageWatermarkDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Overlay a logo or image on the video'**
+  String get imageWatermarkDesc;
+
+  /// No description provided for @watermarkPosition.
+  ///
+  /// In en, this message translates to:
+  /// **'Watermark Position'**
+  String get watermarkPosition;
+
+  /// No description provided for @watermarkHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Disable the watermark to create videos without any overlay.'**
+  String get watermarkHint;
+
+  /// No description provided for @watermarkChangeImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Image'**
+  String get watermarkChangeImage;
+
+  /// No description provided for @watermarkRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get watermarkRemove;
+
+  /// No description provided for @watermarkSelectImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image'**
+  String get watermarkSelectImage;
+
+  /// No description provided for @positionTopLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Left'**
+  String get positionTopLeft;
+
+  /// No description provided for @positionTopRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Top Right'**
+  String get positionTopRight;
+
+  /// No description provided for @positionBottomLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom Left'**
+  String get positionBottomLeft;
+
+  /// No description provided for @positionBottomRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Bottom Right'**
+  String get positionBottomRight;
+
+  /// No description provided for @backToSelectImageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Go Back'**
+  String get backToSelectImageTitle;
+
+  /// No description provided for @backToSelectImageMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to go back to select image mode?'**
+  String get backToSelectImageMessage;
+
+  /// No description provided for @pressBackAgainToExit.
+  ///
+  /// In en, this message translates to:
+  /// **'Press back again to exit'**
+  String get pressBackAgainToExit;
+
+  /// No description provided for @support.
+  ///
+  /// In en, this message translates to:
+  /// **'Support'**
+  String get support;
+
+  /// No description provided for @supportDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a video ad to help keep the app free and support development'**
+  String get supportDesc;
+
+  /// No description provided for @shortVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Short Video'**
+  String get shortVideo;
+
+  /// No description provided for @shortVideoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a short ad to support the app'**
+  String get shortVideoDesc;
+
+  /// No description provided for @longVideo.
+  ///
+  /// In en, this message translates to:
+  /// **'Long Video'**
+  String get longVideo;
+
+  /// No description provided for @longVideoDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch a longer ad for extra support'**
+  String get longVideoDesc;
+
+  /// No description provided for @watchAd.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch'**
+  String get watchAd;
+
+  /// No description provided for @thankYouSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your support!'**
+  String get thankYouSupport;
+
+  /// No description provided for @adsWatched.
+  ///
+  /// In en, this message translates to:
+  /// **'Ads Watched'**
+  String get adsWatched;
+
+  /// No description provided for @adsWatchedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get adsWatchedToday;
+
+  /// No description provided for @adsWatchedTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get adsWatchedTotal;
+
+  /// No description provided for @selectVideoLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectVideoLanguage;
+
+  /// No description provided for @englishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get englishVoice;
+
+  /// No description provided for @englishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with English narration'**
+  String get englishVoiceDesc;
+
+  /// No description provided for @turkishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get turkishVoice;
+
+  /// No description provided for @turkishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Turkish narration'**
+  String get turkishVoiceDesc;
+
+  /// No description provided for @russianVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Russian'**
+  String get russianVoice;
+
+  /// No description provided for @russianVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Russian narration'**
+  String get russianVoiceDesc;
+
+  /// No description provided for @frenchVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get frenchVoice;
+
+  /// No description provided for @frenchVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with French narration'**
+  String get frenchVoiceDesc;
+
+  /// No description provided for @arabicVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic'**
+  String get arabicVoice;
+
+  /// No description provided for @arabicVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Arabic narration'**
+  String get arabicVoiceDesc;
+
+  /// No description provided for @chineseVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Chinese'**
+  String get chineseVoice;
+
+  /// No description provided for @chineseVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Mandarin Chinese narration'**
+  String get chineseVoiceDesc;
+
+  /// No description provided for @spanishVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get spanishVoice;
+
+  /// No description provided for @spanishVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Spanish narration'**
+  String get spanishVoiceDesc;
+
+  /// No description provided for @hindiVoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Hindi'**
+  String get hindiVoice;
+
+  /// No description provided for @hindiVoiceDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate video with Hindi narration'**
+  String get hindiVoiceDesc;
+
+  /// No description provided for @forceUpdateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Required'**
+  String get forceUpdateTitle;
+
+  /// No description provided for @forceUpdateMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'A new version is available. Please update to continue.'**
+  String get forceUpdateMessage;
+
+  /// No description provided for @forceUpdateButton.
+  ///
+  /// In en, this message translates to:
+  /// **'UPDATE NOW'**
+  String get forceUpdateButton;
 }
 
 class _AppLocalizationsDelegate
