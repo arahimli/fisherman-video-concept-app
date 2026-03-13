@@ -45,8 +45,9 @@
 		<true/>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
-		<key>GADApplicationIdentifier</key>
-		<string>ca-app-pub-9530282216810256~3098728908</string>
+		<!-- GADApplicationIdentifier — TODO: uncomment for next release -->
+		<!-- <key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-9530282216810256~3098728908</string> -->
 		<key>UIStatusBarHidden</key>
 		<false/>
 	</dict>
