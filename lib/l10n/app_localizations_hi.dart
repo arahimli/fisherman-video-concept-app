@@ -219,8 +219,7 @@ class AppLocalizationsHi extends AppLocalizations {
       'क्या आप वाकई छवि चयन मोड में वापस जाना चाहते हैं?';
 
   @override
-  String get pressBackAgainToExit =>
-      'बाहर निकलने के लिए फिर से वापस दबाएं';
+  String get pressBackAgainToExit => 'बाहर निकलने के लिए फिर से वापस दबाएं';
 
   @override
   String get support => 'सहायता';
@@ -240,8 +239,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get longVideo => 'लंबा वीडियो';
 
   @override
-  String get longVideoDesc =>
-      'अतिरिक्त समर्थन के लिए एक लंबा विज्ञापन देखें';
+  String get longVideoDesc => 'अतिरिक्त समर्थन के लिए एक लंबा विज्ञापन देखें';
 
   @override
   String get watchAd => 'देखें';
@@ -308,6 +306,9 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get hindiVoiceDesc => 'हिंदी में कथन के साथ वीडियो बनाएं';
+
+  @override
+  String get appLanguage => 'भाषा';
 
   @override
   String get forceUpdateTitle => 'अपडेट आवश्यक';

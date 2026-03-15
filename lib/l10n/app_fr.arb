@@ -111,6 +111,7 @@
   "spanishVoiceDesc": "Générer une vidéo avec narration en espagnol",
   "hindiVoice": "Hindi",
   "hindiVoiceDesc": "Générer une vidéo avec narration en hindi",
+  "appLanguage": "Langue",
   "forceUpdateTitle": "Mise à Jour Requise",
   "forceUpdateMessage": "Une nouvelle version est disponible. Veuillez mettre à jour pour continuer.",
   "forceUpdateButton": "METTRE À JOUR"

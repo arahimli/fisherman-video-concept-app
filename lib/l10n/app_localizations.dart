@@ -688,6 +688,12 @@ abstract class AppLocalizations {
   /// **'Generate video with Hindi narration'**
   String get hindiVoiceDesc;
 
+  /// No description provided for @appLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get appLanguage;
+
   /// No description provided for @forceUpdateTitle.
   ///
   /// In en, this message translates to:
@@ -717,9 +723,17 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['ar', 'az', 'en', 'es', 'fr', 'hi', 'ru', 'tr', 'zh']
-          .contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'ar',
+    'az',
+    'en',
+    'es',
+    'fr',
+    'hi',
+    'ru',
+    'tr',
+    'zh',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;

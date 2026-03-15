@@ -306,6 +306,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get hindiVoiceDesc => 'إنشاء فيديو بسرد باللغة الهندية';
 
   @override
+  String get appLanguage => 'اللغة';
+
+  @override
   String get forceUpdateTitle => 'تحديث مطلوب';
 
   @override

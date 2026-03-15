@@ -4,7 +4,7 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for Spanish (`es`).
+/// The translations for Spanish Castilian (`es`).
 class AppLocalizationsEs extends AppLocalizations {
   AppLocalizationsEs([String locale = 'es']) : super(locale);
 
@@ -306,6 +306,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get hindiVoiceDesc => 'Generar video con narración en hindi';
+
+  @override
+  String get appLanguage => 'Idioma';
 
   @override
   String get forceUpdateTitle => 'Actualización Requerida';

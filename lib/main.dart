@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/service_locator.dart';
 import 'core/router/app_router.dart';
 import 'l10n/app_localizations.dart';
+import 'presentation/managers/locale_bloc/bloc.dart';
 import 'presentation/managers/recent_videos_bloc/bloc.dart';
 import 'presentation/managers/video_bloc/bloc.dart';
 
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<LocaleBloc>(
+          create: (context) => sl<LocaleBloc>(),
+        ),
         BlocProvider<RecentVideosBloc>(
           create: (context) => sl<RecentVideosBloc>()..add(LoadRecentVideosEvent()),
         ),
@@ -37,32 +41,34 @@ class MyApp extends StatelessWidget {
           create: (context) => sl<VideoBloc>(),
         ),
       ],
-      child: MaterialApp.router(
-        routerConfig: appRouter,
-        title: 'Old Fisherman',
-        locale: const Locale('en'),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        theme: ThemeData(
-          brightness: Brightness.dark,
-          scaffoldBackgroundColor: const Color(0xFF0A0A0A),
-          fontFamily: 'Georgia',
-          appBarTheme: const AppBarTheme(
-            scrolledUnderElevation: 0,
-            surfaceTintColor: Colors.transparent,
-          ),
-          snackBarTheme: SnackBarThemeData(
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+      child: BlocBuilder<LocaleBloc, LocaleState>(
+        builder: (context, localeState) => MaterialApp.router(
+          routerConfig: appRouter,
+          title: 'Old Fisherman',
+          locale: localeState.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: const Color(0xFF0A0A0A),
+            fontFamily: 'Georgia',
+            appBarTheme: const AppBarTheme(
+              scrolledUnderElevation: 0,
+              surfaceTintColor: Colors.transparent,
             ),
-            insetPadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 12,
+            snackBarTheme: SnackBarThemeData(
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              insetPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
             ),
           ),
+          debugShowCheckedModeBanner: false,
         ),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

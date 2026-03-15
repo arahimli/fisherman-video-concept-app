@@ -303,6 +303,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get hindiVoiceDesc => '生成带印地语旁白的视频';
 
   @override
+  String get appLanguage => '语言';
+
+  @override
   String get forceUpdateTitle => '需要更新';
 
   @override

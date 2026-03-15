@@ -101,8 +101,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get videoGenerated => 'Vidéo générée ✓';
 
   @override
-  String get videoGenerationError =>
-      'Erreur lors de la génération de la vidéo';
+  String get videoGenerationError => 'Erreur lors de la génération de la vidéo';
 
   @override
   String get selectImageFirst => 'Veuillez d\'abord sélectionner une image';
@@ -269,8 +268,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get englishVoice => 'Anglais';
 
   @override
-  String get englishVoiceDesc =>
-      'Générer une vidéo avec narration en anglais';
+  String get englishVoiceDesc => 'Générer une vidéo avec narration en anglais';
 
   @override
   String get turkishVoice => 'Turc';
@@ -288,8 +286,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get frenchVoice => 'Français';
 
   @override
-  String get frenchVoiceDesc =>
-      'Générer une vidéo avec narration en français';
+  String get frenchVoiceDesc => 'Générer une vidéo avec narration en français';
 
   @override
   String get arabicVoice => 'Arabe';
@@ -308,14 +305,16 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spanishVoice => 'Espagnol';
 
   @override
-  String get spanishVoiceDesc =>
-      'Générer une vidéo avec narration en espagnol';
+  String get spanishVoiceDesc => 'Générer une vidéo avec narration en espagnol';
 
   @override
   String get hindiVoice => 'Hindi';
 
   @override
   String get hindiVoiceDesc => 'Générer une vidéo avec narration en hindi';
+
+  @override
+  String get appLanguage => 'Langue';
 
   @override
   String get forceUpdateTitle => 'Mise à Jour Requise';

@@ -111,6 +111,7 @@
   "spanishVoiceDesc": "生成带西班牙语旁白的视频",
   "hindiVoice": "印地语",
   "hindiVoiceDesc": "生成带印地语旁白的视频",
+  "appLanguage": "语言",
   "forceUpdateTitle": "需要更新",
   "forceUpdateMessage": "有新版本可用。请更新以继续。",
   "forceUpdateButton": "立即更新"

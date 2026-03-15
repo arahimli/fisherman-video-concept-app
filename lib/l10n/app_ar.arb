@@ -111,6 +111,7 @@
   "spanishVoiceDesc": "إنشاء فيديو بسرد باللغة الإسبانية",
   "hindiVoice": "الهندية",
   "hindiVoiceDesc": "إنشاء فيديو بسرد باللغة الهندية",
+  "appLanguage": "اللغة",
   "forceUpdateTitle": "تحديث مطلوب",
   "forceUpdateMessage": "يتوفر إصدار جديد. يرجى التحديث للمتابعة.",
   "forceUpdateButton": "تحديث الآن"
