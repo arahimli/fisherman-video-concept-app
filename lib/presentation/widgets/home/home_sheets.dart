@@ -4,11 +4,11 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../data/services/video_service.dart' show VideoLanguage;
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/video_bloc/bloc.dart';
 
 void showVideoLanguageSheet(BuildContext context) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -227,7 +227,7 @@ void showVideoLanguageSheet(BuildContext context) {
 }
 
 void showImageSourceSheet(BuildContext context) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -291,7 +291,7 @@ void showImageSourceSheet(BuildContext context) {
 }
 
 void showBackToSelectImageSheet(BuildContext context) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -360,7 +360,7 @@ void showBackToSelectImageSheet(BuildContext context) {
 }
 
 void showResetConfirmSheet(BuildContext context) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,

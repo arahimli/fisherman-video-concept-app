@@ -307,7 +307,6 @@ class AppLocalizationsAz extends AppLocalizations {
   String get hindiVoiceDesc => 'Hind dilində səsləndirmə ilə video yarat';
 
   @override
-  @override
   String get home => 'Ana Səhifə';
 
   @override

@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../core/router/app_routes.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/video_bloc/bloc.dart';
 import 'home_sheets.dart';
 
@@ -22,7 +22,7 @@ class VideoReadyModeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Column(
       children: [
@@ -147,7 +147,7 @@ class VideoReadyModeWidget extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () => context.read<VideoBloc>().add(ResetEvent()),
                   icon: const Icon(Icons.home_outlined, size: 20),
-                  label: Text(AppLocalizations.of(context).home),
+                  label: Text(context.l10n.home),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     side: const BorderSide(color: AppColors.accentBorder),

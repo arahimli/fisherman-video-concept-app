@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/design_system.dart';
 import '../../data/services/settings_service.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 import '../managers/locale_bloc/bloc.dart';
 import '../widgets/settings/language_bottom_sheet.dart';
 import '../widgets/settings/settings_card.dart';
@@ -60,7 +60,7 @@ class _LanguageRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context).appLanguage,
+                    context.l10n.appLanguage,
                     style: AppTextStyles.historyCardTitle,
                   ),
                   const SizedBox(height: 2),
@@ -122,7 +122,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: AppColors.background,

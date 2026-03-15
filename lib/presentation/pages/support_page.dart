@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import '../../core/ads/ads_config.dart'; // TODO: uncomment for next release
 import '../../core/design/design_system.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -153,7 +154,7 @@ class _SupportPageState extends State<SupportPage> {
 
   void _showThankYou() {
     if (!mounted) return;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(l10n.thankYouSupport),
@@ -172,7 +173,7 @@ class _SupportPageState extends State<SupportPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: AppColors.background,
