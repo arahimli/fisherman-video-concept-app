@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/design/design_system.dart';
 
 class SettingsToggleRow extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String title;
   final String subtitle;
   final bool value;
@@ -33,7 +33,7 @@ class SettingsToggleRow extends StatelessWidget {
               color: AppColors.surfaceElevated,
               borderRadius: AppRadius.smAll,
             ),
-            child: Icon(icon, color: AppColors.accent, size: 22),
+            child: icon,
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(

@@ -43,7 +43,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.image_outlined,
+                  icon: AppVectorIcon(AppVectors.image, color: AppColors.accent, size: 26),
                   label: l10n.changeImage,
                   onTap: () => showImageSourceSheet(context),
                 ),
@@ -51,7 +51,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
               const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.videocam_outlined,
+                  icon: AppVectorIcon(AppVectors.video, color: AppColors.surface, size: 26),
                   label: l10n.generateVideo,
                   isAccent: true,
                   onTap: () => showVideoLanguageSheet(context),

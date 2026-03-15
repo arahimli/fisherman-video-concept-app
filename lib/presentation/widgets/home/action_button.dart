@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/design/design_system.dart';
 
 class HomeActionButton extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String label;
   final bool isAccent;
   final VoidCallback? onTap;
@@ -33,11 +33,7 @@ class HomeActionButton extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  icon,
-                  color: isAccent ? AppColors.surface : AppColors.accent,
-                  size: 26,
-                ),
+                icon,
                 const SizedBox(height: AppSpacing.sm),
                 Text(
                   label,
