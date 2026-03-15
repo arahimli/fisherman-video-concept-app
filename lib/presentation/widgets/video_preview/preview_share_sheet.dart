@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 
 void showPreviewShareSheet(
   BuildContext context, {
   required VoidCallback onSave,
   required VoidCallback onShare,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -31,7 +31,7 @@ void showPreviewShareSheet(
             Text(l10n.shareSheet, style: AppTextStyles.appBarTitle),
             const SizedBox(height: AppSpacing.xl),
             _SheetTile(
-              icon: Icons.save_alt_outlined,
+              icon: const AppVectorIcon(AppVectors.save, size: 22, color: AppColors.accent),
               title: l10n.saveToGallery,
               subtitle: l10n.saveToGalleryDesc,
               onTap: () {
@@ -41,7 +41,7 @@ void showPreviewShareSheet(
             ),
             Divider(color: AppColors.surfaceElevated, height: AppSpacing.xl),
             _SheetTile(
-              icon: Icons.ios_share_outlined,
+              icon: const AppVectorIcon(AppVectors.share, size: 22, color: AppColors.accent),
               title: l10n.share,
               subtitle: l10n.shareSubtitle,
               onTap: () {
@@ -58,7 +58,7 @@ void showPreviewShareSheet(
 }
 
 class _SheetTile extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
@@ -80,7 +80,7 @@ class _SheetTile extends StatelessWidget {
           color: AppColors.surfaceElevated,
           borderRadius: AppRadius.smAll,
         ),
-        child: Icon(icon, color: AppColors.accent, size: 22),
+        child: icon,
       ),
       title: Text(title, style: AppTextStyles.historyCardTitle),
       subtitle: Text(subtitle, style: AppTextStyles.historyCardDate),

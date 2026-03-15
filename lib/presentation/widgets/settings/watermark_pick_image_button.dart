@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 
 class WatermarkPickImageButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -10,7 +10,7 @@ class WatermarkPickImageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -26,7 +26,7 @@ class WatermarkPickImageButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.add_photo_alternate_outlined, color: AppColors.accent, size: 22),
+              const AppVectorIcon(AppVectors.photoPlus, color: AppColors.accent, size: 22),
               const SizedBox(width: AppSpacing.sm),
               Text(l10n.watermarkSelectImage, style: const TextStyle(color: AppColors.accent, fontSize: 13)),
             ],

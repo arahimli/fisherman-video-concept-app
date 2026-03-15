@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../core/router/app_routes.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/video_bloc/bloc.dart';
 import 'home_sheets.dart';
 
@@ -22,7 +22,7 @@ class VideoReadyModeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Column(
       children: [
@@ -55,8 +55,8 @@ class VideoReadyModeWidget extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: AppShadows.accentGlow,
                           ),
-                          child: const Icon(
-                            Icons.play_arrow_rounded,
+                          child: const AppVectorIcon(
+                            AppVectors.play,
                             color: AppColors.background,
                             size: 72,
                           ),
@@ -77,8 +77,7 @@ class VideoReadyModeWidget extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(Icons.check_circle_outline,
-                                  color: AppColors.background, size: 13),
+                              const AppVectorIcon(AppVectors.checkCircle, color: AppColors.background, size: 13),
                               const SizedBox(width: AppSpacing.xs),
                               Text(
                                 l10n.videoReady,
@@ -108,7 +107,7 @@ class VideoReadyModeWidget extends StatelessWidget {
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: () => context.push(AppRoutes.videoPreview, extra: videoPath),
-              icon: const Icon(Icons.play_circle_outline, size: 22),
+              icon: const AppVectorIcon(AppVectors.playCircle, color: AppColors.background, size: 22),
               label: Text(l10n.previewVideo,
                   style: AppTextStyles.previewButtonLabel.copyWith(fontSize: 13)),
               style: ElevatedButton.styleFrom(
@@ -132,7 +131,7 @@ class VideoReadyModeWidget extends StatelessWidget {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => showImageSourceSheet(context),
-                  icon: const Icon(Icons.image_outlined, size: 20),
+                  icon: const AppVectorIcon(AppVectors.image, color: AppColors.textPrimary, size: 20),
                   label: Text(l10n.changeImage.replaceAll('\n', ' ')),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
@@ -146,8 +145,8 @@ class VideoReadyModeWidget extends StatelessWidget {
               Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () => context.read<VideoBloc>().add(ResetEvent()),
-                  icon: const Icon(Icons.home_outlined, size: 20),
-                  label: const Text('Home'),
+                  icon: const AppVectorIcon(AppVectors.home, color: AppColors.textPrimary, size: 20),
+                  label: Text(context.l10n.home),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     side: const BorderSide(color: AppColors.accentBorder),

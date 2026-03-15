@@ -6,6 +6,7 @@ import '../../../core/design/design_system.dart';
 import '../../../core/router/app_routes.dart';
 import '../../../data/database/app_database.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/recent_videos_bloc/bloc.dart';
 import '../history/history_sheets.dart';
 import 'recent_video_item.dart';
@@ -16,7 +17,7 @@ class RecentVideosWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return BlocBuilder<RecentVideosBloc, RecentVideosState>(
       builder: (context, state) {

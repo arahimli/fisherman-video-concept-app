@@ -35,10 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Google Mobile Ads App ID -->
-        <meta-data
+        <!-- Google Mobile Ads App ID — TODO: uncomment for next release -->
+        <!-- <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-9530282216810256~3098728908"/>
+            android:value="ca-app-pub-9530282216810256~3098728908"/> -->
 
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->

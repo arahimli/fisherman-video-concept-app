@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/design_system.dart';
 import '../../data/services/settings_service.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
+import '../managers/locale_bloc/bloc.dart';
+import '../widgets/settings/language_bottom_sheet.dart';
 import '../widgets/settings/settings_card.dart';
 import '../widgets/settings/settings_section_label.dart';
 import '../widgets/settings/settings_toggle_row.dart';
@@ -17,6 +20,63 @@ class SettingsPage extends StatefulWidget {
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _LanguageRow extends StatelessWidget {
+  final VoidCallback onTap;
+  const _LanguageRow({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final currentCode =
+        context.watch<LocaleBloc>().state.locale.languageCode;
+    final currentName = nativeLanguageName(currentCode);
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: AppRadius.lgAll,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: AppSpacing.lg,
+          vertical: AppSpacing.md,
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              decoration: const BoxDecoration(
+                color: AppColors.surfaceElevated,
+                borderRadius: AppRadius.smAll,
+              ),
+              child: const AppVectorIcon(AppVectors.globe, color: AppColors.accent, size: 22),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    context.l10n.appLanguage,
+                    style: AppTextStyles.historyCardTitle,
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    currentName,
+                    style: AppTextStyles.historyCardDate,
+                  ),
+                ],
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.textTertiary,
+              size: 22,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _SettingsPageState extends State<SettingsPage> {
@@ -58,7 +118,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -79,12 +139,22 @@ class _SettingsPageState extends State<SettingsPage> {
               child: ListView(
                 padding: const EdgeInsets.all(AppSpacing.xl),
                 children: [
+                  SettingsSectionLabel(l10n.appLanguage),
+                  const SizedBox(height: AppSpacing.sm),
+                  SettingsCard(
+                    children: [
+                      _LanguageRow(
+                        onTap: () => showLanguageBottomSheet(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSpacing.xl),
                   SettingsSectionLabel(l10n.watermark),
                   const SizedBox(height: AppSpacing.sm),
                   SettingsCard(
                     children: [
                       SettingsToggleRow(
-                        icon: Icons.image_outlined,
+                        icon: const AppVectorIcon(AppVectors.image, color: AppColors.accent, size: 22),
                         title: l10n.imageWatermark,
                         subtitle: l10n.imageWatermarkDesc,
                         value: _imageEnabled,

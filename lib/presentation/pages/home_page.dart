@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 import '../managers/recent_videos_bloc/bloc.dart';
 import '../managers/video_bloc/bloc.dart';
 import '../widgets/home/create_mode_widget.dart';
@@ -28,7 +29,7 @@ class _NewHomePageState extends State<NewHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return PopScope(
       canPop: false,
@@ -123,11 +124,11 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.favorite_outline, color: AppColors.textTertiary, size: 22),
+          icon: const AppVectorIcon(AppVectors.heart, color: AppColors.textTertiary, size: 22),
           onPressed: () => context.push(AppRoutes.support),
         ),
         IconButton(
-          icon: const Icon(Icons.tune, color: AppColors.textTertiary, size: 22),
+          icon: const AppVectorIcon(AppVectors.settings, color: AppColors.textTertiary, size: 22),
           onPressed: () => context.push(AppRoutes.settings),
         ),
         BlocBuilder<VideoBloc, VideoState>(
@@ -136,7 +137,7 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 state is VideoGeneratedState ||
                 state is VideoErrorState) {
               return IconButton(
-                icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
+                icon: const AppVectorIcon(AppVectors.refresh, color: AppColors.accent, size: 26),
                 onPressed: () => showResetConfirmSheet(context),
               );
             }

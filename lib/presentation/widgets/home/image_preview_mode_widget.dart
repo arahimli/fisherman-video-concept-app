@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import 'action_button.dart';
 import 'home_sheets.dart';
 import 'recent_videos_widget.dart';
@@ -16,7 +16,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Column(
       children: [
@@ -43,7 +43,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.image_outlined,
+                  icon: AppVectorIcon(AppVectors.image, color: AppColors.accent, size: 26),
                   label: l10n.changeImage,
                   onTap: () => showImageSourceSheet(context),
                 ),
@@ -51,7 +51,7 @@ class ImagePreviewModeWidget extends StatelessWidget {
               const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.videocam_outlined,
+                  icon: AppVectorIcon(AppVectors.video, color: AppColors.surface, size: 26),
                   label: l10n.generateVideo,
                   isAccent: true,
                   onTap: () => showVideoLanguageSheet(context),

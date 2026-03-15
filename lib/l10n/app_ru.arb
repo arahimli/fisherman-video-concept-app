@@ -111,6 +111,8 @@
   "spanishVoiceDesc": "Создать видео с испанским озвучиванием",
   "hindiVoice": "Хинди",
   "hindiVoiceDesc": "Создать видео с озвучиванием на хинди",
+  "home": "Главная",
+  "appLanguage": "Язык",
   "forceUpdateTitle": "Требуется обновление",
   "forceUpdateMessage": "Доступна новая версия. Обновите приложение, чтобы продолжить.",
   "forceUpdateButton": "ОБНОВИТЬ"

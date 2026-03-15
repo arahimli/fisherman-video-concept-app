@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import 'preview_action_button.dart';
 
 class VideoPreviewActionBar extends StatelessWidget {
@@ -18,7 +18,7 @@ class VideoPreviewActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(
@@ -46,7 +46,7 @@ class VideoPreviewActionBar extends StatelessWidget {
                         color: AppColors.background,
                       ),
                     )
-                  : const Icon(Icons.save_alt_outlined, size: 20),
+                  : const AppVectorIcon(AppVectors.save, size: 20, color: AppColors.background),
               label: isSaving ? l10n.saving : l10n.save,
               isAccent: true,
               onTap: isSaving ? null : onSave,
@@ -55,7 +55,7 @@ class VideoPreviewActionBar extends StatelessWidget {
           const SizedBox(width: AppSpacing.md),
           Expanded(
             child: PreviewActionButton(
-              icon: const Icon(Icons.ios_share_outlined, size: 20),
+              icon: const AppVectorIcon(AppVectors.share, size: 20, color: AppColors.accent),
               label: l10n.share,
               isAccent: false,
               onTap: onShare,

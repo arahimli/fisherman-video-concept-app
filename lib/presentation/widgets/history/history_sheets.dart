@@ -5,12 +5,12 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../data/database/app_database.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/history_bloc/bloc.dart';
 import '../../managers/recent_videos_bloc/bloc.dart';
 
 void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -40,7 +40,7 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
                   color: AppColors.surfaceElevated,
                   borderRadius: AppRadius.smAll,
                 ),
-                child: const Icon(Icons.ios_share_outlined, color: AppColors.accent, size: 22),
+                child: const AppVectorIcon(AppVectors.share, color: AppColors.accent, size: 22),
               ),
               title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
               subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
@@ -66,7 +66,7 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
                   color: AppColors.surfaceElevated,
                   borderRadius: AppRadius.smAll,
                 ),
-                child: const Icon(Icons.save_alt_outlined, color: AppColors.accent, size: 22),
+                child: const AppVectorIcon(AppVectors.save, color: AppColors.accent, size: 22),
               ),
               title: Text(l10n.saveToGallery, style: AppTextStyles.historyCardTitle),
               subtitle: Text(l10n.saveToGalleryDesc, style: AppTextStyles.historyCardDate),
@@ -103,7 +103,7 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
                   color: AppColors.error.withValues(alpha: 0.12),
                   borderRadius: AppRadius.smAll,
                 ),
-                child: const Icon(Icons.delete_outline, color: AppColors.error, size: 22),
+                child: const AppVectorIcon(AppVectors.delete, color: AppColors.error, size: 22),
               ),
               title: Text(
                 l10n.deleteVideo,
@@ -125,7 +125,7 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
 }
 
 void showDeleteConfirmSheet(BuildContext context, int videoId) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
