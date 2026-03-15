@@ -308,6 +308,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get hindiVoiceDesc => 'Создать видео с озвучиванием на хинди';
 
   @override
+  @override
+  String get home => 'Главная';
+
+  @override
   String get appLanguage => 'Язык';
 
   @override

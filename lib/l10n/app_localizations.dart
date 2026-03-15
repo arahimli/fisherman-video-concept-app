@@ -688,6 +688,12 @@ abstract class AppLocalizations {
   /// **'Generate video with Hindi narration'**
   String get hindiVoiceDesc;
 
+  /// No description provided for @home.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get home;
+
   /// No description provided for @appLanguage.
   ///
   /// In en, this message translates to:

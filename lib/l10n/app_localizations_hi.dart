@@ -308,6 +308,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get hindiVoiceDesc => 'हिंदी में कथन के साथ वीडियो बनाएं';
 
   @override
+  String get home => 'होम';
+
+  @override
   String get appLanguage => 'भाषा';
 
   @override

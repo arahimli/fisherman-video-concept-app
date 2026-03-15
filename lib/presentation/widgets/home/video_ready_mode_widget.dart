@@ -147,7 +147,7 @@ class VideoReadyModeWidget extends StatelessWidget {
                 child: OutlinedButton.icon(
                   onPressed: () => context.read<VideoBloc>().add(ResetEvent()),
                   icon: const Icon(Icons.home_outlined, size: 20),
-                  label: const Text('Home'),
+                  label: Text(AppLocalizations.of(context).home),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.textPrimary,
                     side: const BorderSide(color: AppColors.accentBorder),

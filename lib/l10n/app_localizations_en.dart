@@ -307,6 +307,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get hindiVoiceDesc => 'Generate video with Hindi narration';
 
   @override
+  String get home => 'Home';
+
+  @override
   String get appLanguage => 'Language';
 
   @override

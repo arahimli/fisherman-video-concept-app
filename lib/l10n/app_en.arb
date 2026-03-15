@@ -111,6 +111,7 @@
   "spanishVoiceDesc": "Generate video with Spanish narration",
   "hindiVoice": "Hindi",
   "hindiVoiceDesc": "Generate video with Hindi narration",
+  "home": "Home",
   "appLanguage": "Language",
   "forceUpdateTitle": "Update Required",
   "forceUpdateMessage": "A new version is available. Please update to continue.",
