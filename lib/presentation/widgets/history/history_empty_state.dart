@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 
 class HistoryEmptyState extends StatelessWidget {
   const HistoryEmptyState({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

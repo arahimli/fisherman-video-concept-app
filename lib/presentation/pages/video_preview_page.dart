@@ -8,7 +8,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../core/design/design_system.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 import '../widgets/video_preview/preview_action_bar.dart';
 import '../widgets/video_preview/preview_share_sheet.dart';
 import '../widgets/video_preview/video_player_view.dart';
@@ -103,7 +103,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
       );
       setState(() => _isSaving = false);
       if (!mounted) return;
-      final l10n = AppLocalizations.of(context);
+      final l10n = context.l10n;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(result.isSuccess
             ? l10n.videoSavedSuccess
@@ -114,7 +114,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
     } catch (e) {
       setState(() => _isSaving = false);
       if (mounted) {
-        final l10n = AppLocalizations.of(context);
+        final l10n = context.l10n;
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(l10n.error(e)),
           backgroundColor: AppColors.error,
@@ -124,7 +124,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   }
 
   Future<void> _shareVideo() async {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     try {
       await Share.shareXFiles([XFile(widget.videoPath)], text: l10n.shareVideoText);
     } catch (e) {
@@ -147,7 +147,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: AppColors.background,

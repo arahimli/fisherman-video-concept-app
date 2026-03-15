@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 
 void showPreviewShareSheet(
   BuildContext context, {
   required VoidCallback onSave,
   required VoidCallback onShare,
 }) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,

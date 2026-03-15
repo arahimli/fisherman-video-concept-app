@@ -5,12 +5,12 @@ import 'package:share_plus/share_plus.dart';
 
 import '../../../core/design/design_system.dart';
 import '../../../data/database/app_database.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import '../../managers/history_bloc/bloc.dart';
 import '../../managers/recent_videos_bloc/bloc.dart';
 
 void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,
@@ -125,7 +125,7 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
 }
 
 void showDeleteConfirmSheet(BuildContext context, int videoId) {
-  final l10n = AppLocalizations.of(context);
+  final l10n = context.l10n;
   showModalBottomSheet(
     context: context,
     backgroundColor: AppColors.surface,

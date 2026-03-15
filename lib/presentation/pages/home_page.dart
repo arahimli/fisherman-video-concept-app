@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 import '../managers/recent_videos_bloc/bloc.dart';
 import '../managers/video_bloc/bloc.dart';
 import '../widgets/home/create_mode_widget.dart';
@@ -28,7 +29,7 @@ class _NewHomePageState extends State<NewHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return PopScope(
       canPop: false,

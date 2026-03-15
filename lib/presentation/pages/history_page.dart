@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 import '../managers/history_bloc/bloc.dart';
 import '../widgets/history/history_empty_state.dart';
 import '../widgets/history/history_filter_chips.dart';
@@ -82,7 +82,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: AppColors.background,

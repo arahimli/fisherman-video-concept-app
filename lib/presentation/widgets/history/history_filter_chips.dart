@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 
 class HistoryFilterChips extends StatelessWidget {
   final String selectedFilter;
@@ -15,7 +15,7 @@ class HistoryFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
     final filters = [
       (label: l10n.allDates,  value: 'all'),
       (label: l10n.today,     value: 'today'),

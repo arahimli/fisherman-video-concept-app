@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/design/design_system.dart';
-import '../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations_extension.dart';
 
 class ForceUpdatePage extends StatelessWidget {
   final String storeUrl;
@@ -11,7 +11,7 @@ class ForceUpdatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return PopScope(
       canPop: false,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/design/design_system.dart';
-import '../../../l10n/app_localizations.dart';
+import '../../../l10n/app_localizations_extension.dart';
 import 'preview_action_button.dart';
 
 class VideoPreviewActionBar extends StatelessWidget {
@@ -18,7 +18,7 @@ class VideoPreviewActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.l10n;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(
