@@ -88,7 +88,7 @@ class _CreateModeWidgetState extends State<CreateModeWidget>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.add, color: AppColors.accent, size: screenWidth * 0.1),
+                              AppVectorIcon(AppVectors.plus, color: AppColors.accent, size: screenWidth * 0.1),
                               const SizedBox(height: AppSpacing.sm),
                               Text(l10n.create, style: AppTextStyles.createLabel),
                             ],
@@ -108,7 +108,7 @@ class _CreateModeWidgetState extends State<CreateModeWidget>
             children: [
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.image_outlined,
+                  icon: AppVectorIcon(AppVectors.image, color: AppColors.accent, size: 26),
                   label: l10n.selectImage,
                   onTap: () => showImageSourceSheet(context),
                 ),
@@ -116,7 +116,7 @@ class _CreateModeWidgetState extends State<CreateModeWidget>
               const SizedBox(width: AppSpacing.lg),
               Expanded(
                 child: HomeActionButton(
-                  icon: Icons.videocam_outlined,
+                  icon: AppVectorIcon(AppVectors.video, color: AppColors.surface, size: 26),
                   label: l10n.generateVideo,
                   isAccent: true,
                   onTap: null,

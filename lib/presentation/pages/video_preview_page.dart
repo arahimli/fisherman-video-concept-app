@@ -162,7 +162,7 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.ios_share_outlined, color: AppColors.accent, size: 24),
+            icon: const AppVectorIcon(AppVectors.share, color: AppColors.accent, size: 24),
             onPressed: () => showPreviewShareSheet(
               context,
               onSave: _saveToGallery,

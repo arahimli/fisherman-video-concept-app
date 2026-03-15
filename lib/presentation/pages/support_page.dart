@@ -195,7 +195,7 @@ class _SupportPageState extends State<SupportPage> {
               padding: const EdgeInsets.all(AppSpacing.xl),
               children: [
                 const SizedBox(height: AppSpacing.lg),
-                const Icon(Icons.favorite_outline, color: AppColors.accent, size: 48),
+                const AppVectorIcon(AppVectors.heartHandDonate, color: AppColors.accent, size: 48),
                 const SizedBox(height: AppSpacing.md),
                 Text(
                   l10n.supportDesc,
@@ -226,7 +226,7 @@ class _SupportPageState extends State<SupportPage> {
                 ),
                 const SizedBox(height: AppSpacing.xxxl),
                 _AdCard(
-                  icon: Icons.play_circle_outline,
+                  icon: const AppVectorIcon(AppVectors.playCircle, color: AppColors.accent, size: 24),
                   title: l10n.shortVideo,
                   description: l10n.shortVideoDesc,
                   loaded: false, // _interstitialLoaded — TODO: uncomment for next release
@@ -235,7 +235,7 @@ class _SupportPageState extends State<SupportPage> {
                 ),
                 const SizedBox(height: AppSpacing.md),
                 _AdCard(
-                  icon: Icons.movie_outlined,
+                  icon: const AppVectorIcon(AppVectors.videoAds, color: AppColors.accent, size: 24),
                   title: l10n.longVideo,
                   description: l10n.longVideoDesc,
                   loaded: false, // _rewardedLoaded — TODO: uncomment for next release
@@ -320,7 +320,7 @@ class _StatCard extends StatelessWidget {
 // ── Ad card ───────────────────────────────────────────────────────────────────
 
 class _AdCard extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String title;
   final String description;
   final bool loaded;
@@ -353,7 +353,7 @@ class _AdCard extends StatelessWidget {
               color: AppColors.accentOverlay,
               borderRadius: AppRadius.mdAll,
             ),
-            child: Icon(icon, color: AppColors.accent, size: 24),
+            child: icon,
           ),
           const SizedBox(width: AppSpacing.md),
           Expanded(

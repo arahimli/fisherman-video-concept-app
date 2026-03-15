@@ -26,7 +26,7 @@ class WatermarkPickImageButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.add_photo_alternate_outlined, color: AppColors.accent, size: 22),
+              const AppVectorIcon(AppVectors.photoPlus, color: AppColors.accent, size: 22),
               const SizedBox(width: AppSpacing.sm),
               Text(l10n.watermarkSelectImage, style: const TextStyle(color: AppColors.accent, fontSize: 13)),
             ],

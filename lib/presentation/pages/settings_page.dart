@@ -48,11 +48,7 @@ class _LanguageRow extends StatelessWidget {
                 color: AppColors.surfaceElevated,
                 borderRadius: AppRadius.smAll,
               ),
-              child: const Icon(
-                Icons.language_rounded,
-                color: AppColors.accent,
-                size: 22,
-              ),
+              child: const AppVectorIcon(AppVectors.globe, color: AppColors.accent, size: 22),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
@@ -158,7 +154,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   SettingsCard(
                     children: [
                       SettingsToggleRow(
-                        icon: Icons.image_outlined,
+                        icon: const AppVectorIcon(AppVectors.image, color: AppColors.accent, size: 22),
                         title: l10n.imageWatermark,
                         subtitle: l10n.imageWatermarkDesc,
                         value: _imageEnabled,

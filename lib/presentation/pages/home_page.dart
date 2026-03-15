@@ -124,11 +124,11 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          icon: const Icon(Icons.favorite_outline, color: AppColors.textTertiary, size: 22),
+          icon: const AppVectorIcon(AppVectors.heart, color: AppColors.textTertiary, size: 22),
           onPressed: () => context.push(AppRoutes.support),
         ),
         IconButton(
-          icon: const Icon(Icons.tune, color: AppColors.textTertiary, size: 22),
+          icon: const AppVectorIcon(AppVectors.settings, color: AppColors.textTertiary, size: 22),
           onPressed: () => context.push(AppRoutes.settings),
         ),
         BlocBuilder<VideoBloc, VideoState>(
@@ -137,7 +137,7 @@ class _HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 state is VideoGeneratedState ||
                 state is VideoErrorState) {
               return IconButton(
-                icon: const Icon(Icons.refresh, color: AppColors.accent, size: 26),
+                icon: const AppVectorIcon(AppVectors.refresh, color: AppColors.accent, size: 26),
                 onPressed: () => showResetConfirmSheet(context),
               );
             }

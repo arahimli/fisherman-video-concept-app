@@ -55,8 +55,8 @@ class HistoryVideoCard extends StatelessWidget {
                           color: AppColors.overlayDark,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
-                          Icons.delete_outline,
+                        child: const AppVectorIcon(
+                          AppVectors.delete,
                           color: AppColors.textPrimary,
                           size: 18,
                         ),
@@ -108,7 +108,7 @@ class HistoryVideoCard extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
       ),
       child: const Center(
-        child: Icon(Icons.play_circle_outline, size: 48, color: AppColors.accent),
+        child: AppVectorIcon(AppVectors.playCircle, color: AppColors.accent, size: 48),
       ),
     );
   }

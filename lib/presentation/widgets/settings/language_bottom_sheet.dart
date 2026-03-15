@@ -80,11 +80,7 @@ class _LanguageSheet extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
             child: Row(
               children: [
-                const Icon(
-                  Icons.language_rounded,
-                  color: AppColors.accent,
-                  size: 22,
-                ),
+                const AppVectorIcon(AppVectors.globe, color: AppColors.accent, size: 22),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
                   l10n.appLanguage,
@@ -179,8 +175,8 @@ class _LanguageTile extends StatelessWidget {
               ),
             ),
             if (isSelected)
-              const Icon(
-                Icons.check_rounded,
+              const AppVectorIcon(
+                AppVectors.check,
                 color: AppColors.accent,
                 size: 20,
               ),

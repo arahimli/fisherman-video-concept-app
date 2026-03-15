@@ -58,7 +58,7 @@ class RecentVideoItem extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(AppSpacing.sm),
-                  child: Icon(Icons.play_arrow, color: AppColors.textPrimary, size: 26),
+                  child: AppVectorIcon(AppVectors.play, color: AppColors.textPrimary, size: 26),
                 ),
               ),
             ),
