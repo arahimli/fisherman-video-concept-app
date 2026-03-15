@@ -20,14 +20,14 @@ The app takes a single photo and generates a 30-second cinematic video by applyi
 - **Video history**: Browse past videos with date and language filters
 - **Gallery & sharing**: Save to device, share via WhatsApp/Telegram/etc.
 - **Settings**: Watermark configuration, position selection
-- **Ads**: Google AdMob integration for monetization
+- **Remote config**: Firebase Remote Config for feature flags and app updates
 - **UI languages**: Azerbaijani, English, Russian, Turkish
 
 ## Tech Stack
 
 | Category | Library |
 |----------|---------|
-| Framework | Flutter 3.9.2+ |
+| Framework | Flutter (FVM-managed) |
 | State management | flutter_bloc |
 | Dependency injection | get_it |
 | Navigation | go_router |
@@ -35,9 +35,13 @@ The app takes a single photo and generates a 30-second cinematic video by applyi
 | Image processing | image package (background isolate) |
 | Video generation | ffmpeg_kit_flutter_new |
 | Video playback | video_player + chewie |
-| Ads | google_mobile_ads |
+| SVG icons | flutter_svg |
+| Firebase | firebase_core, firebase_remote_config |
 | Storage | shared_preferences, saver_gallery |
 | Sharing | share_plus |
+| App info | package_info_plus, url_launcher |
+
+> **Note:** `google_mobile_ads` is currently commented out in `pubspec.yaml` and will be re-enabled in the next release.
 
 ## Project Structure
 
@@ -46,7 +50,7 @@ lib/
 ├── main.dart
 ├── core/
 │   ├── ads/           # AdMob configuration
-│   ├── design/        # Design system (colors, spacing, typography, shadows)
+│   ├── design/        # Design system (colors, spacing, typography, shadows, vectors)
 │   ├── di/            # Service locator setup
 │   └── router/        # go_router routes
 ├── data/
@@ -59,6 +63,11 @@ lib/
 │   ├── pages/         # Full-screen pages
 │   └── widgets/       # Reusable UI components
 └── l10n/              # Localization (az, en, ru, tr)
+
+assets/
+├── images/            # App images and splash assets
+├── vectors/           # SVG icon files (19 icons)
+└── voices/            # Narration audio tracks
 ```
 
 ## Architecture
@@ -102,13 +111,26 @@ Translations are manually maintained in `lib/l10n/`. Adding a new string require
 
 ## Design System
 
-The app uses a dark theme centered on a brown/tan accent color (`#B8956A`). Design tokens live in `lib/core/design/`:
+The app uses a dark theme centered on a brown/tan accent color (`#B8956A`). All design tokens live in `lib/core/design/` and are exported via `design_system.dart`.
 
 - `AppColors` — color palette with opacity variants
 - `AppSpacing` — margin/padding scale
 - `AppRadius` — border radius values
 - `AppTextStyles` — typography (Georgia font family)
 - `AppShadows` — shadow effects
+- `AppVectors` — SVG asset path constants (`assets/vectors/`)
+- `AppVectorIcon` — reusable SVG icon widget (wraps `flutter_svg`)
+
+### SVG Icons
+
+All icons are custom SVGs in `assets/vectors/`. Use `AppVectorIcon` with a path from `AppVectors` instead of `Icon(Icons.*)`:
+
+```dart
+// Instead of: Icon(Icons.delete_outline, color: AppColors.error, size: 22)
+AppVectorIcon(AppVectors.delete, color: AppColors.error, size: 22)
+```
+
+Available vectors: `camera`, `check`, `checkCircle`, `delete`, `globe`, `heart`, `heartHandDonate`, `home`, `image`, `photoPlus`, `play`, `playCircle`, `plus`, `refresh`, `save`, `settings`, `share`, `video`, `videoAds`.
 
 ## Screens
 
