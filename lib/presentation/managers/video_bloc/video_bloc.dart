@@ -42,7 +42,10 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     try {
       final picked = await _picker.pickImage(source: event.source);
       if (picked != null) {
-        emit(ImagePickedState(File(picked.path)));
+        final docsDir = await getApplicationDocumentsDirectory();
+        final permanentPath = '${docsDir.path}/${picked.name}';
+        final permanentFile = await File(picked.path).copy(permanentPath);
+        emit(ImagePickedState(permanentFile));
       }
     } catch (e) {
       emit(VideoErrorState('Image selection error: $e'));

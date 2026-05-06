@@ -66,5 +66,7 @@
 		<!-- Microphone -->
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Old Fisherman does not record audio. Microphone access is not used.</string>
+        <key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
 	</dict>
 </plist>

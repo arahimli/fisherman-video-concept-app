@@ -45,11 +45,14 @@ void showVideoOptionsSheet(BuildContext context, VideoHistoryData video) {
               title: Text(l10n.share, style: AppTextStyles.historyCardTitle),
               subtitle: Text(l10n.shareSubtitle, style: AppTextStyles.historyCardDate),
               onTap: () async {
+                final box = sheetContext.findRenderObject() as RenderBox?;
+                final origin = box == null ? null : box.localToGlobal(Offset.zero) & box.size;
                 Navigator.pop(sheetContext);
                 try {
                   await Share.shareXFiles(
                     [XFile(video.videoPath)],
                     text: l10n.shareVideoText,
+                    sharePositionOrigin: origin,
                   );
                 } catch (_) {}
               },
