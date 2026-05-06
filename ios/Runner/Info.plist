@@ -17,11 +17,11 @@
 		<key>CFBundlePackageType</key>
 		<string>APPL</string>
 		<key>CFBundleShortVersionString</key>
-		<string>$(FLUTTER_BUILD_NAME)</string>
+		<string>$(MARKETING_VERSION)</string>
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleVersion</key>
-		<string>$(FLUTTER_BUILD_NUMBER)</string>
+        <string>$(CURRENT_PROJECT_VERSION)</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
@@ -50,5 +50,21 @@
 		<string>ca-app-pub-9530282216810256~3098728908</string> -->
 		<key>UIStatusBarHidden</key>
 		<false/>
+
+		<!-- Camera -->
+		<key>NSCameraUsageDescription</key>
+		<string>Old Fisherman needs camera access to take photos. Video recording is not performed.</string>
+
+		<!-- Photo Library (read) -->
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Old Fisherman needs access to your photo library to select videos and images.</string>
+
+		<!-- Photo Library (write / save) -->
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Old Fisherman needs permission to save videos to your photo library.</string>
+
+		<!-- Microphone -->
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Old Fisherman does not record audio. Microphone access is not used.</string>
 	</dict>
 </plist>
