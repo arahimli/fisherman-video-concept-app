@@ -16,7 +16,6 @@ import 'presentation/managers/video_bloc/bloc.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: "OldFisherman",
     options: DefaultFirebaseOptions.currentPlatform,
   );
   // TODO: uncomment for next release

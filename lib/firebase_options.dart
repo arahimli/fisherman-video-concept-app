@@ -40,4 +40,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'old-fisherman-80dad.firebasestorage.app',
     iosBundleId: 'old.fisherman.video.maker',
   );
+
 }
