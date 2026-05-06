@@ -126,7 +126,13 @@ class _VideoPreviewScreenState extends State<VideoPreviewScreen> {
   Future<void> _shareVideo() async {
     final l10n = context.l10n;
     try {
-      await Share.shareXFiles([XFile(widget.videoPath)], text: l10n.shareVideoText);
+      final box = context.findRenderObject() as RenderBox?;
+      final origin = box == null ? null : box.localToGlobal(Offset.zero) & box.size;
+      await Share.shareXFiles(
+        [XFile(widget.videoPath)],
+        text: l10n.shareVideoText,
+        sharePositionOrigin: origin,
+      );
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/database/app_database.dart';
@@ -12,8 +11,6 @@ import '../../presentation/managers/video_bloc/bloc.dart';
 final GetIt sl = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
-  await Firebase.initializeApp();
-
   sl.registerLazySingleton<ForceUpdateService>(() => ForceUpdateService());
   // Database
   sl.registerSingleton<AppDatabase>(AppDatabase());
