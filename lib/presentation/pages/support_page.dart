@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart'; // TODO: uncomment for next release
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import '../../core/ads/ads_config.dart'; // TODO: uncomment for next release
+import '../../core/ads/ads_config.dart';
 import '../../core/design/design_system.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/app_localizations_extension.dart';
@@ -19,20 +19,18 @@ class SupportPage extends StatefulWidget {
 }
 
 class _SupportPageState extends State<SupportPage> {
-  // TODO: uncomment for next release
-  // static final String _interstitialAdUnitId = AdsConfig.interstitialAdUnitId;
-  // static final String _rewardedAdUnitId = AdsConfig.rewardedAdUnitId;
+  static final String _interstitialAdUnitId = AdsConfig.interstitialAdUnitId;
+  static final String _rewardedAdUnitId = AdsConfig.rewardedAdUnitId;
 
   static const String _keyTotal = 'ads_watched_count';
   static const String _keyToday = 'ads_watched_today';
   static const String _keyDate = 'ads_watched_date';
 
-  // TODO: uncomment for next release
-  // InterstitialAd? _interstitialAd;
-  // RewardedAd? _rewardedAd;
-  // bool _interstitialLoaded = false;
-  // bool _rewardedLoaded = false;
-  // bool _rewardEarned = false;
+  InterstitialAd? _interstitialAd;
+  RewardedAd? _rewardedAd;
+  bool _interstitialLoaded = false;
+  bool _rewardedLoaded = false;
+  bool _rewardEarned = false;
 
   late final ConfettiController _confettiController;
   int _adsWatched = 0;
@@ -43,8 +41,8 @@ class _SupportPageState extends State<SupportPage> {
     super.initState();
     _confettiController = ConfettiController(duration: const Duration(seconds: 2));
     _loadCounts();
-    // _loadInterstitial(); // TODO: uncomment for next release
-    // _loadRewarded(); // TODO: uncomment for next release
+    _loadInterstitial();
+    _loadRewarded();
   }
 
   String _todayString() {
@@ -83,68 +81,66 @@ class _SupportPageState extends State<SupportPage> {
     }
   }
 
-  // TODO: uncomment for next release
-  // void _loadInterstitial() {
-  //   InterstitialAd.load(
-  //     adUnitId: _interstitialAdUnitId,
-  //     request: const AdRequest(),
-  //     adLoadCallback: InterstitialAdLoadCallback(
-  //       onAdLoaded: (ad) {
-  //         _interstitialAd = ad;
-  //         _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //           onAdDismissedFullScreenContent: (ad) {
-  //             ad.dispose();
-  //             _interstitialAd = null;
-  //             setState(() => _interstitialLoaded = false);
-  //             _loadInterstitial();
-  //             _onAdWatched();
-  //           },
-  //           onAdFailedToShowFullScreenContent: (ad, _) {
-  //             ad.dispose();
-  //             _interstitialAd = null;
-  //             setState(() => _interstitialLoaded = false);
-  //             _loadInterstitial();
-  //           },
-  //         );
-  //         setState(() => _interstitialLoaded = true);
-  //       },
-  //       onAdFailedToLoad: (_) => setState(() => _interstitialLoaded = false),
-  //     ),
-  //   );
-  // }
+  void _loadInterstitial() {
+    InterstitialAd.load(
+      adUnitId: _interstitialAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          _interstitialAd = ad;
+          _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              _interstitialAd = null;
+              setState(() => _interstitialLoaded = false);
+              _loadInterstitial();
+              _onAdWatched();
+            },
+            onAdFailedToShowFullScreenContent: (ad, _) {
+              ad.dispose();
+              _interstitialAd = null;
+              setState(() => _interstitialLoaded = false);
+              _loadInterstitial();
+            },
+          );
+          setState(() => _interstitialLoaded = true);
+        },
+        onAdFailedToLoad: (_) => setState(() => _interstitialLoaded = false),
+      ),
+    );
+  }
 
-  // TODO: uncomment for next release
-  // void _loadRewarded() {
-  //   RewardedAd.load(
-  //     adUnitId: _rewardedAdUnitId,
-  //     request: const AdRequest(),
-  //     rewardedAdLoadCallback: RewardedAdLoadCallback(
-  //       onAdLoaded: (ad) {
-  //         _rewardedAd = ad;
-  //         _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //           onAdDismissedFullScreenContent: (ad) {
-  //             ad.dispose();
-  //             _rewardedAd = null;
-  //             setState(() => _rewardedLoaded = false);
-  //             _loadRewarded();
-  //             if (_rewardEarned) {
-  //               _rewardEarned = false;
-  //               _onAdWatched();
-  //             }
-  //           },
-  //           onAdFailedToShowFullScreenContent: (ad, _) {
-  //             ad.dispose();
-  //             _rewardedAd = null;
-  //             setState(() => _rewardedLoaded = false);
-  //             _loadRewarded();
-  //           },
-  //         );
-  //         setState(() => _rewardedLoaded = true);
-  //       },
-  //       onAdFailedToLoad: (_) => setState(() => _rewardedLoaded = false),
-  //     ),
-  //   );
-  // }
+  void _loadRewarded() {
+    RewardedAd.load(
+      adUnitId: _rewardedAdUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          _rewardedAd = ad;
+          _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              _rewardedAd = null;
+              setState(() => _rewardedLoaded = false);
+              _loadRewarded();
+              if (_rewardEarned) {
+                _rewardEarned = false;
+                _onAdWatched();
+              }
+            },
+            onAdFailedToShowFullScreenContent: (ad, _) {
+              ad.dispose();
+              _rewardedAd = null;
+              setState(() => _rewardedLoaded = false);
+              _loadRewarded();
+            },
+          );
+          setState(() => _rewardedLoaded = true);
+        },
+        onAdFailedToLoad: (_) => setState(() => _rewardedLoaded = false),
+      ),
+    );
+  }
 
   void _onAdWatched() {
     _incrementCounts();
@@ -166,8 +162,8 @@ class _SupportPageState extends State<SupportPage> {
   @override
   void dispose() {
     _confettiController.dispose();
-    // _interstitialAd?.dispose(); // TODO: uncomment for next release
-    // _rewardedAd?.dispose(); // TODO: uncomment for next release
+    _interstitialAd?.dispose();
+    _rewardedAd?.dispose();
     super.dispose();
   }
 
@@ -229,8 +225,8 @@ class _SupportPageState extends State<SupportPage> {
                   icon: const AppVectorIcon(AppVectors.playCircle, color: AppColors.accent, size: 24),
                   title: l10n.shortVideo,
                   description: l10n.shortVideoDesc,
-                  loaded: false, // _interstitialLoaded — TODO: uncomment for next release
-                  onWatch: () {}, // () => _interstitialAd?.show() — TODO: uncomment for next release
+                  loaded: _interstitialLoaded,
+                  onWatch: () => _interstitialAd?.show(),
                   l10n: l10n,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -238,8 +234,8 @@ class _SupportPageState extends State<SupportPage> {
                   icon: const AppVectorIcon(AppVectors.videoAds, color: AppColors.accent, size: 24),
                   title: l10n.longVideo,
                   description: l10n.longVideoDesc,
-                  loaded: false, // _rewardedLoaded — TODO: uncomment for next release
-                  onWatch: () {}, // () => _rewardedAd?.show(onUserEarnedReward: (_, __) => _rewardEarned = true) — TODO: uncomment for next release
+                  loaded: _rewardedLoaded,
+                  onWatch: () => _rewardedAd?.show(onUserEarnedReward: (_, __) => _rewardEarned = true),
                   l10n: l10n,
                 ),
               ],
