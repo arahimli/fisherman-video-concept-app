@@ -1,10 +1,10 @@
-// import 'package:flutter/foundation.dart'; // TODO: uncomment for ads (kDebugMode)
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart'; // TODO: uncomment for next release
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// import 'core/ads/ads_config.dart'; // TODO: uncomment for next release
+import 'core/ads/ads_config.dart';
 import 'core/di/service_locator.dart';
 import 'firebase_options.dart';
 import 'core/router/app_router.dart';
@@ -18,13 +18,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // TODO: uncomment for next release
-  // await MobileAds.instance.initialize();
-  // if (kDebugMode) {
-  //   MobileAds.instance.updateRequestConfiguration(
-  //     RequestConfiguration(testDeviceIds: AdsConfig.testDeviceIds),
-  //   );
-  // }
+  await MobileAds.instance.initialize();
+  if (kDebugMode) {
+    MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(testDeviceIds: AdsConfig.testDeviceIds),
+    );
+  }
   await setupServiceLocator();
   runApp(const MyApp());
 }

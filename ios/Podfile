@@ -31,6 +31,7 @@ target 'Runner' do
   use_frameworks!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  pod 'webview_flutter_wkwebview', :path => '.symlinks/plugins/webview_flutter_wkwebview/darwin'
   target 'RunnerTests' do
     inherit! :search_paths
   end
