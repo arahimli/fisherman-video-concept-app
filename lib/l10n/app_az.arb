@@ -115,5 +115,6 @@
   "appLanguage": "Dil",
   "forceUpdateTitle": "Yeniləmə Tələb Olunur",
   "forceUpdateMessage": "Yeni versiya mövcuddur. Davam etmək üçün yeniləyin.",
-  "forceUpdateButton": "İNDİ YENİLƏ"
+  "forceUpdateButton": "İNDİ YENİLƏ",
+  "cropImage": "Şəkli Kəs"
 }

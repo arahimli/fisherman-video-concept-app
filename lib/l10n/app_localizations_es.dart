@@ -322,4 +322,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'ACTUALIZAR AHORA';
+
+  @override
+  String get cropImage => 'Recortar Imagen';
 }

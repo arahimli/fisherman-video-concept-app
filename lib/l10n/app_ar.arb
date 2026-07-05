@@ -115,5 +115,6 @@
   "appLanguage": "اللغة",
   "forceUpdateTitle": "تحديث مطلوب",
   "forceUpdateMessage": "يتوفر إصدار جديد. يرجى التحديث للمتابعة.",
-  "forceUpdateButton": "تحديث الآن"
+  "forceUpdateButton": "تحديث الآن",
+  "cropImage": "قص الصورة"
 }

@@ -321,4 +321,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'UPDATE NOW';
+
+  @override
+  String get cropImage => 'Crop Image';
 }

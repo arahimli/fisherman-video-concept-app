@@ -106,13 +106,14 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _pickImage() async {
+    final l10n = context.l10n;
     final picked = await _picker.pickImage(source: ImageSource.gallery);
     if (picked == null) return;
     final cropped = await ImageCropper().cropImage(
       sourcePath: picked.path,
       uiSettings: [
         AndroidUiSettings(
-          toolbarTitle: 'Crop Image',
+          toolbarTitle: l10n.cropImage,
           toolbarColor: AppColors.background,
           toolbarWidgetColor: AppColors.accent,
           backgroundColor: AppColors.background,
@@ -123,7 +124,7 @@ class _SettingsPageState extends State<SettingsPage> {
           dimmedLayerColor: AppColors.overlayDark,
         ),
         IOSUiSettings(
-          title: 'Crop Image',
+          title: l10n.cropImage,
           cancelButtonTitle: 'Cancel',
           doneButtonTitle: 'Done',
         ),
