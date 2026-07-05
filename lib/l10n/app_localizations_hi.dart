@@ -322,4 +322,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'अभी अपडेट करें';
+
+  @override
+  String get cropImage => 'छवि काटें';
 }

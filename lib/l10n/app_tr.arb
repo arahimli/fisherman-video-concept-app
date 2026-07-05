@@ -115,5 +115,6 @@
   "appLanguage": "Dil",
   "forceUpdateTitle": "Güncelleme Gerekli",
   "forceUpdateMessage": "Yeni bir sürüm mevcut. Devam etmek için güncelleyin.",
-  "forceUpdateButton": "ŞİMDİ GÜNCELLE"
+  "forceUpdateButton": "ŞİMDİ GÜNCELLE",
+  "cropImage": "Resmi Kırp"
 }

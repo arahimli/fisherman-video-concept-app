@@ -319,4 +319,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'تحديث الآن';
+
+  @override
+  String get cropImage => 'قص الصورة';
 }

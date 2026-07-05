@@ -322,4 +322,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'ŞİMDİ GÜNCELLE';
+
+  @override
+  String get cropImage => 'Resmi Kırp';
 }

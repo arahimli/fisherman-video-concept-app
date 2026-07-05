@@ -4,7 +4,8 @@ abstract class VideoEvent {}
 
 class PickImageEvent extends VideoEvent {
   final ImageSource source;
-  PickImageEvent({this.source = ImageSource.gallery});
+  final String? cropTitle;
+  PickImageEvent({this.source = ImageSource.gallery, this.cropTitle});
 }
 
 class GenerateVideoEvent extends VideoEvent {

@@ -321,4 +321,7 @@ class AppLocalizationsAz extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'İNDİ YENİLƏ';
+
+  @override
+  String get cropImage => 'Şəkli Kəs';
 }

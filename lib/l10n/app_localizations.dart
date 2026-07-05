@@ -717,6 +717,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'UPDATE NOW'**
   String get forceUpdateButton;
+
+  /// No description provided for @cropImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Crop Image'**
+  String get cropImage;
 }
 
 class _AppLocalizationsDelegate

@@ -46,7 +46,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
           sourcePath: picked.path,
           uiSettings: [
             AndroidUiSettings(
-              toolbarTitle: 'Crop Image',
+              toolbarTitle: event.cropTitle ?? 'Crop Image',
               toolbarColor: const Color(0xFF0A0A0A),
               toolbarWidgetColor: const Color(0xFFB8956A),
               backgroundColor: const Color(0xFF0A0A0A),
@@ -57,7 +57,7 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
               dimmedLayerColor: const Color(0x80000000),
             ),
             IOSUiSettings(
-              title: 'Crop Image',
+              title: event.cropTitle ?? 'Crop Image',
               cancelButtonTitle: 'Cancel',
               doneButtonTitle: 'Done',
             ),
