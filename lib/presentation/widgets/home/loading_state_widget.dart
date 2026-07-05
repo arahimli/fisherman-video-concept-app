@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart'; // TODO: uncomment for next release
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// import '../../../core/ads/ads_config.dart'; // TODO: uncomment for next release
 import '../../../core/design/design_system.dart';
 
 class LoadingStateWidget extends StatefulWidget {
   final String loadingMessage;
+  final BannerAd? topBannerAd;
+  final BannerAd? bottomBannerAd;
 
-  const LoadingStateWidget({super.key, required this.loadingMessage});
+  const LoadingStateWidget({
+    super.key,
+    required this.loadingMessage,
+    this.topBannerAd,
+    this.bottomBannerAd,
+  });
 
   @override
   State<LoadingStateWidget> createState() => _LoadingStateWidgetState();
@@ -17,15 +23,6 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _rotateAnimation;
-
-  // TODO: uncomment for next release
-  // BannerAd? _topBannerAd;
-  // BannerAd? _bottomBannerAd;
-  // bool _topBannerLoaded = false;
-  // bool _bottomBannerLoaded = false;
-
-  // static final String _topAdUnitId = AdsConfig.bannerAdUnitId;
-  // static final String _bottomAdUnitId = AdsConfig.bannerAdUnitId;
 
   @override
   void initState() {
@@ -38,38 +35,11 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
     _rotateAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.linear),
     );
-
-    // _loadBanners(); // TODO: uncomment for next release
   }
-
-  // TODO: uncomment for next release
-  // void _loadBanners() {
-  //   _topBannerAd = BannerAd(
-  //     adUnitId: _topAdUnitId,
-  //     size: AdSize.banner,
-  //     request: const AdRequest(),
-  //     listener: BannerAdListener(
-  //       onAdLoaded: (_) => setState(() => _topBannerLoaded = true),
-  //       onAdFailedToLoad: (ad, _) => ad.dispose(),
-  //     ),
-  //   )..load();
-  //
-  //   _bottomBannerAd = BannerAd(
-  //     adUnitId: _bottomAdUnitId,
-  //     size: AdSize.banner,
-  //     request: const AdRequest(),
-  //     listener: BannerAdListener(
-  //       onAdLoaded: (_) => setState(() => _bottomBannerLoaded = true),
-  //       onAdFailedToLoad: (ad, _) => ad.dispose(),
-  //     ),
-  //   )..load();
-  // }
 
   @override
   void dispose() {
     _controller.dispose();
-    // _topBannerAd?.dispose(); // TODO: uncomment for next release
-    // _bottomBannerAd?.dispose(); // TODO: uncomment for next release
     super.dispose();
   }
 
@@ -79,20 +49,19 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
 
     return Column(
       children: [
-        // TODO: uncomment for next release
-        // if (_topBannerLoaded && _topBannerAd != null)
-        //   Padding(
-        //     padding: const EdgeInsets.only(
-        //       top: AppSpacing.md,
-        //       left: AppSpacing.lg,
-        //       right: AppSpacing.lg,
-        //     ),
-        //     child: SizedBox(
-        //       width: _topBannerAd!.size.width.toDouble(),
-        //       height: _topBannerAd!.size.height.toDouble(),
-        //       child: AdWidget(ad: _topBannerAd!),
-        //     ),
-        //   ),
+        if (widget.topBannerAd != null)
+          Padding(
+            padding: const EdgeInsets.only(
+              top: AppSpacing.md,
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+            ),
+            child: SizedBox(
+              width: widget.topBannerAd!.size.width.toDouble(),
+              height: widget.topBannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: widget.topBannerAd!),
+            ),
+          ),
         Expanded(
           child: Center(
             child: Column(
@@ -147,20 +116,19 @@ class _LoadingStateWidgetState extends State<LoadingStateWidget>
             ),
           ),
         ),
-        // TODO: uncomment for next release
-        // if (_bottomBannerLoaded && _bottomBannerAd != null)
-        //   Padding(
-        //     padding: const EdgeInsets.only(
-        //       bottom: AppSpacing.md,
-        //       left: AppSpacing.lg,
-        //       right: AppSpacing.lg,
-        //     ),
-        //     child: SizedBox(
-        //       width: _bottomBannerAd!.size.width.toDouble(),
-        //       height: _bottomBannerAd!.size.height.toDouble(),
-        //       child: AdWidget(ad: _bottomBannerAd!),
-        //     ),
-        //   ),
+        if (widget.bottomBannerAd != null)
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: AppSpacing.md,
+              left: AppSpacing.lg,
+              right: AppSpacing.lg,
+            ),
+            child: SizedBox(
+              width: widget.bottomBannerAd!.size.width.toDouble(),
+              height: widget.bottomBannerAd!.size.height.toDouble(),
+              child: AdWidget(ad: widget.bottomBannerAd!),
+            ),
+          ),
       ],
     );
   }

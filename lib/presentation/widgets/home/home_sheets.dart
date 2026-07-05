@@ -261,7 +261,7 @@ void showImageSourceSheet(BuildContext context) {
               subtitle: Text(l10n.selectFromGallery, style: AppTextStyles.historyCardDate),
               onTap: () {
                 Navigator.pop(sheetContext);
-                context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.gallery));
+                context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.gallery, cropTitle: l10n.cropImage));
               },
             ),
             const Divider(color: AppColors.surfaceElevated),
@@ -279,7 +279,7 @@ void showImageSourceSheet(BuildContext context) {
               subtitle: Text(l10n.takePhotoDesc, style: AppTextStyles.historyCardDate),
               onTap: () {
                 Navigator.pop(sheetContext);
-                context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.camera));
+                context.read<VideoBloc>().add(PickImageEvent(source: ImageSource.camera, cropTitle: l10n.cropImage));
               },
             ),
             const SizedBox(height: AppSpacing.sm),

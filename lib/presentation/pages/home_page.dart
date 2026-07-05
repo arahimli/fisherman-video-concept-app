@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
+import '../../core/ads/ads_config.dart';
 import '../../core/design/design_system.dart';
 import '../../core/router/app_routes.dart';
 import '../../l10n/app_localizations.dart';
@@ -26,6 +28,46 @@ class NewHomePage extends StatefulWidget {
 
 class _NewHomePageState extends State<NewHomePage> {
   DateTime? _lastBackPressed;
+
+  BannerAd? _topBannerAd;
+  BannerAd? _bottomBannerAd;
+  bool _topBannerLoaded = false;
+  bool _bottomBannerLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _preloadBanners();
+  }
+
+  void _preloadBanners() {
+    _topBannerAd = BannerAd(
+      adUnitId: AdsConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() => _topBannerLoaded = true),
+        onAdFailedToLoad: (ad, _) => ad.dispose(),
+      ),
+    )..load();
+
+    _bottomBannerAd = BannerAd(
+      adUnitId: AdsConfig.bannerAdUnitId,
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() => _bottomBannerLoaded = true),
+        onAdFailedToLoad: (ad, _) => ad.dispose(),
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _topBannerAd?.dispose();
+    _bottomBannerAd?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +121,11 @@ class _NewHomePageState extends State<NewHomePage> {
             child: BlocBuilder<VideoBloc, VideoState>(
               builder: (context, state) {
                 if (state is VideoLoadingState) {
-                  return LoadingStateWidget(loadingMessage: state.loadingMessage);
+                  return LoadingStateWidget(
+                    loadingMessage: state.loadingMessage,
+                    topBannerAd: _topBannerLoaded ? _topBannerAd : null,
+                    bottomBannerAd: _bottomBannerLoaded ? _bottomBannerAd : null,
+                  );
                 }
                 if (state is VideoGeneratedState) {
                   return VideoReadyModeWidget(

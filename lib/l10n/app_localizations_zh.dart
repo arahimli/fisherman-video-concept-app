@@ -316,4 +316,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get forceUpdateButton => '立即更新';
+
+  @override
+  String get cropImage => '裁剪图片';
 }

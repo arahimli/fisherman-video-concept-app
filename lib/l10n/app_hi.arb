@@ -115,5 +115,6 @@
   "appLanguage": "भाषा",
   "forceUpdateTitle": "अपडेट आवश्यक",
   "forceUpdateMessage": "एक नया संस्करण उपलब्ध है। जारी रखने के लिए कृपया अपडेट करें।",
-  "forceUpdateButton": "अभी अपडेट करें"
+  "forceUpdateButton": "अभी अपडेट करें",
+  "cropImage": "छवि काटें"
 }

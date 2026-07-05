@@ -115,5 +115,6 @@
   "appLanguage": "语言",
   "forceUpdateTitle": "需要更新",
   "forceUpdateMessage": "有新版本可用。请更新以继续。",
-  "forceUpdateButton": "立即更新"
+  "forceUpdateButton": "立即更新",
+  "cropImage": "裁剪图片"
 }

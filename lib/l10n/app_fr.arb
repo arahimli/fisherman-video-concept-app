@@ -115,5 +115,6 @@
   "appLanguage": "Langue",
   "forceUpdateTitle": "Mise à Jour Requise",
   "forceUpdateMessage": "Une nouvelle version est disponible. Veuillez mettre à jour pour continuer.",
-  "forceUpdateButton": "METTRE À JOUR"
+  "forceUpdateButton": "METTRE À JOUR",
+  "cropImage": "Rogner l'image"
 }

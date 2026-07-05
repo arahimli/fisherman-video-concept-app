@@ -3,10 +3,10 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart'; // TODO: uncomment for next release
 import 'package:shared_preferences/shared_preferences.dart';
 
-// import '../../core/ads/ads_config.dart'; // TODO: uncomment for next release
+import '../../core/ads/ad_preloader.dart';
+import '../../core/di/service_locator.dart';
 import '../../core/design/design_system.dart';
 import '../../l10n/app_localizations.dart';
 import '../../l10n/app_localizations_extension.dart';
@@ -19,21 +19,11 @@ class SupportPage extends StatefulWidget {
 }
 
 class _SupportPageState extends State<SupportPage> {
-  // TODO: uncomment for next release
-  // static final String _interstitialAdUnitId = AdsConfig.interstitialAdUnitId;
-  // static final String _rewardedAdUnitId = AdsConfig.rewardedAdUnitId;
-
   static const String _keyTotal = 'ads_watched_count';
   static const String _keyToday = 'ads_watched_today';
   static const String _keyDate = 'ads_watched_date';
 
-  // TODO: uncomment for next release
-  // InterstitialAd? _interstitialAd;
-  // RewardedAd? _rewardedAd;
-  // bool _interstitialLoaded = false;
-  // bool _rewardedLoaded = false;
-  // bool _rewardEarned = false;
-
+  late final AdPreloader _adPreloader;
   late final ConfettiController _confettiController;
   int _adsWatched = 0;
   int _adsWatchedToday = 0;
@@ -41,10 +31,14 @@ class _SupportPageState extends State<SupportPage> {
   @override
   void initState() {
     super.initState();
+    _adPreloader = sl<AdPreloader>();
+    _adPreloader.addListener(_onAdStateChanged);
     _confettiController = ConfettiController(duration: const Duration(seconds: 2));
     _loadCounts();
-    // _loadInterstitial(); // TODO: uncomment for next release
-    // _loadRewarded(); // TODO: uncomment for next release
+  }
+
+  void _onAdStateChanged() {
+    if (mounted) setState(() {});
   }
 
   String _todayString() {
@@ -83,69 +77,6 @@ class _SupportPageState extends State<SupportPage> {
     }
   }
 
-  // TODO: uncomment for next release
-  // void _loadInterstitial() {
-  //   InterstitialAd.load(
-  //     adUnitId: _interstitialAdUnitId,
-  //     request: const AdRequest(),
-  //     adLoadCallback: InterstitialAdLoadCallback(
-  //       onAdLoaded: (ad) {
-  //         _interstitialAd = ad;
-  //         _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //           onAdDismissedFullScreenContent: (ad) {
-  //             ad.dispose();
-  //             _interstitialAd = null;
-  //             setState(() => _interstitialLoaded = false);
-  //             _loadInterstitial();
-  //             _onAdWatched();
-  //           },
-  //           onAdFailedToShowFullScreenContent: (ad, _) {
-  //             ad.dispose();
-  //             _interstitialAd = null;
-  //             setState(() => _interstitialLoaded = false);
-  //             _loadInterstitial();
-  //           },
-  //         );
-  //         setState(() => _interstitialLoaded = true);
-  //       },
-  //       onAdFailedToLoad: (_) => setState(() => _interstitialLoaded = false),
-  //     ),
-  //   );
-  // }
-
-  // TODO: uncomment for next release
-  // void _loadRewarded() {
-  //   RewardedAd.load(
-  //     adUnitId: _rewardedAdUnitId,
-  //     request: const AdRequest(),
-  //     rewardedAdLoadCallback: RewardedAdLoadCallback(
-  //       onAdLoaded: (ad) {
-  //         _rewardedAd = ad;
-  //         _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-  //           onAdDismissedFullScreenContent: (ad) {
-  //             ad.dispose();
-  //             _rewardedAd = null;
-  //             setState(() => _rewardedLoaded = false);
-  //             _loadRewarded();
-  //             if (_rewardEarned) {
-  //               _rewardEarned = false;
-  //               _onAdWatched();
-  //             }
-  //           },
-  //           onAdFailedToShowFullScreenContent: (ad, _) {
-  //             ad.dispose();
-  //             _rewardedAd = null;
-  //             setState(() => _rewardedLoaded = false);
-  //             _loadRewarded();
-  //           },
-  //         );
-  //         setState(() => _rewardedLoaded = true);
-  //       },
-  //       onAdFailedToLoad: (_) => setState(() => _rewardedLoaded = false),
-  //     ),
-  //   );
-  // }
-
   void _onAdWatched() {
     _incrementCounts();
     _confettiController.play();
@@ -165,9 +96,8 @@ class _SupportPageState extends State<SupportPage> {
 
   @override
   void dispose() {
+    _adPreloader.removeListener(_onAdStateChanged);
     _confettiController.dispose();
-    // _interstitialAd?.dispose(); // TODO: uncomment for next release
-    // _rewardedAd?.dispose(); // TODO: uncomment for next release
     super.dispose();
   }
 
@@ -229,8 +159,12 @@ class _SupportPageState extends State<SupportPage> {
                   icon: const AppVectorIcon(AppVectors.playCircle, color: AppColors.accent, size: 24),
                   title: l10n.shortVideo,
                   description: l10n.shortVideoDesc,
-                  loaded: false, // _interstitialLoaded — TODO: uncomment for next release
-                  onWatch: () {}, // () => _interstitialAd?.show() — TODO: uncomment for next release
+                  loaded: _adPreloader.interstitialLoaded,
+                  failed: _adPreloader.interstitialFailed,
+                  onWatch: () => _adPreloader.showInterstitial(
+                    onDismissed: _onAdWatched,
+                  ),
+                  onRetry: () => _adPreloader.retryAllFailed(),
                   l10n: l10n,
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -238,8 +172,13 @@ class _SupportPageState extends State<SupportPage> {
                   icon: const AppVectorIcon(AppVectors.videoAds, color: AppColors.accent, size: 24),
                   title: l10n.longVideo,
                   description: l10n.longVideoDesc,
-                  loaded: false, // _rewardedLoaded — TODO: uncomment for next release
-                  onWatch: () {}, // () => _rewardedAd?.show(onUserEarnedReward: (_, __) => _rewardEarned = true) — TODO: uncomment for next release
+                  loaded: _adPreloader.rewardedLoaded,
+                  failed: _adPreloader.rewardedFailed,
+                  onWatch: () => _adPreloader.showRewarded(
+                    onDismissed: _onAdWatched,
+                    onRewardEarned: () {},
+                  ),
+                  onRetry: () => _adPreloader.retryAllFailed(),
                   l10n: l10n,
                 ),
               ],
@@ -324,7 +263,9 @@ class _AdCard extends StatelessWidget {
   final String title;
   final String description;
   final bool loaded;
+  final bool failed;
   final VoidCallback onWatch;
+  final VoidCallback? onRetry;
   final AppLocalizations l10n;
 
   const _AdCard({
@@ -332,7 +273,9 @@ class _AdCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.loaded,
+    this.failed = false,
     required this.onWatch,
+    this.onRetry,
     required this.l10n,
   });
 
@@ -367,30 +310,36 @@ class _AdCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.md),
-          loaded
-              ? ElevatedButton(
-                  onPressed: onWatch,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.accent,
-                    foregroundColor: AppColors.background,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.md,
-                      vertical: AppSpacing.sm,
-                    ),
-                    shape: RoundedRectangleBorder(borderRadius: AppRadius.smAll),
-                    minimumSize: Size.zero,
-                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  child: Text(l10n.watchAd, style: const TextStyle(fontSize: 12)),
-                )
-              : const SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: AppColors.accent,
-                  ),
+          if (loaded)
+            ElevatedButton(
+              onPressed: onWatch,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.accent,
+                foregroundColor: AppColors.background,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
                 ),
+                shape: RoundedRectangleBorder(borderRadius: AppRadius.smAll),
+                minimumSize: Size.zero,
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              ),
+              child: Text(l10n.watchAd, style: const TextStyle(fontSize: 12)),
+            )
+          else if (failed)
+            GestureDetector(
+              onTap: onRetry,
+              child: const AppVectorIcon(AppVectors.refresh, color: AppColors.textSecondary, size: 20),
+            )
+          else
+            const SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: AppColors.accent,
+              ),
+            ),
         ],
       ),
     );

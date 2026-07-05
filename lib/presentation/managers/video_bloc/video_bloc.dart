@@ -42,7 +42,33 @@ class VideoBloc extends Bloc<VideoEvent, VideoState> {
     try {
       final picked = await _picker.pickImage(source: event.source);
       if (picked != null) {
-        emit(ImagePickedState(File(picked.path)));
+        final cropped = await ImageCropper().cropImage(
+          sourcePath: picked.path,
+          uiSettings: [
+            AndroidUiSettings(
+              toolbarTitle: event.cropTitle ?? 'Crop Image',
+              toolbarColor: const Color(0xFF0A0A0A),
+              toolbarWidgetColor: const Color(0xFFB8956A),
+              backgroundColor: const Color(0xFF0A0A0A),
+              activeControlsWidgetColor: const Color(0xFFB8956A),
+              statusBarLight: false,
+              cropFrameColor: const Color(0xFFB8956A),
+              cropGridColor: const Color(0x4DB8956A),
+              dimmedLayerColor: const Color(0x80000000),
+            ),
+            IOSUiSettings(
+              title: event.cropTitle ?? 'Crop Image',
+              cancelButtonTitle: 'Cancel',
+              doneButtonTitle: 'Done',
+            ),
+          ],
+        );
+        if (cropped != null) {
+          final docsDir = await getApplicationDocumentsDirectory();
+          final permanentPath = '${docsDir.path}/${picked.name}';
+          final permanentFile = await File(cropped.path).copy(permanentPath);
+          emit(ImagePickedState(permanentFile));
+        }
       }
     } catch (e) {
       emit(VideoErrorState('Image selection error: $e'));

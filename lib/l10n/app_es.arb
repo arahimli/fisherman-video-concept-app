@@ -115,5 +115,6 @@
   "appLanguage": "Idioma",
   "forceUpdateTitle": "Actualización Requerida",
   "forceUpdateMessage": "Una nueva versión está disponible. Por favor actualiza para continuar.",
-  "forceUpdateButton": "ACTUALIZAR AHORA"
+  "forceUpdateButton": "ACTUALIZAR AHORA",
+  "cropImage": "Recortar Imagen"
 }

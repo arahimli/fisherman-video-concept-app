@@ -322,4 +322,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get forceUpdateButton => 'ОБНОВИТЬ';
+
+  @override
+  String get cropImage => 'Обрезать';
 }

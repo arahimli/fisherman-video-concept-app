@@ -1,10 +1,12 @@
-// import 'package:flutter/foundation.dart'; // TODO: uncomment for ads (kDebugMode)
+import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart'; // TODO: uncomment for next release
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// import 'core/ads/ads_config.dart'; // TODO: uncomment for next release
+import 'core/ads/ads_config.dart';
 import 'core/di/service_locator.dart';
+import 'firebase_options.dart';
 import 'core/router/app_router.dart';
 import 'l10n/app_localizations.dart';
 import 'presentation/managers/locale_bloc/bloc.dart';
@@ -13,13 +15,15 @@ import 'presentation/managers/video_bloc/bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // TODO: uncomment for next release
-  // await MobileAds.instance.initialize();
-  // if (kDebugMode) {
-  //   MobileAds.instance.updateRequestConfiguration(
-  //     RequestConfiguration(testDeviceIds: AdsConfig.testDeviceIds),
-  //   );
-  // }
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await MobileAds.instance.initialize();
+  if (kDebugMode) {
+    MobileAds.instance.updateRequestConfiguration(
+      RequestConfiguration(testDeviceIds: AdsConfig.testDeviceIds),
+    );
+  }
   await setupServiceLocator();
   runApp(const MyApp());
 }
@@ -31,15 +35,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<LocaleBloc>(
-          create: (context) => sl<LocaleBloc>(),
-        ),
+        BlocProvider<LocaleBloc>(create: (context) => sl<LocaleBloc>()),
         BlocProvider<RecentVideosBloc>(
-          create: (context) => sl<RecentVideosBloc>()..add(LoadRecentVideosEvent()),
+          create: (context) =>
+              sl<RecentVideosBloc>()..add(LoadRecentVideosEvent()),
         ),
-        BlocProvider<VideoBloc>(
-          create: (context) => sl<VideoBloc>(),
-        ),
+        BlocProvider<VideoBloc>(create: (context) => sl<VideoBloc>()),
       ],
       child: BlocBuilder<LocaleBloc, LocaleState>(
         builder: (context, localeState) => MaterialApp.router(

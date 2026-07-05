@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../core/design/design_system.dart';
@@ -105,10 +106,33 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Future<void> _pickImage() async {
+    final l10n = context.l10n;
     final picked = await _picker.pickImage(source: ImageSource.gallery);
     if (picked == null) return;
-    await _settings.setImageWatermarkPath(picked.path);
-    setState(() => _imagePath = picked.path);
+    final cropped = await ImageCropper().cropImage(
+      sourcePath: picked.path,
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarTitle: l10n.cropImage,
+          toolbarColor: AppColors.background,
+          toolbarWidgetColor: AppColors.accent,
+          backgroundColor: AppColors.background,
+          activeControlsWidgetColor: AppColors.accent,
+          statusBarLight: false,
+          cropFrameColor: AppColors.accent,
+          cropGridColor: AppColors.accentBorder,
+          dimmedLayerColor: AppColors.overlayDark,
+        ),
+        IOSUiSettings(
+          title: l10n.cropImage,
+          cancelButtonTitle: 'Cancel',
+          doneButtonTitle: 'Done',
+        ),
+      ],
+    );
+    if (cropped == null) return;
+    await _settings.setImageWatermarkPath(cropped.path);
+    setState(() => _imagePath = cropped.path);
   }
 
   Future<void> _removeImage() async {
