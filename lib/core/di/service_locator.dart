@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 
+import '../ads/ad_preloader.dart';
 import '../../data/database/app_database.dart';
 import '../../data/repositories/video_history_repository.dart';
 import '../../data/services/force_update_service.dart';
@@ -12,6 +13,9 @@ final GetIt sl = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<ForceUpdateService>(() => ForceUpdateService());
+
+  // Ad preloader — starts fetching interstitial & rewarded ads immediately
+  sl.registerSingleton<AdPreloader>(AdPreloader());
   // Database
   sl.registerSingleton<AppDatabase>(AppDatabase());
 
