@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
 
+    <!-- Advertising ID (Android 13+ tələb edir) -->
+    <uses-permission android:name="com.google.android.gms.permission.AD_ID"/>
+
 
     <application
         android:label="Old Fisherman"
