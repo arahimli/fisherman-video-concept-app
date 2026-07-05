@@ -16,7 +16,7 @@ abstract class AdsConfig {
   // Interstitial ad unit (short video — support page)
   static final String interstitialAdUnitId = Platform.isAndroid
       ? 'ca-app-pub-9530282216810256/6080620040'
-      : 'ca-app-pub-9530282216810256/7087045886';
+      : 'ca-app-pub-9530282216810256/7440404685';
 
   // Rewarded ad unit (long video — support page)
   static final String rewardedAdUnitId = Platform.isAndroid
